@@ -41,7 +41,10 @@ module.exports = function(app) {
     // res.json({
     //   message: "test"
     // })
-    const data = [123];
+
+    let counter = 0;    
+
+    const data = [];
 
     teamLinks.forEach(team => {
       axios.get(team).then(response => {
@@ -57,12 +60,40 @@ module.exports = function(app) {
             newPlayerName,
             newPlayerLink
           });
-      
-        })
+          
+        });
+        counter++
+
+        if (counter === teamLinks.length) {
+          data.forEach(item => {
+            // console.log(item.team)
+            db.Players.create({
+              playerName: item.newPlayerName,
+              playerLink: item.newPlayerLink,
+              teamLink: item.team
+            })
+          })
+          
+          // data.forEach(item => {
+          //   db.Players.create({
+          //     playerName: newPlayerName,
+          //     playerLink: newPlayerLink,
+          //     teamLink: team
+          //   })
+          // }).then(result => res.json(result))
+          // .catch(err => res.json(err))
+          // res.json(data.forEach(item => {
+          //   item.team
+          // }))
+        }
+
+        // res.json(data)
+        
       }).catch(err => res.json(err))
+
     })
 
-    res.json(data);
+    // res.json(data);
     
     // data.forEach(item => {
     //   db.Players.create({
