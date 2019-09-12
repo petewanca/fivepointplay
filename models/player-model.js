@@ -12,25 +12,25 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    imageFile: {
-      type: DataTypes.BLOB,
-      allowNull: false,
-      get() {
-          return this.getDataValue('img').toString('utf8');
-      },
+    // imageFile: {
+      // type: DataTypes.BLOB,
+      // allowNull: false,
+      // get() {
+          // return this.getDataValue('img').toString('utf8');
+      // },
       // stats in some form here
-  }
+  // }
   });
 
-  Players.associate = function(models) {
-    // We're saying that a player should belong to a team
-    // A player can't be created without a team due to the foreign key constraint
-    Players.belongsTo(models.Teams, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // Players.associate = function(models) {
+  //   // We're saying that a player should belong to a team
+  //   // A player can't be created without a team due to the foreign key constraint
+  //   Players.belongsTo(models.Teams, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
   
   return Players;
 };

@@ -1,22 +1,85 @@
-// var db = require("../models");
+const db = require("../../models");
+const axios = require("axios");
+const cheerio = require("cheerio");
+const teamLinks = [
+  "https://www.basketball-reference.com/teams/ATL/2020.html",
+  "https://www.basketball-reference.com/teams/BOS/2020.html",
+  "https://www.basketball-reference.com/teams/BRK/2020.html",
+  "https://www.basketball-reference.com/teams/CHO/2020.html",
+  "https://www.basketball-reference.com/teams/CHI/2020.html",
+  "https://www.basketball-reference.com/teams/CLE/2020.html",
+  "https://www.basketball-reference.com/teams/DAL/2020.html",
+  "https://www.basketball-reference.com/teams/DEN/2020.html",
+  "https://www.basketball-reference.com/teams/DET/2020.html",
+  "https://www.basketball-reference.com/teams/GSW/2020.html",
+  "https://www.basketball-reference.com/teams/HOU/2020.html",
+  "https://www.basketball-reference.com/teams/IND/2020.html",
+  "https://www.basketball-reference.com/teams/LAC/2020.html",
+  "https://www.basketball-reference.com/teams/LAL/2020.html",
+  "https://www.basketball-reference.com/teams/MEM/2020.html",
+  "https://www.basketball-reference.com/teams/MIA/2020.html",
+  "https://www.basketball-reference.com/teams/MIL/2020.html",
+  "https://www.basketball-reference.com/teams/MIN/2020.html",
+  "https://www.basketball-reference.com/teams/NOP/2020.html",
+  "https://www.basketball-reference.com/teams/NYK/2020.html",
+  "https://www.basketball-reference.com/teams/OKC/2020.html",
+  "https://www.basketball-reference.com/teams/ORL/2020.html",
+  "https://www.basketball-reference.com/teams/PHI/2020.html",
+  "https://www.basketball-reference.com/teams/PHO/2020.html",
+  "https://www.basketball-reference.com/teams/POR/2020.html",
+  "https://www.basketball-reference.com/teams/SAC/2020.html",
+  "https://www.basketball-reference.com/teams/SAS/2020.html",
+  "https://www.basketball-reference.com/teams/TOR/2020.html",
+  "https://www.basketball-reference.com/teams/UTA/2020.html",
+  "https://www.basketball-reference.com/teams/WAS/2020.html",
+];
+
 
 module.exports = function(app) {
-  //create new user
   
   app.get("/api/test", function(req, res) {
-    res.json({
-      message: "test"
+    // res.json({
+    //   message: "test"
+    // })
+    const data = [123];
+
+    teamLinks.forEach(team => {
+      axios.get(team).then(response => {
+  
+        const $ = cheerio.load(response.data);
+        // gets player name and link
+        $("#roster tr td[data-stat='player'] a").each((i, element) => {
+          let newPlayerName = $(element).text();
+          let newPlayerLink = "https://www.basketball-reference.com" + $(element).attr("href");
+
+          data.push({
+            team,
+            newPlayerName,
+            newPlayerLink
+          });
+      
+        })
+      }).catch(err => res.json(err))
     })
 
-    // db.Users.findAll({})
-    //   .then(function(result) {
-    //     res.json(result);
-    //   })
-    //   .catch(function(err) {
-    //     res.json(err);
-    //   });
-  });
+    res.json(data);
+    
+    // data.forEach(item => {
+    //   db.Players.create({
+    //   playerName: newPlayerName,
+    //   playerLink: newPlayerLink,
+    //   teamLink: team
+    // }).then(result => res.json(result))
+    // .catch(err => res.json(err))
+    // });
   
+  });
+
+
+
+
+
+
   // app.post("/api/user/add", function(req, res) {
   //   db.Users.create({
   //     email: req.body.email,

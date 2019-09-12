@@ -44,19 +44,26 @@ teamLinks.forEach(team => {
         const results = [];
         const allRosters = [];
         // gets player name and link
-        $("#roster tr td[data-stat='player'] a").each(function(i, element) {
-            let playerName = $(element).text();
-            let playerLink = "https://www.basketball-reference.com" + $(element).attr("href");
+        $("#roster tr td[data-stat='player'] a").each((i, element) => {
+            let newPlayerName = $(element).text();
+            let newPlayerLink = "https://www.basketball-reference.com" + $(element).attr("href");
+
+            db.Players.create({
+              playerName: newPlayerName,
+              playerLink: newPlayerLink,
+              teamLink: team
+            }).then(result => res.json(result))
+            .catch(err => res.json(err));
 
             // get individual player and push to array
-            results.push({
-                team,
-                playerName,
-                playerLink
-            });
+            // results.push({
+            //     team,
+            //     playerName,
+            //     playerLink
+            // });
             
             
-            // db.Users.create({
+            // db.Players.create({
               //     email: req.body.email,
               //     userName: req.body.userName,
               //     password: req.body.password,
