@@ -1,9 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   var Teams = sequelize.define('Teams', {
-      teamId: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-      },
       teamName: {
           type: DataTypes.STRING,
           allowNull: false,
