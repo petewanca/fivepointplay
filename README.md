@@ -4,8 +4,8 @@
 TBD
 
 ### Contributors
- - @petewanca
- - @TerrenceMM2
+ - @petewanca (https://www.linkedin.com/in/petewanca/)
+ - @TerrenceMM2 (https://www.linkedin.com/in/terrencemahnken/)
  
 ### Technology
   - React
@@ -25,14 +25,3 @@ TBD
 
 ### Contributing Guidelines
 TBD
-
-### Contact
- - Name: Pete Wanca (@petewanca)
- - Role: Full Stack Developer | Full-time Data Engineer
- - Email: petewanca@gmail.com
- - LinkedIn: https://www.linkedin.com/in/petewanca/
-
- - Name: Terrence Mahnken (@TerrenceMM2)
- - Role: Full Stack Developer | Senior Consultant
- - Email: terrencemm2@gmail.com
- - LinkedIn: https://www.linkedin.com/in/terrencemahnken/
