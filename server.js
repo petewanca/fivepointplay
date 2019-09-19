@@ -1,7 +1,7 @@
 var express = require("express");
 
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3001;
 
 var passport = require("passport");
 var session = require("express-session");
@@ -32,6 +32,8 @@ require('./config/passport.js')(passport, db.User);
 
 // Define Routes
 require("./routes/api/index")(app);
+require("./routes/api/users")(app);
+require("./routes/api/auth")(app);
 
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {

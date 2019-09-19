@@ -34,9 +34,9 @@ const teamLinks = [
   "https://www.basketball-reference.com/teams/WAS/2020.html",
 ];
 
-
 module.exports = function(app) {
-  
+
+ 
   app.get("/api/test", function(req, res) {
     // res.json({
     //   message: "test"

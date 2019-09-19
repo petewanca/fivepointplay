@@ -7,7 +7,6 @@ export default class SignUp extends Component {
         firstName: "",
         lastName: "",
         email: "",
-        username: "",
         password: ""
     };
 
@@ -48,16 +47,6 @@ export default class SignUp extends Component {
                     label="Email"
                     name="email"
                     value={this.state.email}
-                    onChange={this.handleInputChange}
-                    margin="normal"
-                />
-                </div>
-                <div>
-                <TextField
-                    id="username"
-                    label="Username"
-                    name="username"
-                    value={this.state.username}
                     onChange={this.handleInputChange}
                     margin="normal"
                 />
