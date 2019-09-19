@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+
+// MaterialUI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// React APIs 
 import API from "../utils/API";
 
 const styles = {
@@ -26,8 +29,8 @@ export default class LoginForm extends Component {
 
     handleSubmitForm = () => {
         let newLogin = {
-            "email" : this.state.email,
-            "password" : this.state.password
+            email : this.state.email,
+            password : this.state.password
         }
         API.login(newLogin).then(res => console.log(res)).catch(err => console.log(err));
     };
@@ -55,7 +58,11 @@ export default class LoginForm extends Component {
                     margin="normal"
                     />
                 </div>
-                <Button onClick={this.handleSubmitForm} style={styles.button} variant="outlined" size="small">Login</Button>
+                <Button
+                    onClick={this.handleSubmitForm}
+                    style={styles.button}
+                    variant="outlined"
+                    size="small">Login</Button>
             </form>
         )
     }

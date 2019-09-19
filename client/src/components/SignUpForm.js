@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+
+// MaterialUI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// React APIs 
+import API from "../utils/API";
 
 const styles = {
     button: {
@@ -23,6 +27,16 @@ export default class SignUpForm extends Component {
 		this.setState({
 			[name]: value
 		});
+    };
+
+    handleSubmitForm = () => {
+        let newSignup = {
+            firstName : this.state.firstName,
+            lastName : this.state.lastName,
+            email : this.state.email,
+            password : this.state.password
+        }
+        API.signup(newSignup).then(res => console.log(res)).catch(err => console.log(err));
     };
 
     render() {
@@ -68,7 +82,11 @@ export default class SignUpForm extends Component {
                     margin="normal"
                     />
                 </div>
-                <Button style={styles.button} variant="outlined" size="small">Sign Up</Button>
+                <Button
+                    onClick={this.handleSubmitForm}
+                    style={styles.button}
+                    variant="outlined"
+                    size="small">Sign Up</Button>
             </form>
         )
     }
