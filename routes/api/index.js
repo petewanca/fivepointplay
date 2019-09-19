@@ -36,34 +36,27 @@ const teamLinks = [
 
 module.exports = function(app) {
 
- 
-  app.get("/api/test", function(req, res) {
-    // res.json({
-    //   message: "test"
-    // })
-
+  // get player list, push to array, save to DB
+  app.get("/api/scrape/player-list", function(req, res) {
     let counter = 0;    
-
     const data = [];
 
     teamLinks.forEach(team => {
       axios.get(team).then(response => {
-  
         const $ = cheerio.load(response.data);
-        // gets player name and link
         $("#roster tr td[data-stat='player'] a").each((i, element) => {
           let newPlayerName = $(element).text();
-          let newPlayerLink = "https://www.basketball-reference.com" + $(element).attr("href");
+          let newPlayerLink = process.env.SCRAPE_SITE + $(element).attr("href");
 
           data.push({
             team,
             newPlayerName,
             newPlayerLink
           });
-          
-        });
-        counter++
 
+        });
+
+        counter++
         if (counter === teamLinks.length) {
           data.forEach(item => {
             // console.log(item.team)
@@ -73,37 +66,10 @@ module.exports = function(app) {
               teamLink: item.team
             })
           })
-          
-          // data.forEach(item => {
-          //   db.Players.create({
-          //     playerName: newPlayerName,
-          //     playerLink: newPlayerLink,
-          //     teamLink: team
-          //   })
-          // }).then(result => res.json(result))
-          // .catch(err => res.json(err))
-          // res.json(data.forEach(item => {
-          //   item.team
-          // }))
+          res.json("success")
         }
-
-        // res.json(data)
-        
       }).catch(err => res.json(err))
-
     })
-
-    // res.json(data);
-    
-    // data.forEach(item => {
-    //   db.Players.create({
-    //   playerName: newPlayerName,
-    //   playerLink: newPlayerLink,
-    //   teamLink: team
-    // }).then(result => res.json(result))
-    // .catch(err => res.json(err))
-    // });
-  
   });
 
 
