@@ -2,16 +2,16 @@ module.exports = function(sequelize, DataTypes) {
   var Players = sequelize.define("Players", {
     playerName: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
     },
     playerLink: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
     },
     teamLink: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
+      // allowNull: false
+    }
     // imageFile: {
       // type: DataTypes.BLOB,
       // allowNull: false,
