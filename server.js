@@ -28,7 +28,7 @@ var db = require("./models");
 var syncOptions = { force: false };
 
 //Load passport strategies
-require('./app/config/passport.js')(passport, db.user-model);
+require('./config/passport.js')(passport, db.User);
 
 // Define Routes
 require("./routes/api/index")(app);
