@@ -5,6 +5,16 @@ module.exports = function(app) {
     const jwt = require('jsonwebtoken');
     const keys = require('../../config/keys');
 
+    // Redirect to Google authentication.
+    app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', "email"] }));
+
+    // After authentication, redirect back to home page.
+    app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/404', session: false }), function(req, res) {
+        var token = req.user.token
+        res.redirect('/');
+        res.redirect("http://localhost:3000?token=" + token);
+    });
+
     // @route GET api/auth/test
     // @desc tests the users api route
     app.get('/api/auth/test', (req, res) => {

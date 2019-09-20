@@ -1,5 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const db = require('../models');
 const keys = require('../config/keys');
 
@@ -25,4 +26,17 @@ module.exports = (passport) => {
                 .catch((err) => console.log(err));
         })
     );
+
+    passport.use(
+        new GoogleStrategy({
+            clientID: keys.googleClientID,
+            clientSecret: keys.googleClientSecret,
+            callbackURL: "/api/auth/google/callback"
+        },
+        function(accessToken, refreshToken, profile, done) {
+            db.Users.findOrCreate({ googleId: profile.id }, function (err, user) {
+                return done(err, user);
+            });
+        }
+    ));
 };

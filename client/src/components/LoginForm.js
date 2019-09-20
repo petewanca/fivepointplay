@@ -35,8 +35,13 @@ export default class LoginForm extends Component {
         API.login(newLogin).then(res => console.log(res)).catch(err => console.log(err));
     };
 
+    handleGoogleLogin = () => {
+        fetch("/api/auth/google", {mode: 'no-cors'});
+    }
+
     render() {
         return (
+            <div>
             <form noValidate autoComplete="off">
                 <div>
                 <TextField
@@ -64,6 +69,15 @@ export default class LoginForm extends Component {
                     variant="outlined"
                     size="small">Login</Button>
             </form>
+            <div>
+                {/* <Button
+                 onClick={this.handleGoogleLogin}
+                 style={styles.button}
+                variant="outlined"
+                size="small">Sign In with Google</Button> */}
+                <a type="button" className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-sizeSmall" href="/api/auth/google">Sign in with Google</a>
+            </div>
+            </div>
         )
     }
 }
