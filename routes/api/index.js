@@ -127,12 +127,40 @@ module.exports = function(app) {
       })
 
       // use counter to match DB return count, force wait before next call
-      if (counter === numMatch) {
+      if (counter === playersToScrape.length) {
         console.log(`waiting for sync...`)
         let dataSet = [];
         let playername;
         let playerImage;
-        // need to insert previous season's stats in array and also model (hit last index in array)
+        let season = [];
+        let age = [];
+        let team = [];
+        let position = [];
+        let gamesPlayed = [];
+        let gamesStarted = [];
+        let minutesPlayed = [];
+        let fg = [];
+        let fga = [];
+        let fgp = [];
+        let threesMade = [];
+        let threesAttempted = [];
+        let threePct = [];
+        let twosMade = [];
+        let twosAttempted = [];
+        let twosPct = [];
+        let efgp = [];
+        let ft = [];
+        let fta = [];
+        let ftp = [];
+        let orb = [];
+        let drb = [];
+        let trb = [];
+        let ast = [];
+        let stl = [];
+        let blk = [];
+        let tov = [];
+        let pf = [];
+        let ppg = [];
         let careerMinutes = [];
         let careerFg = [];
         let careerFga = [];
@@ -172,6 +200,180 @@ module.exports = function(app) {
             $("#info #meta div.media-item img").each(function(i, element) {
               let data = $(element).attr("src")
               playerImage = data;
+            });
+
+            // gets seasons
+            $("#div_per_game table tbody th[data-stat='season']").each(function(i, element) {
+                var seasons = $(element).text()
+                season.push(seasons);
+            });
+
+            // get ages
+            $("#div_per_game table tbody td[data-stat='age']").each(function(i, element) {
+                var ages = $(element).text()
+                age.push(ages);
+            });
+
+            // get teams
+            $("#div_per_game table tbody td[data-stat='team_id']").each(function(i, element) {
+                var teams = $(element).text()
+                team.push(teams);
+            });
+
+            // get position
+            $("#div_per_game table tbody td[data-stat='pos']").each(function(i, element) {
+                var pos = $(element).text()
+                position.push(pos);
+            });
+
+            // get games played
+            $("#div_per_game table tbody td[data-stat='g']").each(function(i, element) {
+                var games = $(element).text()
+                gamesPlayed.push(games);
+            });
+
+            // get games started
+            $("#div_per_game table tbody td[data-stat='gs']").each(function(i, element) {
+                var started = $(element).text()
+                gamesStarted.push(started);
+            });
+
+            // get minutes played
+            $("#div_per_game table tbody td[data-stat='mp_per_g']").each(function(i, element) {
+                var mins = $(element).text()
+                minutesPlayed.push(mins);
+            });
+
+            // get field goals per game
+            $("#div_per_game table tbody td[data-stat='fg_per_g']").each(function(i, element) {
+                var fgs = $(element).text()
+                fg.push(fgs);
+            });
+
+            // get field goal attempts per game
+            $("#div_per_game table tbody td[data-stat='fga_per_g']").each(function(i, element) {
+                var attempted = $(element).text()
+                fga.push(attempted);
+            });
+
+            // get field goal percentage
+            $("#div_per_game table tbody td[data-stat='fg_pct']").each(function(i, element) {
+                var fgpct = $(element).text()
+                fgp.push(fgpct);
+            });
+
+            // get threes made per game
+            $("#div_per_game table tbody td[data-stat='fg3_per_g']").each(function(i, element) {
+                var tpg = $(element).text()
+                threesMade.push(tpg);
+            });
+
+            // get threes attempted per game
+            $("#div_per_game table tbody td[data-stat='fg3a_per_g']").each(function(i, element) {
+                var fg3a = $(element).text()
+                threesAttempted.push(fg3a);
+            });
+
+            // get three point percentage
+            $("#div_per_game table tbody td[data-stat='fg3_pct']").each(function(i, element) {
+                var fg3pct = $(element).text()
+                threePct.push(fg3pct);
+            });
+
+            // get twos made per game
+            $("#div_per_game table tbody td[data-stat='fg2_per_g']").each(function(i, element) {
+                var fg2 = $(element).text()
+                twosMade.push(fg2);
+            });
+
+            // get twos attempted per game
+            $("#div_per_game table tbody td[data-stat='fg2a_per_g']").each(function(i, element) {
+                var fg2a = $(element).text()
+                twosAttempted.push(fg2a);
+            });
+
+            // get two point percentage
+            $("#div_per_game table tbody td[data-stat='fg2_pct']").each(function(i, element) {
+                var fg2pct = $(element).text()
+                twosPct.push(fg2pct);
+            });
+
+            // get effective fg percentage
+            $("#div_per_game table tbody td[data-stat='efg_pct']").each(function(i, element) {
+                var efg_pct = $(element).text()
+                efgp.push(efg_pct);
+            });
+
+            // get free throws per game
+            $("#div_per_game table tbody td[data-stat='ft_per_g']").each(function(i, element) {
+                var freethrows = $(element).text()
+                ft.push(freethrows);
+            });
+
+            // get free throws attempted per game
+            $("#div_per_game table tbody td[data-stat='fta_per_g']").each(function(i, element) {
+                var ftattempted = $(element).text()
+                fta.push(ftattempted);
+            });
+
+            // get free throw percentage
+            $("#div_per_game table tbody td[data-stat='ft_pct']").each(function(i, element) {
+                var ft_pct = $(element).text()
+                ftp.push(ft_pct);
+            });
+
+            // get offensive rebounds per game
+            $("#div_per_game table tbody td[data-stat='orb_per_g']").each(function(i, element) {
+                var offrebounds = $(element).text()
+                orb.push(offrebounds);
+            });
+
+            // get defensive rebounds per game
+            $("#div_per_game table tbody td[data-stat='drb_per_g']").each(function(i, element) {
+                var defrebounds = $(element).text()
+                drb.push(defrebounds);
+            });
+
+            // get total rebounds per game
+            $("#div_per_game table tbody td[data-stat='trb_per_g']").each(function(i, element) {
+                var totalreb = $(element).text()
+                trb.push(totalreb);
+            });
+
+            // get assists per game
+            $("#div_per_game table tbody td[data-stat='ast_per_g']").each(function(i, element) {
+                var assists = $(element).text()
+                ast.push(assists);
+            });
+
+            // get steals per game
+            $("#div_per_game table tbody td[data-stat='stl_per_g']").each(function(i, element) {
+                var steals = $(element).text()
+                stl.push(steals);
+            });
+
+            // get blocks per game
+            $("#div_per_game table tbody td[data-stat='blk_per_g']").each(function(i, element) {
+                var blocks = $(element).text()
+                blk.push(blocks);
+            });
+
+            // get turnovers per game
+            $("#div_per_game table tbody td[data-stat='tov_per_g']").each(function(i, element) {
+                var to = $(element).text()
+                tov.push(to);
+            });
+
+            // get personal fouls
+            $("#div_per_game table tbody td[data-stat='pf_per_g']").each(function(i, element) {
+                var pfs = $(element).text()
+                pf.push(pfs);
+            });
+
+            // get ppg
+            $("#div_per_game table tbody td[data-stat='pts_per_g']").each(function(i, element) {
+                var points = $(element).text()
+                ppg.push(points);
             });
             
             // get career minutes averaged  
@@ -317,6 +519,35 @@ module.exports = function(app) {
             dataSet.push({
               playerName,
               playerImage,
+              season: season[season.length-1],
+              age: age[age.length-1],
+              team: team[team.length-1],
+              position: position[position.length-1],
+              gamesPlayed: gamesPlayed[gamesPlayed.length-1],
+              gamesStarted: gamesStarted[gamesStarted.length-1],
+              minutesPlayed: minutesPlayed[minutesPlayed.length-1],
+              fg: fg[fg.length-1],
+              fga: fga[fga.length-1],
+              fgp: fgp[fgp.length-1],
+              threesMade: threesMade[threesMade.length-1],
+              threesAttempted: threesAttempted[threesAttempted.length-1],
+              threePct: threePct[threePct.length-1],
+              twosMade: twosMade[twosMade.length-1],
+              twosAttempted: twosAttempted[twosAttempted.length-1],
+              twosPct: twosPct[twosPct.length-1],
+              efgp: efgp[efgp.length-1],
+              ft: ft[ft.length-1],
+              fta: fta[fta.length-1],
+              ftp: ftp[ftp.length-1],
+              orb: orb[orb.length-1],
+              drb: drb[drb.length-1],
+              trb: trb[trb.length-1],
+              ast: ast[ast.length-1],
+              stl: stl[stl.length-1],
+              blk: blk[blk.length-1],
+              tov: tov[tov.length-1],
+              pf: pf[pf.length-1],
+              ppg: ppg[ppg.length-1],
               careerMinutes: careerMinutes[0],
               careerFg: careerFg[0],
               careerFga: careerFga[0],
@@ -344,18 +575,15 @@ module.exports = function(app) {
 
             // end of push before axios goes to next player page
             console.log(`length checker: ${dataSet.length}`)
-            console.log(playerImage)
-            console.log(playerName)
             // makes sure dataSet array matches response from DB to scrape all player data
-            if (dataSet.length === numMatch) {
-              console.log("your dataSet matches the length of your playersToScrape array");
+            if (dataSet.length === playersToScrape) {
+              console.log(`your data scrape is complete`);
+
               res.json(dataSet)
             }
 
           })
-        // counter++
-        // if (counter === playersToScrape.length) {
-        // }
+        
         })
 
       }
