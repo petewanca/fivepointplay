@@ -36,7 +36,9 @@ const teamLinks = [
 
 module.exports = function(app) {
 
+  // =============================================
   // save player name, player link, team link to DB
+  // =============================================
   app.get("/api/scrape/player-list", function(req, res) {
     let counter = 0;    
     const data = [];
@@ -54,10 +56,6 @@ module.exports = function(app) {
           });
         });
 
-        // $("div.media-item").each((i, element) => {
-        //   let teamLogo = $(".teamlogo").attr("src");
-        // });
-
         counter++
         if (counter === teamLinks.length) {
           data.forEach(item => {
@@ -68,13 +66,16 @@ module.exports = function(app) {
               teamLogo: item.teamLogo
             })
           })
-          res.json("success")
+          res.status(200).json("success")
         }
-      }).catch(err => res.json(err))
+      }).catch(err => res.status(404).json(err))
     })
   });
 
+  
+  // =============================================
   // save team link and logo to DB
+  // =============================================
   app.get("/api/scrape/team-list", function(req, res) {
     let counter = 0;    
     const data = [];
@@ -99,78 +100,259 @@ module.exports = function(app) {
               teamLogo: item.teamLogo
             })
           })
-          res.json("success")
+          res.status(200).json("success")
         }
-      }).catch(err => res.json(err))
+      }).catch(err => res.status(404).json(err))
     })
   });
 
 
+  // =============================================
+  // save player statistics to DB
+  // =============================================
+  app.get("/api/scrape/player-stats/", function(req, res) {
+    let counter = 0;    
+    let playersToScrape = [];
+
+    // prepare player links to scrape
+    db.Players.findAll({})
+    .then(response => {
+      response.forEach(item => {
+        counter++
+        playersToScrape.push(item.dataValues.playerLink)
+      })
+
+      // use counter to force wait before next call
+      if (counter === playersToScrape.length) {
+        let dataSet = [];
+        let careerMinutes = [];
+        let careerFg = [];
+        let careerFga = [];
+        let careerFgp = [];
+        let careerThreesMade = [];
+        let careerThreesAttempted = [];
+        let careerThreePct = [];
+        let careerTwosMade = [];
+        let careerTwosAttempted = [];
+        let careerTwosPct = [];
+        let careerEfgp = [];
+        let careerFt = [];
+        let careerFta = [];
+        let careerFtp = [];
+        let careerOrb = [];
+        let careerDrb = [];
+        let careerTrb = [];
+        let careerAst = [];
+        let careerStl = [];
+        let careerBlk = [];
+        let careerTov = [];
+        let careerPf = [];
+        let careerPpg = [];
+
+        // scrape prepped player links
+        // playersToScrape.forEach(link => {
+        axios.get(playersToScrape[0]).then(response => {
+          const $ = cheerio.load(response.data);
+  
+          // get career minutes averaged  
+          $("#div_per_game table tfoot tr td[data-stat='mp_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerMinutes.push(data);
+          });
+  
+          // get career field goals made avg
+          $("#div_per_game table tfoot tr td[data-stat='fg_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerFg.push(data);
+          });
+  
+          // get career field goals attempted avg
+          $("#div_per_game table tfoot tr td[data-stat='fga_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerFga.push(data);
+          });
+  
+          // get career field goal pct
+          $("#div_per_game table tfoot tr td[data-stat='fg_pct']").each(function(i, element) {
+            let data = $(element).text()
+            careerFgp.push(data);
+          });
+  
+          // get career three points made avg
+          $("#div_per_game table tfoot tr td[data-stat='fg3_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerThreesMade.push(data);
+          });
+  
+          // get career three point attempts avg
+          $("#div_per_game table tfoot tr td[data-stat='fg3a_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerThreesAttempted.push(data);
+          });
+  
+          // get career three point pct
+          $("#div_per_game table tfoot tr td[data-stat='fg3_pct']").each(function(i, element) {
+            let data = $(element).text()
+            careerThreePct.push(data);
+          });
+  
+          // get career two points made avg
+          $("#div_per_game table tfoot tr td[data-stat='fg2_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerTwosMade.push(data);
+          });
+  
+          // get career two point attempts avg
+          $("#div_per_game table tfoot tr td[data-stat='fg2a_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerTwosAttempted.push(data);
+          });
+  
+          // get career two point pct
+          $("#div_per_game table tfoot tr td[data-stat='fg2_pct']").each(function(i, element) {
+            let data = $(element).text()
+            careerTwosPct.push(data);
+          });
+  
+          // get career field goal efc pct
+          $("#div_per_game table tfoot tr td[data-stat='efg_pct']").each(function(i, element) {
+            let data = $(element).text()
+            careerEfgp.push(data);
+          });
+  
+          // get career free throws made avg
+          $("#div_per_game table tfoot tr td[data-stat='ft_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerFt.push(data);
+          });
+  
+          // get career free throw attempt avg
+          $("#div_per_game table tfoot tr td[data-stat='fta_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerFta.push(data);
+          });
+  
+          // get career free throw pct
+          $("#div_per_game table tfoot tr td[data-stat='ft_pct']").each(function(i, element) {
+            let data = $(element).text()
+            careerFtp.push(data);
+          });
+  
+          // get career offensive reb avg
+          $("#div_per_game table tfoot tr td[data-stat='orb_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerOrb.push(data);
+          });
+  
+          // get career defensive reb avg
+          $("#div_per_game table tfoot tr td[data-stat='drb_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerDrb.push(data);
+          });
+  
+          // get career total reb avg
+          $("#div_per_game table tfoot tr td[data-stat='trb_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerTrb.push(data);
+          });
+  
+          // get career total assists avg
+          $("#div_per_game table tfoot tr td[data-stat='ast_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerAst.push(data);
+          });
+  
+          // get career total steals avg
+          $("#div_per_game table tfoot tr td[data-stat='stl_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerStl.push(data);
+          });
+  
+          // get career total blocks avg
+          $("#div_per_game table tfoot tr td[data-stat='blk_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerBlk.push(data);
+          });
+  
+          // get career turnover avg
+          $("#div_per_game table tfoot tr td[data-stat='tov_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerTov.push(data);
+          });
+  
+          // get career fouls avg
+          $("#div_per_game table tfoot tr td[data-stat='pf_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerPf.push(data);
+          });
+  
+          // get career ppg avg 
+          $("#div_per_game table tfoot tr td[data-stat='pts_per_g']").each(function(i, element) {
+            let data = $(element).text()
+            careerPpg.push(data);
+          });
+  
+  
+          // player statistics results object
+          dataSet.push({
+            careerMinutes: careerMinutes[0],
+            careerFg: careerFg[0],
+            careerFga: careerFga[0],
+            careerFgp: careerFgp[0],
+            careerThreesMade: careerThreesMade[0],
+            careerThreesAttempted: careerThreesAttempted[0],
+            careerThreePct: careerThreePct[0],
+            careerTwosMade: careerTwosMade[0],
+            careerTwosAttempted: careerTwosAttempted[0],
+            careerTwosPct: careerTwosPct[0],
+            careerEfgp: careerEfgp[0],
+            careerFt: careerFt[0],
+            careerFta: careerFta[0],
+            careerFtp: careerFtp[0],
+            careerOrb: careerOrb[0],
+            careerDrb: careerDrb[0],
+            careerTrb: careerTrb[0],
+            careerAst: careerAst[0],
+            careerStl: careerStl[0],
+            careerBlk: careerBlk[0],
+            careerTov: careerTov[0],
+            careerPf: careerPf[0],
+            careerPpg: careerPpg[0]
+          });
+          console.log(dataSet);
+
+        })
+        // counter++
+        // if (counter === playersToScrape.length) {
+        // }
+      // })
+
+      }
+    })
+    .catch(err=>res.status(404).json(err))
 
 
-  // app.post("/api/user/add", function(req, res) {
-  //   db.Users.create({
-  //     email: req.body.email,
-  //     userName: req.body.userName,
-  //     password: req.body.password,
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName
-  //   })
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.json(err);
-  //     });
-  // });
 
-  // //get all users
-  // app.get("/api/user/all", function(req, res) {
-  //   db.Users.findAll({})
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.json(err);
-  //     });
-  // });
+    // res.json(dataSet);
 
-  // //sign-in user
-  // app.get("/api/user/:id", function(req, res) {
-  //   db.Users.findOne({
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   })
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.json(err);
-  //     });
-  // });
+  });
 
-  // // edit user details
-  // app.put("/api/user/:id", function(req, res) {
-  //   db.Users.update(
-  //     {
-  //       email: req.body.email,
-  //       userName: req.body.userName,
-  //       password: req.body.password,
-  //       firstName: req.body.firstName,
-  //       lastName: req.body.lastName
-  //     },
-  //     {
-  //       where: {
-  //         id: req.params.id
-  //       }
-  //     }
-  //   )
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.json(err);
-  //     });
-  // });
 };
+
+
+/*
+db.Players.update({
+  user: data.username,
+  chatroomID: data.chatroomID
+}, {
+  where: { socketID: socket.id },
+  returning: true,
+  plain: true
+})
+.then(function (result) {
+  console.log(result);   
+  // result = [x] or [x, y]
+  // [x] if you're not using Postgres
+  // [x, y] if you are using Postgres
+});
+*/
