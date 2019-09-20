@@ -132,6 +132,7 @@ module.exports = function(app) {
         let dataSet = [];
         let playername;
         let playerImage;
+        // need to insert previous season's stats in array and also model (hit last index in array)
         let careerMinutes = [];
         let careerFg = [];
         let careerFga = [];
@@ -167,10 +168,9 @@ module.exports = function(app) {
               playerName = data;
             });
 
-            
             // get player image  
-            $("div.media-item").each(function(i, element) {
-              let data = $("img").attr("src")
+            $("#info #meta div.media-item img").each(function(i, element) {
+              let data = $(element).attr("src")
               playerImage = data;
             });
             
