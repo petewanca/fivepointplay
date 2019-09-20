@@ -5,7 +5,7 @@ module.exports = function(app) {
     const jwt = require('jsonwebtoken');
     const keys = require('../../config/keys');
 
-    // @route GET api/users/test
+    // @route GET api/auth/test
     // @desc tests the users api route
     app.get('/api/auth/test', (req, res) => {
         res.json({
@@ -14,6 +14,8 @@ module.exports = function(app) {
         });
     });
 
+    // @route GET api/auth/test
+    // @desc tests secure api route
     app.get('/api/auth/test-secure', passport.authenticate('jwt', { session: false }), (req, res) => {
         res.json({
             success: true,
@@ -21,7 +23,7 @@ module.exports = function(app) {
         });
     });
 
-    // @route POST api/users/login
+    // @route POST api/auth/login
     // @desc logs in a user
     app.post('/api/auth/login', (req, res) => {
         const { email, password } = req.body;
