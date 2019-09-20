@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var PlayerStats = sequelize.define("playerStats", {
+  var PlayerStats = sequelize.define("PlayerStats", {
     playerName: {
       type: DataTypes.STRING,
       // allowNull: false

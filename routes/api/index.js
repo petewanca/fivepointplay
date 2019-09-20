@@ -578,8 +578,66 @@ module.exports = function(app) {
             // makes sure dataSet array matches response from DB to scrape all player data
             if (dataSet.length === playersToScrape) {
               console.log(`your data scrape is complete`);
-
-              res.json(dataSet)
+              
+              dataSet.forEach(item => {
+                db.PlayerStats.create({
+                  playerName: item.playerName,
+                  playerImage: item.playerImage,
+                  season: item.season,
+                  age: item.age,
+                  team: item.team,
+                  position: item.position,
+                  gamesPlayed: item.gamesPlayed,
+                  gamesStarted: item.gamesStarted,
+                  minutesPlayed: item.minutesPlayed,
+                  fg: item.fg,
+                  fga: item.fga,
+                  fgp: item.fgp,
+                  threesMade: item.threesMade,
+                  threesAttempted: item.threesAttempted,
+                  threePct: item.threePct,
+                  twosMade: item.twosMade,
+                  twosAttempted: item.twosAttempted,
+                  twosPct: item.twosPct,
+                  efgp: item.efgp,
+                  ft: item.ft,
+                  fta: item.fta,
+                  ftp: item.ftp,
+                  orb: item.orb,
+                  drb: item.drb,
+                  trb: item.trb,
+                  ast: item.ast,
+                  stl: item.stl,
+                  blk: item.blk,
+                  tov: item.tov,
+                  pf: item.pf,
+                  ppg: item.ppg,
+                  careerMinutes: item.careerMinutes,
+                  careerFg: item.careerFg,
+                  careerFga: item.careerFga,
+                  careerFgp: item.careerFgp,
+                  careerThreesMade: item.careerThreesMade,
+                  careerThreesAttempted: item.careerThreesAttempted,
+                  careerThreePct: item.careerThreePct,
+                  careerTwosMade: item.careerTwosMade,
+                  careerTwosAttempted: item.careerTwosAttempted,
+                  careerTwosPct: item.careerTwosPct,
+                  careerEfgp: item.careerEfgp,
+                  careerFt: item.careerFt,
+                  careerFta: item.careerFta,
+                  careerFtp: item.careerFtp,
+                  careerOrb: item.careerOrb,
+                  careerDrb: item.careerDrb,
+                  careerTrb: item.careerTrb,
+                  careerAst: item.careerAst,
+                  careerStl: item.careerStl,
+                  careerBlk: item.careerBlk,
+                  careerTov: item.careerTov,
+                  careerPf: item.careerPf,
+                  careerPpg: item.careerPpg
+                })
+              })
+              res.status(200).json("success")
             }
 
           })
