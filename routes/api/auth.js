@@ -6,18 +6,22 @@ module.exports = function(app) {
     const keys = require('../../config/keys');
 
     // Redirect to Google authentication.
-    app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', "email"] }));
+    app.get('/api/auth/google', function(){
+        console.log("google api")
+    }, passport.authenticate('google', { scope: ['profile', "email"] }));
 
     // After authentication, redirect back to home page.
-    app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/404', session: false }), function(req, res) {
-        var token = req.user.token
-        res.redirect('/');
+    app.get('/api/auth/google/callback', passport.authenticate('google', { successRedirect: "/", failureRedirect: '/404', session: false }), function(req, res) {
+        // var token = req.user.token
+        // res.redirect('/');
         res.redirect("http://localhost:3000?token=" + token);
+        // console.log("google callback")
     });
 
     // @route GET api/auth/test
     // @desc tests the users api route
     app.get('/api/auth/test', (req, res) => {
+        console.log("test api")
         res.json({
             success: true,
             msg: 'Testing endpoint works correctly.'

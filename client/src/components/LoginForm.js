@@ -36,7 +36,13 @@ export default class LoginForm extends Component {
     };
 
     handleGoogleLogin = () => {
-        fetch("/api/auth/google", {mode: 'no-cors'});
+        fetch("/api/auth/google", {mode: 'no-cors'})
+        .then(response => {
+            console.log(response)
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
@@ -68,14 +74,14 @@ export default class LoginForm extends Component {
                     style={styles.button}
                     variant="outlined"
                     size="small">Login</Button>
+                <Button
+                    onClick={this.handleGoogleLogin}
+                    style={styles.button}
+                    variant="outlined"
+                    size="small">Google Login</Button>
             </form>
             <div>
-                {/* <Button
-                 onClick={this.handleGoogleLogin}
-                 style={styles.button}
-                variant="outlined"
-                size="small">Sign In with Google</Button> */}
-                <a type="button" className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-sizeSmall" href="/api/auth/google">Sign in with Google</a>
+                <a type="button" className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-sizeSmall" href="/api/auth/google">Google A Tag</a>
             </div>
             </div>
         )

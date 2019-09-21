@@ -2,6 +2,7 @@
   "name": "fpp",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
@@ -46,6 +47,5 @@
   "bugs": {
     "url": "https://github.com/petewanca/fivepointplay/issues"
   },
-  "homepage": "https://github.com/petewanca/fivepointplay#readme",
-  "proxy": "http://localhost:3001/"
+  "homepage": "https://github.com/petewanca/fivepointplay#readme"
 }

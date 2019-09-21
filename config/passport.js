@@ -9,6 +9,14 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys.secretOrKey;
 
 module.exports = (passport) => {
+
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+       });
+    passport.deserializeUser(function(user, done) {
+        done(null, user);
+       });
+
     passport.use(
         new JwtStrategy(opts, (jwtPayload, done) => {
             db.Users
@@ -31,7 +39,7 @@ module.exports = (passport) => {
         new GoogleStrategy({
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: "/api/auth/google/callback"
+            callbackURL: "http://localhost:3001/api/auth/google/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             db.Users.findOrCreate({ googleId: profile.id }, function (err, user) {
