@@ -33,187 +33,187 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     minutesPlayed: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     fg: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     fga: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     fgp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     threesMade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     threesAttempted: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     threePct: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     twosMade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     twosAttempted: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     twosPct: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     efgp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     ft: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     fta: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     ftp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     orb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     drb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     trb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     ast: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     stl: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     blk: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     tov: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     pf: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     ppg: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerMinutes: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFg: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFga: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFgp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerThreesMade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerThreesAttempted: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerThreePct: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerTwosMade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerTwosAttempted: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerTwosPct: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerEfgp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFt: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFta: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerFtp: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerOrb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerDrb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerTrb: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerAst: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerStl: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerBlk: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerTov: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerPf: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     careerPpg: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,1),
       // allowNull: false
     },
     // imageFile: {
