@@ -5,10 +5,6 @@ module.exports = function(sequelize, DataTypes) {
         // allowNull: false,
         // primaryKey: true
       },
-      teamAbv: {
-        type: DataTypes.STRING
-        // allowNull: false
-      },
       teamLink: {
         type: DataTypes.STRING,
         // allowNull: false

@@ -36,74 +36,115 @@ const teamLinks = [
 
 module.exports = function(app) {
 
-  // =============================================
-  // save player name, player link, team link to DB
-  // =============================================
-  app.get("/api/scrape/player-list", function(req, res) {
-    let counter = 0;
-    const data = [];
+  // ====================================================
+  // get team list ======================================
+  // ====================================================
+  app.get("/api/scrape/teams", function(req, res) {
+    const results = [];
 
-    teamLinks.forEach(team => {
-      axios.get(process.env.SCRAPE_SITE + team).then(response => {
+      axios.get("https://www.nba.com/teams/").then(response => {
         const $ = cheerio.load(response.data);
-        $("#roster tr td[data-stat='player'] a").each((i, element) => {
-          let newPlayerName = $(element).text();
-          let newPlayerLink = process.env.SCRAPE_SITE + $(element).attr("href");
-          data.push({
-            team: process.env.SCRAPE_SITE+team,
-            newPlayerName,
-            newPlayerLink,
+
+        // for every div with a class of 'team__list'...
+        $("div.team__list").each((i, element) => {
+          let teamName = $(element).text();
+          let teamLogo = $(element).children("img").attr("src");
+          let teamLink = `nba.com` + $(element).children("a").attr("href");
+
+          // create obj with results to push to array
+          results.push({
+            teamName: teamName,
+            teamLogo: teamLogo,
+            teamLink: teamLink
           });
+
         });
 
-        counter++
-        if (counter === teamLinks.length) {
-          data.forEach(item => {
-            db.Players.create({
-              playerName: item.newPlayerName,
-              playerLink: item.newPlayerLink,
-              teamLink: item.team,
-              teamLogo: item.teamLogo
+        // ensure results obj has all 30 teams added...
+        if (results.length === 30) {
+          results.forEach(team => {
+            db.Teams.create({
+              teamName: team.teamName,
+              teamLogo: team.teamLogo,
+              teamLink: team.teamLink,
             })
           })
-          res.status(200).json("success")
+          res.status(200).json(results)
         }
+
       }).catch(err => res.status(404).json(err))
-    })
   });
 
-  
-  // =============================================
-  // save team link and logo to DB
-  // =============================================
-  app.get("/api/scrape/team-list", function(req, res) {
-    let counter = 0;    
-    const data = [];
 
-    teamLinks.forEach(team => {
-      axios.get(process.env.SCRAPE_SITE + team).then(response => {
-        const $ = cheerio.load(response.data);
-        $("div.media-item").each((i, element) => {
-          let teamLogo = $(".teamlogo").attr("src");
-          data.push({
-            teamLink: process.env.SCRAPE_SITE+team,
-            teamLogo,
-          });
+  // ====================================================
+  // get team roster ====================================
+  // ====================================================
+  app.get("/api/scrape/rosters", function(req, res) {
+    const teamsToScrape = [];
+    // OBJECT FORMAT 
+    // "teamName": "Atlanta Hawks",
+    // "teamLink": "nba.com/teams/hawks",
+    // "teamLogo": "https://www.nba.com/assets/logos/teams/primary/web/ATL.svg"
+    const playerResults = [];
+    // OBJECT FORMAT 
+    // "playerName": "Charles Brown",
+    // "playerLink": "nba.com/players/charles/brown/1629718",
+    // "playerImage": "ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629718.png"
+
+    
+    // first we need to get team links from DB
+    getTeamLinks = () => {
+      db.Teams.findAll({})
+      .then(response => {
+        console.log("gathering teams to scrape roster slots...");
+        response.forEach(team => {
+          teamsToScrape.push(team);
         });
+      });
+    };
+
+    // scrape each teams roster with results from DB
+    scrapeTeamLinks = () => {
+      teamsToScrape.forEach(team => {
+        axios.get(team.teamLink).then(response => {
+          const $ = cheerio.load(response.data);
+    
+          // for every div with a class of 'team__list'...
+          $("section.nba-player-index__trending-item").each((i, element) => {
+            let playerName = $(element).children("a").attr("title");
+            let playerLink = `nba.com` + $(element).children("a").attr("href");
+            let playerImage = $(element).find("img").attr("data-src");
+            playerImage = playerImage.substring(2);
+            
+            playerResults.push({
+              playerName: playerName,
+              playerLink: playerLink,
+              playerImage: playerImage
+            });
+          // end of scrape node
+          });
+    
+          res.json(playerResults);
+        // end of axios call
+        }).catch(err => res.status(404).json(err));
+      });
+    };
 
 
-        counter++
-        if (counter === teamLinks.length) {
-          data.forEach(item => {
-            db.Teams.create({
-              teamLink: item.teamLink,
-              teamLogo: item.teamLogo
-            })
-          })
-          res.status(200).json("success")
-        }
-      }).catch(err => res.status(404).json(err))
-    })
+
+
+    // lastly, we run everything through Promise.all()
+    // to handle async calls correctly
+    Promise.all([getTeamLinks, scrapeTeamLinks])
+    .then(result => {
+      console.log(result)
+      res.status(200).json("success")
+    }).catch(error => {
+      console.log(error);
+      res.status(404).json(`Error in promises ${error}`)
+    });
+
+  
   });
 
 
