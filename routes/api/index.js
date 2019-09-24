@@ -1,38 +1,6 @@
 const db = require("../../models");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const teamLinks = [
-  "/teams/ATL/2020.html",
-  "/teams/BOS/2020.html",
-  "/teams/BRK/2020.html",
-  "/teams/CHO/2020.html",
-  "/teams/CHI/2020.html",
-  "/teams/CLE/2020.html",
-  "/teams/DAL/2020.html",
-  "/teams/DEN/2020.html",
-  "/teams/DET/2020.html",
-  "/teams/GSW/2020.html",
-  "/teams/HOU/2020.html",
-  "/teams/IND/2020.html",
-  "/teams/LAC/2020.html",
-  "/teams/LAL/2020.html",
-  "/teams/MEM/2020.html",
-  "/teams/MIA/2020.html",
-  "/teams/MIL/2020.html",
-  "/teams/MIN/2020.html",
-  "/teams/NOP/2020.html",
-  "/teams/NYK/2020.html",
-  "/teams/OKC/2020.html",
-  "/teams/ORL/2020.html",
-  "/teams/PHI/2020.html",
-  "/teams/PHO/2020.html",
-  "/teams/POR/2020.html",
-  "/teams/SAC/2020.html",
-  "/teams/SAS/2020.html",
-  "/teams/TOR/2020.html",
-  "/teams/UTA/2020.html",
-  "/teams/WAS/2020.html",
-];
 
 module.exports = function(app) {
 
@@ -41,25 +9,20 @@ module.exports = function(app) {
   // ====================================================
   app.get("/api/scrape/teams", function(req, res) {
     const results = [];
-
       axios.get("https://www.nba.com/teams/").then(response => {
         const $ = cheerio.load(response.data);
-
         // for every div with a class of 'team__list'...
         $("div.team__list").each((i, element) => {
           let teamName = $(element).text();
           let teamLogo = $(element).children("img").attr("src");
-          let teamLink = `nba.com` + $(element).children("a").attr("href");
-
+          let teamLink = `https://www.nba.com` + $(element).children("a").attr("href");
           // create obj with results to push to array
           results.push({
             teamName: teamName,
             teamLogo: teamLogo,
             teamLink: teamLink
           });
-
         });
-
         // ensure results obj has all 30 teams added...
         if (results.length === 30) {
           results.forEach(team => {
@@ -71,7 +34,6 @@ module.exports = function(app) {
           })
           res.status(200).json(results)
         }
-
       }).catch(err => res.status(404).json(err))
   });
 
@@ -81,72 +43,49 @@ module.exports = function(app) {
   // ====================================================
   app.get("/api/scrape/rosters", function(req, res) {
     const teamsToScrape = [];
-    // OBJECT FORMAT 
-    // "teamName": "Atlanta Hawks",
-    // "teamLink": "nba.com/teams/hawks",
-    // "teamLogo": "https://www.nba.com/assets/logos/teams/primary/web/ATL.svg"
     const playerResults = [];
-    // OBJECT FORMAT 
-    // "playerName": "Charles Brown",
-    // "playerLink": "nba.com/players/charles/brown/1629718",
-    // "playerImage": "ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629718.png"
-
-    
-    // first we need to get team links from DB
-    getTeamLinks = () => {
-      db.Teams.findAll({})
-      .then(response => {
-        console.log("gathering teams to scrape roster slots...");
-        response.forEach(team => {
-          teamsToScrape.push(team);
-        });
+    // get team links from DB to scrape
+    db.Teams.findAll({})
+    .then(response => {
+      console.log(`gathering teams to scrape roster slots...`);
+      response.forEach(team => {
+        teamsToScrape.push(team);
       });
-    };
+      // once all 30 teams are gathered, run 
+      // scraper and save each item to DB
+      if (teamsToScrape.length === 30) {
+        console.log(`scraping nba teams...`)
+        teamsToScrape.forEach(team => {
+          axios.get(team.teamLink).then(response => {
+            console.log(`scraping ${team.teamName}'s page...`)
+            const $ = cheerio.load(response.data);
+      
+            // for every div with a class of 'team__list'...
+            $("section.nba-player-index__trending-item").each((i, element) => {
+              let playerName = $(element).children("a").attr("title");
+              let playerLink = `nba.com` + $(element).children("a").attr("href");
+              let playerImage = `https:` + $(element).find("img").attr("data-src");
+              let position = $(element).find("div.nba-player-index__details span:nth-child(1)").text();
+              let size = $(element).find("div.nba-player-index__details span:nth-child(2)").text();
 
-    // scrape each teams roster with results from DB
-    scrapeTeamLinks = () => {
-      teamsToScrape.forEach(team => {
-        axios.get(team.teamLink).then(response => {
-          const $ = cheerio.load(response.data);
-    
-          // for every div with a class of 'team__list'...
-          $("section.nba-player-index__trending-item").each((i, element) => {
-            let playerName = $(element).children("a").attr("title");
-            let playerLink = `nba.com` + $(element).children("a").attr("href");
-            let playerImage = $(element).find("img").attr("data-src");
-            playerImage = playerImage.substring(2);
-            
-            playerResults.push({
-              playerName: playerName,
-              playerLink: playerLink,
-              playerImage: playerImage
+              db.Players.create({
+                playerName: playerName,
+                playerLink: playerLink,
+                playerImage: playerImage,
+                position: position,
+                size: size,
+                teamName: team.teamName,
+                teamLink: team.teamLink,
+                teamLogo: team.teamLogo
+              })
             });
-          // end of scrape node
-          });
-    
-          res.json(playerResults);
-        // end of axios call
-        }).catch(err => res.status(404).json(err));
-      });
-    };
 
-
-
-
-    // lastly, we run everything through Promise.all()
-    // to handle async calls correctly
-    Promise.all([getTeamLinks, scrapeTeamLinks])
-    .then(result => {
-      console.log(result)
-      res.status(200).json("success")
-    }).catch(error => {
-      console.log(error);
-      res.status(404).json(`Error in promises ${error}`)
+          // end of axios call
+          }).catch(err => res.status(404).json(err));
+        });
+      }
     });
-
-  
   });
-
 
   // =============================================
   // save player statistics to DB
