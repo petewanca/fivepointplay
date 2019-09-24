@@ -20,6 +20,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       // allowNull: false
     },
+    statLink: {
+      type: DataTypes.STRING,
+     // allowNull: false
+    },
     teamName: {
        type: DataTypes.STRING,
       // allowNull: false

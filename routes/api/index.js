@@ -67,6 +67,8 @@ module.exports = function(app) {
               let playerImage = `https:` + $(element).find("img").attr("data-src");
               let position = $(element).find("div.nba-player-index__details span:nth-child(1)").text();
               let size = $(element).find("div.nba-player-index__details span:nth-child(2)").text();
+              let urlArr = playerLink.split("/");
+              let statLink = `https://stats.nba.com/player/` + urlArr[urlArr.length - 1];
 
               db.Players.create({
                 playerName: playerName,
@@ -74,6 +76,7 @@ module.exports = function(app) {
                 playerImage: playerImage,
                 position: position,
                 size: size,
+                statLink: statLink,
                 teamName: team.teamName,
                 teamLink: team.teamLink,
                 teamLogo: team.teamLogo
