@@ -30,23 +30,30 @@ module.exports = function(app) {
             UserId: req.user.dataValues.id
         }
         ).then((data) => {
-            res.status(201).json(data);
+            res.status(201).json({
+                data: data,
+                msg: "Player successfully added to list.",
+                success: true
+            });
         }).catch((err) => {
             res.status(500).json(err);
         })
     })
 
-    app.put("/api/list/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-        // db.Lists.update({
-        //     playerName: req.body.playerName,
-        //     commonName: req.body.commonName,
-        //     UserId: req.user.dataValues.id
-        // }
-        // ).then((data) => {
-        //     res.status(201).json(data);
-        // }).catch((err) => {
-        //     res.status(500).json(err);
-        // })
+    app.delete("/api/list/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
+        db.Lists.destroy({
+            where : {
+                id: req.params.id
+            }
+        }
+        ).then((data) => {
+            res.status(200).json({
+                msg: "Player successfully deleted from list.",
+                success: true
+            });
+        }).catch((err) => {
+            res.status(500).json(err);
+        })
     })
 
 };
