@@ -10,7 +10,19 @@ module.exports = function(app) {
 			msg: "Testing endpoint works correctly.",
 		});
     });
-    
+
+    app.get("/api/list", passport.authenticate("jwt", { session: false }), (req, res) => {
+		db.Lists.findAll({
+            where: {
+                UserId: req.user.dataValues.id
+            }
+        }).then((items) => {
+            res.status(200).json(items);
+        }).catch((err) => {
+            res.status(500).json(err);
+        })
+    });
+
     app.post("/api/list", passport.authenticate("jwt", { session: false }), (req, res) => {
         db.Lists.create({
             playerName: req.body.playerName,
@@ -22,6 +34,19 @@ module.exports = function(app) {
         }).catch((err) => {
             res.status(500).json(err);
         })
+    })
+
+    app.put("/api/list/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
+        // db.Lists.update({
+        //     playerName: req.body.playerName,
+        //     commonName: req.body.commonName,
+        //     UserId: req.user.dataValues.id
+        // }
+        // ).then((data) => {
+        //     res.status(201).json(data);
+        // }).catch((err) => {
+        //     res.status(500).json(err);
+        // })
     })
 
 };
