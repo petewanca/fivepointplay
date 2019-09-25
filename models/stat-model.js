@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var PlayerStats = sequelize.define("PlayerStats", {
+  var Stats = sequelize.define("Stats", {
     playerName: {
       type: DataTypes.STRING,
       // allowNull: false
@@ -235,5 +235,5 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
   
-  return PlayerStats;
+  return Stats;
 };
