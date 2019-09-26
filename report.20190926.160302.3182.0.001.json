@@ -4,10 +4,10 @@
     "reportVersion": 1,
     "event": "Allocation failed - JavaScript heap out of memory",
     "trigger": "FatalError",
-    "filename": "report.20190925.223452.8806.0.001.json",
-    "dumpEventTime": "2019-09-25T22:34:52Z",
-    "dumpEventTimeStamp": "1569468892282",
-    "processId": 8806,
+    "filename": "report.20190926.160302.3182.0.001.json",
+    "dumpEventTime": "2019-09-26T16:03:02Z",
+    "dumpEventTimeStamp": "1569531782551",
+    "processId": 3182,
     "cwd": "/Users/petewanca/Desktop/vandy/homework/fivepointplay",
     "commandLine": [
       "/usr/local/Cellar/node/12.6.0/bin/node",
@@ -48,37 +48,37 @@
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 6972430,
+        "user": 2145700,
         "nice": 0,
-        "sys": 3532810,
-        "idle": 26380020,
+        "sys": 1033990,
+        "idle": 6615980,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 6972430,
+        "user": 2145700,
         "nice": 0,
-        "sys": 3532810,
-        "idle": 26380020,
+        "sys": 1033990,
+        "idle": 6615980,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 6972430,
+        "user": 2145700,
         "nice": 0,
-        "sys": 3532810,
-        "idle": 26380020,
+        "sys": 1033990,
+        "idle": 6615980,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 6972430,
+        "user": 2145700,
         "nice": 0,
-        "sys": 3532810,
-        "idle": 26380020,
+        "sys": 1033990,
+        "idle": 6615980,
         "irq": 0
       }
     ],
@@ -145,10 +145,10 @@
     }
   ],
   "javascriptHeap": {
-    "totalMemory": 2159034368,
-    "totalCommittedMemory": 2153452856,
-    "usedMemory": 2143084952,
-    "availableMemory": 50861232,
+    "totalMemory": 2152620032,
+    "totalCommittedMemory": 2151241272,
+    "usedMemory": 2143701840,
+    "availableMemory": 47611088,
     "memoryLimit": 2197815296,
     "heapSpaces": {
       "read_only_space": {
@@ -159,38 +159,38 @@
         "available": 229872
       },
       "new_space": {
-        "memorySize": 7340032,
-        "committedMemory": 2355280,
-        "capacity": 3665648,
-        "used": 708496,
-        "available": 2957152
+        "memorySize": 2097152,
+        "committedMemory": 1435240,
+        "capacity": 1047328,
+        "used": 450424,
+        "available": 596904
       },
       "old_space": {
-        "memorySize": 2081304576,
-        "committedMemory": 2081174848,
-        "capacity": 2078710024,
-        "used": 2073482392,
-        "available": 5227632
+        "memorySize": 2064789504,
+        "committedMemory": 2064444664,
+        "capacity": 2059400408,
+        "used": 2058858688,
+        "available": 541720
       },
       "code_space": {
-        "memorySize": 1212416,
-        "committedMemory": 1066912,
-        "capacity": 862880,
-        "used": 862880,
+        "memorySize": 950272,
+        "committedMemory": 906112,
+        "capacity": 860096,
+        "used": 860096,
         "available": 0
       },
       "map_space": {
         "memorySize": 1576960,
-        "committedMemory": 1485304,
-        "capacity": 1001600,
-        "used": 1001600,
+        "committedMemory": 1478984,
+        "capacity": 977680,
+        "used": 977680,
         "available": 0
       },
       "large_object_space": {
-        "memorySize": 67289088,
-        "committedMemory": 67289088,
-        "capacity": 66994168,
-        "used": 66994168,
+        "memorySize": 82894848,
+        "committedMemory": 82894848,
+        "capacity": 82519536,
+        "used": 82519536,
         "available": 0
       },
       "code_large_object_space": {
@@ -203,20 +203,20 @@
       "new_large_object_space": {
         "memorySize": 0,
         "committedMemory": 0,
-        "capacity": 3665648,
+        "capacity": 1047328,
         "used": 0,
-        "available": 3665648
+        "available": 1047328
       }
     }
   },
   "resourceUsage": {
-    "userCpuSeconds": 94.4165,
-    "kernelCpuSeconds": 5.96565,
-    "cpuConsumptionPercent": 141.383,
-    "maxRss": 2348915097600,
+    "userCpuSeconds": 102.626,
+    "kernelCpuSeconds": 5.02367,
+    "cpuConsumptionPercent": 153.785,
+    "maxRss": 2436638965760,
     "pageFaults": {
-      "IORequired": 71,
-      "IONotRequired": 917291
+      "IORequired": 46,
+      "IONotRequired": 808087
     },
     "fsActivity": {
       "reads": 0,
@@ -229,7 +229,7 @@
     "npm_config_dry_run": "",
     "npm_config_legacy_bundling": "",
     "npm_config_save_dev": "",
-    "npm_package_gitHead": "0f2f7b24842b1769a5edd8d00b7fe71cfacc1996",
+    "npm_package_gitHead": "03194c6010596fb04419cc744eb316061299902f",
     "npm_config_viewer": "man",
     "npm_config_commit_hooks": "true",
     "npm_config_browser": "",
@@ -256,7 +256,7 @@
     "npm_config_shrinkwrap": "true",
     "npm_config_metrics_registry": "https://registry.npmjs.org/",
     "npm_config_parseable": "",
-    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.MvIqHkafZP/Render",
+    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.5J0CsTOnnl/Render",
     "npm_config_init_license": "ISC",
     "npm_config_timing": "",
     "TERM_PROGRAM_VERSION": "1.38.1",
@@ -264,7 +264,7 @@
     "npm_config_cache_max": "Infinity",
     "npm_config_init_author_email": "",
     "npm_config_sign_git_tag": "",
-    "TERM_SESSION_ID": "0C2315A3-F248-4678-ADAC-574C2DC3AE05",
+    "TERM_SESSION_ID": "7BCBC2DF-DBA1-49CA-BB2F-2FFFCF66EC88",
     "npm_package_scripts_heroku_postbuild": "npm run build",
     "npm_config_git_tag_version": "true",
     "npm_config_cert": "",
@@ -290,7 +290,7 @@
     "npm_config_logs_max": "10",
     "npm_config_always_auth": "",
     "npm_config_prefer_online": "",
-    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.T9ZLcyV3JA/Listeners",
+    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.3lgiVP2yWU/Listeners",
     "__CF_USER_TEXT_ENCODING": "0x1F6:0x0:0x0",
     "npm_config_cache_lock_retries": "10",
     "npm_config_global_style": "",

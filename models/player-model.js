@@ -9,8 +9,11 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     playerImage: {
-      type: DataTypes.STRING,
-      // allowNull: false
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
     },
     position: {
       type: DataTypes.STRING,
@@ -33,16 +36,12 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     teamLogo: {
-      type: DataTypes.STRING,
-      // allowNull: false
-    },
-    // imageFile: {
-    //   type: DataTypes.BLOB,
-    //   allowNull: false,
-    //     get() {
-    //       return this.getDataValue('img').toString('utf8');
-    //     },
-    // }
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
+    }
   });
 
   // Players.associate = function(models) {

@@ -48,48 +48,41 @@ module.exports = function(app) {
     .then(response => {
       const teamsToScrape = [];
       response.forEach(team => {
-        // console.log(team.teamLink)
         teamsToScrape.push(team.dataValues)
       });
 
       if (teamsToScrape.length === 30) {
         for (let i = 0; i < teamsToScrape.length; i++) {
-          console.log(teamsToScrape[i].teamLink)
           axios.get(teamsToScrape[i].teamLink).then(response => {
+            // console.log(`scraping: ${teamsToScrape[i].teamLink}`);
+            let teamName = teamsToScrape[i].teamName;
             const $ = cheerio.load(response.data);
-            let team;
-            let player = [];
-            $("h1.ClubhouseHeader__Name div").each((i, element) => {
-              let teamCity = $(element).find("span:nth-child(1)").text();
-              let teamMascot = $(element).find("span:nth-child(2)").text();
-              team = teamCity + " " + teamMascot;
-            })
             $("tbody.Table__TBODY tr").each((i, element) => {
               let playerName = $(element).find("a").text();
               let playerLink = $(element).find("a.AnchorLink").attr("href");
+              playerLink = playerLink.slice(11);
+              playerLink = `https://www.${playerLink}`
               let playerImage = $(element).find("img.aspect-ratio--child").attr("alt");
               let position = $(element).find("td:nth-child(3)").text();
               let age = $(element).find("td:nth-child(4)").text();
               let height = $(element).find("td:nth-child(5)").text();
               let weight = $(element).find("td:nth-child(6)").text();
               let logo = $(element).find("img").attr("src");
-              player.push(playerName, playerLink, playerImage, position, age, height, weight, logo);
-            })
+
               db.Players.create({
-                playerName: player[0],
-                playerLink: player[1],
-                playerImage: player[2],
-                position: player[3],
-                age: player[4],
-                height: player[5],
-                weight: player[6],
-                teamName: team,
-                teamLogo: player[7]
+                playerName: playerName,
+                playerLink: playerLink,
+                playerImage: playerImage,
+                position: position,
+                age: age,
+                height: height,
+                weight: weight,
+                teamName: teamName,
+                teamLogo: logo
               }).then(response => {
-                console.log("scraping");
+                console.log("adding to DB");
               }).catch(err => console.log(err));
-      
-            
+            });
           }).catch(err => console.log(err));
         }
       }
@@ -111,54 +104,38 @@ module.exports = function(app) {
 
       if (playersToScrape.length === numToScrape) {
         for (let i = 0; i < playersToScrape.length; i++) {
-          axios.get(playersToScrape[i].playerLink).then(response => {
-              let player = [];
-              let stats = [];
+          let playerName = playersToScrape[i].playerName;
+          let team = playersToScrape[i].teamName;
+          let position = playersToScrape[i].position;
+          let playerImage = playersToScrape[i].playerImage;
+          let playerLink = playersToScrape[i].playerLink;
+          axios.get(playerLink).then(response => {
+          // axios.get("https://espn.com/nba/player/_/id/3056602/semi-ojeleye/").then(response => {
               const $ = cheerio.load(response.data);
-              $("body").each((i, element) => {
-                let firstName = $(element).find("h1.PlayerHeader__Name span:nth-child(1)").text();
-                let lastName = $(element).find("h1.PlayerHeader__Name span:nth-child(2)").text();
-                let team = $(element).find("ul.PlayerHeader__Team_Info li:nth-child(1)").text();;
-                let position = $(element).find("ul.PlayerHeader__Team_Info li:nth-child(2)").text();
-                let image = $(element).find("div.Image__Wrapper.aspect-ratio--auto img").attr("alt");
-                player.push(firstName, lastName, team, position, image);
-              });
-              $("section.Card.PlayerStats td.Table__TD").each((i, element) => {
-                let data = $(element).text();
-                stats.push(data)
+            
+              $("section.PlayerStats div.Table__Scroller tr.Table__TR.Table__TR--sm.Table__even[data-idx=0]").each((i, element) => {
+                db.Stats.create({
+                  playerName: playerName,
+                  team: team,
+                  position: position,
+                  image: playerImage,
+                  lsGamesPlayed: $(element).find("td:nth-child(1)").text(),
+                  lsMinutesPerGame: $(element).find("td:nth-child(2)").text(),
+                  lsFieldGoalPercentage: $(element).find("td:nth-child(3)").text(),
+                  lsThreePointPercentage: $(element).find("td:nth-child(4)").text(),
+                  lsFreeThrowPercentage: $(element).find("td:nth-child(5)").text(),
+                  lsRebounds: $(element).find("td:nth-child(6)").text(),
+                  lsAssists: $(element).find("td:nth-child(7)").text(),
+                  lsBlocks: $(element).find("td:nth-child(8)").text(),
+                  lsSteals: $(element).find("td:nth-child(9)").text(),
+                  lsFouls: $(element).find("td:nth-child(10)").text(),
+                  lsTurnovers: $(element).find("td:nth-child(11)").text(),
+                  lsPointsPerGame: $(element).find("td:nth-child(12)").text(),
+                }).then(response => {
+                  // console.log("scraping")
+                }).catch(err => console.log(err));
               })
-              db.Stats.create({
-                playerName: `${player[0]} ${player[1]}`,
-                team: player[2],
-                position: playersToScrape[i].position,
-                image: playersToScrape[i].playerImage,
-                lsGamesPlayed: stats[3],
-                lsMinutesPerGame: stats[4],
-                lsFieldGoalPercentage: stats[5],
-                lsThreePointPercentage: stats[6],
-                lsFreeThrowPercentage: stats[7],
-                lsRebounds: stats[8],
-                lsAssists: stats[9],
-                lsBlocks: stats[10],
-                lsSteals: stats[11],
-                lsFouls: stats[12],
-                lsTurnovers: stats[13],
-                lsPointsPerGame: stats[14],
-                careerGamesPlayed: stats[15],
-                careerMinutesPerGame: stats[16],
-                careerFieldGoalPercentage: stats[17],
-                careerThreePointPercentage: stats[18],
-                careerFreeThrowPercentage: stats[19],
-                careerRebounds: stats[20],
-                careerAssists: stats[21],
-                careerBlocks: stats[22],
-                careerSteals: stats[23],
-                careerFouls: stats[24],
-                careerTurnovers: stats[25],
-                careerPointsPerGame: stats[26],
-              }).then(response => {
-                console.log("scraping")
-              }).catch(err => console.log(err));
+              
           }).catch(err => console.log(err));
         }
       }

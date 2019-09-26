@@ -4,10 +4,10 @@
     "reportVersion": 1,
     "event": "Allocation failed - JavaScript heap out of memory",
     "trigger": "FatalError",
-    "filename": "report.20190925.223632.8827.0.001.json",
-    "dumpEventTime": "2019-09-25T22:36:32Z",
-    "dumpEventTimeStamp": "1569468992666",
-    "processId": 8827,
+    "filename": "report.20190926.160559.3215.0.001.json",
+    "dumpEventTime": "2019-09-26T16:05:59Z",
+    "dumpEventTimeStamp": "1569531959627",
+    "processId": 3215,
     "cwd": "/Users/petewanca/Desktop/vandy/homework/fivepointplay",
     "commandLine": [
       "/usr/local/Cellar/node/12.6.0/bin/node",
@@ -48,37 +48,37 @@
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 7023590,
+        "user": 2222100,
         "nice": 0,
-        "sys": 3550100,
-        "idle": 26411960,
+        "sys": 1059830,
+        "idle": 6690800,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 7023590,
+        "user": 2222100,
         "nice": 0,
-        "sys": 3550100,
-        "idle": 26411960,
+        "sys": 1059830,
+        "idle": 6690800,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 7023590,
+        "user": 2222100,
         "nice": 0,
-        "sys": 3550100,
-        "idle": 26411960,
+        "sys": 1059830,
+        "idle": 6690800,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz",
         "speed": 1600,
-        "user": 7023590,
+        "user": 2222100,
         "nice": 0,
-        "sys": 3550100,
-        "idle": 26411960,
+        "sys": 1059830,
+        "idle": 6690800,
         "irq": 0
       }
     ],
@@ -142,13 +142,25 @@
     {
       "pc": "0x000000010071ab19",
       "symbol": "Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/usr/local/Cellar/node/12.6.0/bin/node]"
+    },
+    {
+      "pc": "0x000000010071b9f3",
+      "symbol": "Builtins_StringAdd_CheckNone [/usr/local/Cellar/node/12.6.0/bin/node]"
+    },
+    {
+      "pc": "0x00002e4a14de4d27",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00002e4a14def30a",
+      "symbol": ""
     }
   ],
   "javascriptHeap": {
-    "totalMemory": 2155593728,
-    "totalCommittedMemory": 2151926824,
-    "usedMemory": 2142310312,
-    "availableMemory": 46865120,
+    "totalMemory": 2156273664,
+    "totalCommittedMemory": 2151942856,
+    "usedMemory": 2144435096,
+    "availableMemory": 49281552,
     "memoryLimit": 2197815296,
     "heapSpaces": {
       "read_only_space": {
@@ -159,38 +171,38 @@
         "available": 229872
       },
       "new_space": {
-        "memorySize": 4194304,
-        "committedMemory": 1280624,
-        "capacity": 2094656,
-        "used": 325712,
-        "available": 1768944
+        "memorySize": 5242880,
+        "committedMemory": 1984160,
+        "capacity": 2618320,
+        "used": 831072,
+        "available": 1787248
       },
       "old_space": {
-        "memorySize": 2081828864,
-        "committedMemory": 2081557360,
-        "capacity": 2074432768,
-        "used": 2073882688,
-        "available": 550080
+        "memorySize": 2083139584,
+        "committedMemory": 2082768568,
+        "capacity": 2080547624,
+        "used": 2077443144,
+        "available": 3104480
       },
       "code_space": {
         "memorySize": 1212416,
-        "committedMemory": 961024,
-        "capacity": 883264,
-        "used": 883264,
+        "committedMemory": 978304,
+        "capacity": 903200,
+        "used": 903200,
         "available": 0
       },
       "map_space": {
-        "memorySize": 1576960,
-        "committedMemory": 1576504,
-        "capacity": 1001840,
-        "used": 1001840,
+        "memorySize": 1839104,
+        "committedMemory": 1602016,
+        "capacity": 977760,
+        "used": 977760,
         "available": 0
       },
       "large_object_space": {
-        "memorySize": 66469888,
-        "committedMemory": 66469888,
-        "capacity": 66181392,
-        "used": 66181392,
+        "memorySize": 64528384,
+        "committedMemory": 64528384,
+        "capacity": 64244504,
+        "used": 64244504,
         "available": 0
       },
       "code_large_object_space": {
@@ -203,20 +215,20 @@
       "new_large_object_space": {
         "memorySize": 0,
         "committedMemory": 0,
-        "capacity": 2094656,
+        "capacity": 2618320,
         "used": 0,
-        "available": 2094656
+        "available": 2618320
       }
     }
   },
   "resourceUsage": {
-    "userCpuSeconds": 91.6891,
-    "kernelCpuSeconds": 4.37055,
-    "cpuConsumptionPercent": 113.011,
-    "maxRss": 2425314344960,
+    "userCpuSeconds": 109.337,
+    "kernelCpuSeconds": 4.64262,
+    "cpuConsumptionPercent": 154.027,
+    "maxRss": 2427793178624,
     "pageFaults": {
       "IORequired": 0,
-      "IONotRequired": 713373
+      "IONotRequired": 823252
     },
     "fsActivity": {
       "reads": 0,
@@ -229,7 +241,7 @@
     "npm_config_dry_run": "",
     "npm_config_legacy_bundling": "",
     "npm_config_save_dev": "",
-    "npm_package_gitHead": "0f2f7b24842b1769a5edd8d00b7fe71cfacc1996",
+    "npm_package_gitHead": "03194c6010596fb04419cc744eb316061299902f",
     "npm_config_viewer": "man",
     "npm_config_commit_hooks": "true",
     "npm_config_browser": "",
@@ -256,7 +268,7 @@
     "npm_config_shrinkwrap": "true",
     "npm_config_metrics_registry": "https://registry.npmjs.org/",
     "npm_config_parseable": "",
-    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.MvIqHkafZP/Render",
+    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.5J0CsTOnnl/Render",
     "npm_config_init_license": "ISC",
     "npm_config_timing": "",
     "TERM_PROGRAM_VERSION": "1.38.1",
@@ -264,7 +276,7 @@
     "npm_config_cache_max": "Infinity",
     "npm_config_init_author_email": "",
     "npm_config_sign_git_tag": "",
-    "TERM_SESSION_ID": "0C2315A3-F248-4678-ADAC-574C2DC3AE05",
+    "TERM_SESSION_ID": "7BCBC2DF-DBA1-49CA-BB2F-2FFFCF66EC88",
     "npm_package_scripts_heroku_postbuild": "npm run build",
     "npm_config_git_tag_version": "true",
     "npm_config_cert": "",
@@ -290,7 +302,7 @@
     "npm_config_logs_max": "10",
     "npm_config_always_auth": "",
     "npm_config_prefer_online": "",
-    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.T9ZLcyV3JA/Listeners",
+    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.3lgiVP2yWU/Listeners",
     "__CF_USER_TEXT_ENCODING": "0x1F6:0x0:0x0",
     "npm_config_cache_lock_retries": "10",
     "npm_config_global_style": "",
