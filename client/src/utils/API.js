@@ -1,8 +1,12 @@
 import axios from "axios";
 
 export default {
-  // Gets all books
-  login: function() {
-    return axios.get("/api/auth/login");
+  // POST to log user in.
+  login: function(userObj) {
+    return axios.post("/api/auth/login", userObj);
   },
+  // POST to sign up a new user.
+  signup: function(userObj) {
+    return axios.post("/api/users", userObj);
+  }
 };
