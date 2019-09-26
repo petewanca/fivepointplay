@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       // allowNull: false
     },
-    size: {
+    height: {
       type: DataTypes.STRING,
       // allowNull: false
     },
-    statLink: {
+    weight: {
       type: DataTypes.STRING,
      // allowNull: false
     },
