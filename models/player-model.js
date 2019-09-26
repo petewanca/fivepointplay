@@ -2,24 +2,47 @@ module.exports = function(sequelize, DataTypes) {
   var Players = sequelize.define("Players", {
     playerName: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
     },
     playerLink: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
+    },
+    playerImage: {
+      type: DataTypes.STRING,
+      // allowNull: false
+    },
+    position: {
+      type: DataTypes.STRING,
+      // allowNull: false
+    },
+    height: {
+      type: DataTypes.STRING,
+      // allowNull: false
+    },
+    weight: {
+      type: DataTypes.STRING,
+     // allowNull: false
+    },
+    teamName: {
+       type: DataTypes.STRING,
+      // allowNull: false
     },
     teamLink: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
+    },
+    teamLogo: {
+      type: DataTypes.STRING,
+      // allowNull: false
     },
     // imageFile: {
-      // type: DataTypes.BLOB,
-      // allowNull: false,
-      // get() {
-          // return this.getDataValue('img').toString('utf8');
-      // },
-      // stats in some form here
-  // }
+    //   type: DataTypes.BLOB,
+    //   allowNull: false,
+    //     get() {
+    //       return this.getDataValue('img').toString('utf8');
+    //     },
+    // }
   });
 
   // Players.associate = function(models) {
@@ -34,57 +57,3 @@ module.exports = function(sequelize, DataTypes) {
   
   return Players;
 };
-
-  // playerName;
-  // season = [];
-  // age = [];
-  // team = [];
-  // position= [];
-  // gamesPlayed = [];
-  // gamesStarted = [];
-  // minutesPlayed = [];
-  // fg = [];
-  // fga = [];
-  // fgp = [];
-  // threesMade = [];
-  // threesAttempted = [];
-  // threePct = [];
-  // twosMade = [];
-  // twosAttempted = [];
-  // twosPct = [];
-  // efgp = [];
-  // ft = [];
-  // fta = [];
-  // ftp = [];
-  // orb = [];
-  // drb = [];
-  // trb = [];
-  // ast = [];
-  // stl = [];
-  // blk = [];
-  // tov = [];
-  // pf = [];
-  // ppg = [];
-  // careerMinutes = [];
-  // careerFg = [];
-  // careerFga = [];
-  // careerFgp = [];
-  // careerThreesMade = [];
-  // careerThreesAttempted = [];
-  // careerThreePct = [];
-  // careerTwosMade = [];
-  // careerTwosAttempted = [];
-  // careerTwosPct = [];
-  // careerEfgp = [];
-  // careerFt = [];
-  // careerFta = [];
-  // careerFtp = [];
-  // careerOrb = [];
-  // careerDrb = [];
-  // careerTrb = [];
-  // careerAst = [];
-  // careerStl = [];
-  // careerBlk = [];
-  // careerTov = [];
-  // careerPf = [];
-  // careerPpg = [];
