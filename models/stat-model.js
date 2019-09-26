@@ -1,10 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Stats = sequelize.define("Stats", {
-    firstName: {
-      type: DataTypes.STRING,
-      // allowNull: false
-    },
-    lastName: {
+    playerName: {
       type: DataTypes.STRING,
       // allowNull: false
     },
