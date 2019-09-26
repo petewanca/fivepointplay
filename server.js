@@ -34,11 +34,8 @@ require('./config/passport.js')(passport, db.User);
 require("./routes/api/index")(app);
 require("./routes/api/users")(app);
 require("./routes/api/auth")(app);
-<<<<<<< HEAD
 require("./routes/api/teams")(app);
-=======
 require("./routes/api/list")(app);
->>>>>>> afc8fd0d74c5873e88c590efa9c8c14f2e299588
 
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
