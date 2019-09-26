@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       // allowNull: false
     },
+    age: {
+      type: DataTypes.STRING,
+      // allowNull: false
+    },
     height: {
       type: DataTypes.STRING,
       // allowNull: false

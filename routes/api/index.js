@@ -15,7 +15,7 @@ module.exports = function(app) {
         // $("div.layout.is-split").each((i, element) => {
         $("section.ContentList__Item").each((i, element) => {
           let teamName = $(element).find("h2.clr-gray-01").text();
-          let teamLink = `espn.com` + $(element).find("div.TeamLinks__Links span:nth-child(3) a").attr("href");
+          let teamLink = `https://www.espn.com` + $(element).find("div.TeamLinks__Links span:nth-child(3) a").attr("href");
           let teamLogo = $(element).find("section.TeamLinks a figure.Image div.Image__Wrapper img.aspect-ratio--child").attr("src");
         
           teamList.push({teamName,teamLink,teamLogo});
@@ -44,114 +44,51 @@ module.exports = function(app) {
   // get team roster ====================================
   // ====================================================
   app.get("/api/scrape/rosters", function(req, res) {
-    // const playerResults = [];
-    // get team links from DB to scrape
 
-    axios.get("https://www.espn.com/nba/team/roster/_/name/cha/charlotte-hornets").then(response => {
-      const $ = cheerio.load(response.data);
-
-      // for every div with a class of 'team__list'...
-      $("section.nba-player-index__trending-item").each((i, element) => {
-        let playerName = $(element).children("a").attr("title");
-        let playerLink = `nba.com` + $(element).children("a").attr("href");
-        let playerImage = `https:` + $(element).find("img").attr("data-src");
-        let position = $(element).find("div.nba-player-index__details span:nth-child(1)").text();
-        let size = $(element).find("div.nba-player-index__details span:nth-child(2)").text();
-        let urlArr = playerLink.split("/");
-        let statLink = `https://stats.nba.com/player/` + urlArr[urlArr.length - 1];
-
-        playerResults.push(
-          playerName, playerLink, playerImage, position, height, weight,
-          team.teamName, team.teamLink, team.teamLogo
-        );
-        // db.Players.create({
-        //   playerName: playerName,
-        //   playerLink: playerLink,
-        //   playerImage: playerImage,
-        //   position: position,
-        //   size: size,
-        //   statLink: statLink,
-        //   teamName: team.teamName,
-        //   teamLink: team.teamLink,
-        //   teamLogo: team.teamLogo
-        // })
+    db.Teams.findAll({})
+    .then(response => {
+      const teamsToScrape = [];
+      response.forEach(team => {
+        // console.log(team.teamLink)
+        teamsToScrape.push(team.dataValues)
       });
 
-    });
-    
-    // db.Teams.findAll({})
-    // .then(response => {
-    //   const teamsToScrape = [];
-    //   response.forEach(team => {
-    //     console.log(team.teamLink)
-    //     teamsToScrape.push(team.dataValues)
-
-    //   })
+      if (teamsToScrape.length === 30) {
+        for (let i = 0; i < teamsToScrape.length; i++) {
+          console.log(teamsToScrape[i].teamLink)
+          axios.get(teamsToScrape[i].teamLink).then(response => {
+            const $ = cheerio.load(response.data);
       
-    //   if (teamsToScrape.length === 30) {
-    //     console.log(teamsToScrape)
-    //     teamsToScrape.forEach(team => {
-    //       axios.get(team.teamLink).then(response => {
-            
-    //       })
-    //     })
-
-    //   }
-
-    // })
-    
-    // db.Teams.findAll({})
-    // .then(response => {
-    //   const teamsToScrape = [];
-    //   const playerResults = [];
+            $("tbody.Table__TBODY tr").each((i, element) => {
+              let playerName = $(element).find("a").text();
+              let playerLink = $(element).find("a.AnchorLink").attr("href");
+              let playerImage = $(element).find("img.aspect-ratio--child").attr("src");
+              let position = $(element).find("td:nth-child(3)").text();
+              let age = $(element).find("td:nth-child(4)").text();
+              let height = $(element).find("td:nth-child(5)").text();
+              let weight = $(element).find("td:nth-child(6)").text();
       
-    //   console.log(`gathering teams to scrape roster slots...`);
-    //   response.forEach(team => {
-    //     teamsToScrape.push(team);
-    //   });
-    //   // once all 30 teams are gathered, run 
-    //   // scraper and save each item to DB
-    //   if (teamsToScrape.length === 30) {
-    //     console.log(`scraping nba teams...`)
-    //     teamsToScrape.forEach(team => {
-    //       axios.get(team.teamLink).then(response => {
-    //         console.log(`scraping ${team.teamName}'s page...`)
-    //         const $ = cheerio.load(response.data);
+            db.Players.create({
+              playerName: playerName,
+              playerLink: playerLink,
+              playerImage: playerImage,
+              position: position,
+              age: age,
+              height: height,
+              weight: weight,
+              teamName: teamsToScrape[i].teamName,
+              teamLink: teamsToScrape[i].teamLink,
+              teamLogo: teamsToScrape[i].teamLogo
+            }).then(response => {
+              console.log("scraping");
+            }).catch(err => console.log(err));
       
-    //         // for every div with a class of 'team__list'...
-    //         $("section.nba-player-index__trending-item").each((i, element) => {
-    //           let playerName = $(element).children("a").attr("title");
-    //           let playerLink = `nba.com` + $(element).children("a").attr("href");
-    //           let playerImage = `https:` + $(element).find("img").attr("data-src");
-    //           let position = $(element).find("div.nba-player-index__details span:nth-child(1)").text();
-    //           let size = $(element).find("div.nba-player-index__details span:nth-child(2)").text();
-    //           let urlArr = playerLink.split("/");
-    //           let statLink = `https://stats.nba.com/player/` + urlArr[urlArr.length - 1];
-
-    //           playerResults.push(
-    //             playerName, playerLink, playerImage, position, height, weight,
-    //             team.teamName, team.teamLink, team.teamLogo
-    //           );
-    //           // db.Players.create({
-    //           //   playerName: playerName,
-    //           //   playerLink: playerLink,
-    //           //   playerImage: playerImage,
-    //           //   position: position,
-    //           //   size: size,
-    //           //   statLink: statLink,
-    //           //   teamName: team.teamName,
-    //           //   teamLink: team.teamLink,
-    //           //   teamLogo: team.teamLogo
-    //           // })
-    //         });
-    //       // end of axios call
-    //       }).catch(err => res.status(404).json(err));
-    //     });
-    //     console.log(playerResults);
-    //   }
-    // });
+            })
+          }).catch(err => console.log(err));
+        }
+      }
+    }).catch(err => console.log(err))
   });
-
   // =============================================
   // save player statistics to DB
   // =============================================
