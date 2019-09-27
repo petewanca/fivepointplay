@@ -12,7 +12,7 @@ const styles = {
     }
 }
 
-export default class SignUpForm extends Component {
+export default class RegisterForm extends Component {
 
     state = {
         firstName: "",
