@@ -7,7 +7,7 @@ const Op = Sequelize.Op;
 
 module.exports = function(app) {
 
-  // find player by name - returns array of objects
+  // find player by name
   app.get("/api/findPlayer/:playerName", (req, res) => {
     let searchTerm = req.params.playerName;
     db.Stats.findAll({
@@ -42,6 +42,29 @@ module.exports = function(app) {
     }).catch(err => res.status(404).json(err));
   })
 
+  // show all players
+  app.get("api/allPlayers", (req, res) => {
+
+  });
+
+  // get team names and links for UI
+  app.get("/api/getTeams", (req, res) => {
+    db.Teams.findAll({
+      order: [['teamName', 'ASC']]
+    }).then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          id: item.dataValues.id,
+          teamName: item.dataValues.teamName,
+          teamLink: item.dataValues.teamLink,
+          teamLogo: item.dataValues.teamLogo
+        })
+      })
+      res.json(results)
+    }).catch(err => res.status(404).json(err));
+  })
+
   // fantasy point calculator
   app.get("/api/fantasyCalculator/:type", (req, res) => {
     let typ = req.params.type;
@@ -50,15 +73,14 @@ module.exports = function(app) {
     switch(type) {
       case "standard":
         console.log("standard scoring system")
-    
         db.Stats.findAll({
-          attributes: ['id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
-          'lsFieldGoalPercentage', 'lsThreePointPercentage', 'lsFreeThrowPercentage', 'lsRebounds', 'lsBlocks', 'lsSteals',
-          'lsFouls', 'lsTurnovers', 'lsPointsPerGame',
+          attributes: [
+            'id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
+            'lsFieldGoalPercentage', 'lsThreePointPercentage', 'lsFreeThrowPercentage', 'lsRebounds', 'lsBlocks', 
+            'lsSteals', 'lsFouls', 'lsTurnovers', 'lsPointsPerGame', 
             [Sequelize.literal('(lsRebounds + lsBlocks + lsSteals + lsFouls + lsPointsPerGame) - lsTurnovers'), 'fantasyValue']
           ],
-          order: [
-            [Sequelize.literal('fantasyValue'), 'DESC']
+          order: [[Sequelize.literal('fantasyValue'), 'DESC']
           ]
         })
         .then(response => {
