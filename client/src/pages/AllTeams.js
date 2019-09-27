@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Teams() {
+export default function AllTeams() {
     return (
         <div>
             <h1>Teams</h1>
