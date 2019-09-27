@@ -1,8 +1,58 @@
 const db = require("../../models");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 module.exports = function(app) {
+
+  // find player by name - returns array of objects
+  app.get("/api/findPlayer/:playerName", (req, res) => {
+    let searchTerm = req.params.playerName;
+    db.Stats.findAll({
+      where: {
+        playerName: {
+          [Op.like]: `%${searchTerm}%`
+        }
+      }
+    }).then(response => {
+      // console.log(response)
+      let results = [];
+      response.forEach(item =>{
+        // console.log(item.dataValues);
+        results.push({
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          team: item.dataValues.team,
+          position: item.dataValues.position,
+          image: item.dataValues.image,
+          gamesPlayed: item.dataValues.lsGamesPlayed,
+          minutesPerGame: item.dataValues.lsMinutesPerGame,
+          fieldGoalPercentage: item.dataValues.fieldGoalPercentage,
+          threePointPercentage: item.dataValues.lsThreePointPercentage,
+          freeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
+          rebounds: item.dataValues.lsRebounds,
+          blocks: item.dataValues.lsBlocks,
+          steals: item.dataValues.lsSteals,
+          fouls: item.dataValues.lsFouls,
+          turnovers: item.dataValues.lsTurnovers,
+          pointsPerGame: item.dataValues.lsPointsPerGame
+        })
+      })
+      res.json(results)
+
+    }).catch(err => res.status(404).json(err));
+  })
+
+
+
+  // =================================================================================
+  // =========================== don't even think about it =========================== 
+  // =================================================================================  
+  // =================================== SCRAPERS ====================================
+  // =================================================================================
+
 
   // ====================================================
   // get team list ======================================
