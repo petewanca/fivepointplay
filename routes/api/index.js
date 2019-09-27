@@ -45,7 +45,22 @@ module.exports = function(app) {
     }).catch(err => res.status(404).json(err));
   })
 
+/*
+db.Production.findAndCountAll(
+    attributes: [
+        [Sequelize.literal('ListPrice * 1.15'), 'NewPrice'],
+    ]
+).then(function(orders){
+    return res.jsonp(output);
+})
+*/
 
+  app.get("/api/fantasyCalculator/", (req, res) => {
+    db.Stats.findOne({})
+    .then(response => {
+      res.json(response.dataValues)
+    }).catch(err => res.json(err));
+  });
 
   // =================================================================================
   // =========================== don't even think about it =========================== 
