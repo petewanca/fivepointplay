@@ -9,10 +9,17 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     playerImage: {
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
+    },
+    position: {
       type: DataTypes.STRING,
       // allowNull: false
     },
-    position: {
+    age: {
       type: DataTypes.STRING,
       // allowNull: false
     },
@@ -28,21 +35,13 @@ module.exports = function(sequelize, DataTypes) {
        type: DataTypes.STRING,
       // allowNull: false
     },
-    teamLink: {
-      type: DataTypes.STRING,
-      // allowNull: false
-    },
     teamLogo: {
-      type: DataTypes.STRING,
-      // allowNull: false
-    },
-    // imageFile: {
-    //   type: DataTypes.BLOB,
-    //   allowNull: false,
-    //     get() {
-    //       return this.getDataValue('img').toString('utf8');
-    //     },
-    // }
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
+    }
   });
 
   // Players.associate = function(models) {
