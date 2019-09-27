@@ -1,10 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Stats = sequelize.define("Stats", {
-    firstName: {
-      type: DataTypes.STRING,
-      // allowNull: false
-    },
-    lastName: {
+    playerName: {
       type: DataTypes.STRING,
       // allowNull: false
     },
@@ -12,12 +8,26 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       // allowNull: false
     },
+    teamLogo: {
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
+    },
     position: {
       type: DataTypes.STRING,
       // allowNull: false
     },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.BLOB,
+      // allowNull: false,
+        get() {
+          return this.getDataValue('img').toString('utf8');
+        },
+    },
+    lsGamesPlayed: {
+      type: DataTypes.INTEGER,
       // allowNull: false
     },
     lsMinutesPerGame: {
@@ -60,46 +70,46 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(5,1),
       // allowNull: false
     },
-    careerMinutesPerGame: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerFieldGoalPercentage: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerThreePointPercentage: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerFreeThrowPercentage: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerRebounds: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerBlocks: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerlsSteals: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerFouls: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerTurnovers: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
-    careerPointsPerGame: {
-      type: DataTypes.DECIMAL(5,1),
-      // allowNull: false
-    },
+    // careerMinutesPerGame: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerFieldGoalPercentage: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerThreePointPercentage: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerFreeThrowPercentage: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerRebounds: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerBlocks: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerlsSteals: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerFouls: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerTurnovers: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
+    // careerPointsPerGame: {
+    //   type: DataTypes.DECIMAL(5,1),
+    //   // allowNull: false
+    // },
     // imageFile: {
     //   type: DataTypes.BLOB,
     //   allowNull: false,

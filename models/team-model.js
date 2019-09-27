@@ -10,16 +10,12 @@ module.exports = function(sequelize, DataTypes) {
         // allowNull: false
       },
       teamLogo: {
-        type: DataTypes.STRING,
-        // allowNull: false
+        type: DataTypes.BLOB,
+        // allowNull: false,
+          get() {
+            return this.getDataValue('img').toString('utf8');
+          },
       }
-      // img: {
-          // type: DataTypes.BLOB,
-          // allowNull: false,
-          // get() {
-              // return this.getDataValue('img').toString('utf8');
-          // },
-      // }
   });
   return Teams;
 };
