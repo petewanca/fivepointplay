@@ -43,8 +43,31 @@ module.exports = function(app) {
   })
 
   // show all players
-  app.get("api/allPlayers", (req, res) => {
-
+  app.get("/api/allPlayers", (req, res) => {
+    db.Players.findAll({
+      order: [['playerName', 'ASC']]
+    })
+    .then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          team: item.dataValues.teamName,
+          position: item.dataValues.position,
+          playerImage: item.dataValues.playerImage,
+          playerLink: item.dataValues.playerLink,
+          playerImage: item.dataValues.playerImage,
+          position: item.dataValues.position,
+          age: item.dataValues.age,
+          height: item.dataValues.height,
+          weight: item.dataValues.weight,
+          teamName: item.dataValues.teamName,
+          teamLogo: item.dataValues.teamLogo
+        })
+      })
+      res.json(results)
+    }).catch(err => res.json(err));
   });
 
   // get team names and links for UI
