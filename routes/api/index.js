@@ -1,8 +1,155 @@
 const db = require("../../models");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 module.exports = function(app) {
+
+  // find player by name
+  app.get("/api/findPlayer/:playerName", (req, res) => {
+    let searchTerm = req.params.playerName;
+    db.Stats.findAll({
+      where: {
+        playerName: {
+          [Op.like]: `%${searchTerm}%`
+        }
+      }
+    }).then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          team: item.dataValues.team,
+          position: item.dataValues.position,
+          image: item.dataValues.image,
+          gamesPlayed: item.dataValues.lsGamesPlayed,
+          minutesPerGame: item.dataValues.lsMinutesPerGame,
+          fieldGoalPercentage: item.dataValues.fieldGoalPercentage,
+          threePointPercentage: item.dataValues.lsThreePointPercentage,
+          freeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
+          rebounds: item.dataValues.lsRebounds,
+          blocks: item.dataValues.lsBlocks,
+          steals: item.dataValues.lsSteals,
+          fouls: item.dataValues.lsFouls,
+          turnovers: item.dataValues.lsTurnovers,
+          pointsPerGame: item.dataValues.lsPointsPerGame
+        })
+      })
+      res.json(results)
+    }).catch(err => res.status(404).json(err));
+  })
+
+  // show all players
+  app.get("/api/allPlayers", (req, res) => {
+    db.Players.findAll({
+      order: [['playerName', 'ASC']]
+    })
+    .then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          team: item.dataValues.teamName,
+          position: item.dataValues.position,
+          playerImage: item.dataValues.playerImage,
+          playerLink: item.dataValues.playerLink,
+          playerImage: item.dataValues.playerImage,
+          position: item.dataValues.position,
+          age: item.dataValues.age,
+          height: item.dataValues.height,
+          weight: item.dataValues.weight,
+          teamName: item.dataValues.teamName,
+          teamLogo: item.dataValues.teamLogo
+        })
+      })
+      res.json(results)
+    }).catch(err => res.json(err));
+  });
+
+  // get team names and links for UI
+  app.get("/api/getTeams", (req, res) => {
+    db.Teams.findAll({
+      order: [['teamName', 'ASC']]
+    }).then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          id: item.dataValues.id,
+          teamName: item.dataValues.teamName,
+          teamLink: item.dataValues.teamLink,
+          teamLogo: item.dataValues.teamLogo
+        })
+      })
+      res.json(results)
+    }).catch(err => res.status(404).json(err));
+  })
+
+  // fantasy point calculator
+  app.get("/api/fantasyCalculator/:type", (req, res) => {
+    let typ = req.params.type;
+    let type = typ.toLowerCase();
+
+    switch(type) {
+      case "standard":
+        console.log("standard scoring system")
+        db.Stats.findAll({
+          attributes: [
+            'id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
+            'lsFieldGoalPercentage', 'lsThreePointPercentage', 'lsFreeThrowPercentage', 'lsRebounds', 'lsBlocks', 
+            'lsSteals', 'lsFouls', 'lsTurnovers', 'lsPointsPerGame', 
+            [Sequelize.literal('(lsRebounds + lsBlocks + lsSteals + lsFouls + lsPointsPerGame) - lsTurnovers'), 'fantasyValue']
+          ],
+          order: [[Sequelize.literal('fantasyValue'), 'DESC']
+          ]
+        })
+        .then(response => {
+          let results = [];
+          response.forEach(item =>{
+            results.push({
+              fantasyValue: item.dataValues.fantasyValue,
+              id: item.dataValues.id,
+              playerName: item.dataValues.playerName,
+              team: item.dataValues.team,
+              position: item.dataValues.position,
+              image: item.dataValues.image,
+              gamesPlayed: item.dataValues.lsGamesPlayed,
+              minutesPerGame: item.dataValues.lsMinutesPerGame,
+              fieldGoalPercentage: item.dataValues.lsFieldGoalPercentage,
+              threePointPercentage: item.dataValues.lsThreePointPercentage,
+              freeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
+              rebounds: item.dataValues.lsRebounds,
+              blocks: item.dataValues.lsBlocks,
+              steals: item.dataValues.lsSteals,
+              fouls: item.dataValues.lsFouls,
+              turnovers: item.dataValues.lsTurnovers,
+              pointsPerGame: item.dataValues.lsPointsPerGame
+            });
+          });
+          res.json(results);
+        }).catch(err => res.json(err));
+        break;
+      case "espn":
+        console.log("espn");
+        break;
+      case "yahoo":
+        console.log("yahoo");
+      break;
+      default:
+        console.log("no score system selected")
+        res.json("whoopsie, choose a scoring system");
+    }
+  });
+
+  // =================================================================================
+  // =========================== don't even think about it =========================== 
+  // =================================================================================  
+  // =================================== SCRAPERS ====================================
+  // =================================================================================
+
 
   // ====================================================
   // get team list ======================================
