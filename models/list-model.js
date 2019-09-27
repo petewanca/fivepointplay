@@ -10,8 +10,6 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Lists.associate = function(models) {
-    // We're saying that a favorite should belong to a User
-    // A favorite can't be created without a User due to the foreign key constraint
     Lists.belongsTo(models.Users, {
       foreignKey: {
         allowNull: false
