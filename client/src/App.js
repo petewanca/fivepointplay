@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import "./index.css"
 
 // React Pages
 import Home from "./pages/Home";
@@ -15,18 +17,51 @@ import Results from "./pages/Results";
 import PlayerProfile from "./pages/PlayerProfile";
 import Error404 from "./pages/Error404";
 
+// React Component
+import Logo from "./components/Logo";
+import LoginButton from "./components/LoginButton";
+
 import Container from '@material-ui/core/Container';
 
 const styles = {
   container: {
-    textAlign: "center"
+    textAlign: "center",
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "#FFF"
   }
-}
+};
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+      default: "#FFF"
+    },
+    primary: {
+      light: "#F88717",
+      main: "#F87C00",
+      dark: "#E27100",
+      contrastText: '#fff',
+    }
+  },
+  typography: {
+    fontFamily: [
+      'Antonio'
+    ].join(','),
+    fontWeightLight: 300,
+    fontWeightRegular: 500,
+    fontWeightMedium: 700,
+    fontSize: 16
+  }
+});
 
 function App() {
   return (
+    <MuiThemeProvider theme={theme}>
     <CssBaseline>
       <Container style={styles.container}>
+        <Logo />
+        <LoginButton />
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -44,6 +79,7 @@ function App() {
         </Router>
       </Container>
     </CssBaseline>
+    </MuiThemeProvider>
   );
 }
 

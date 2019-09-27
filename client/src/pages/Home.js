@@ -1,17 +1,26 @@
-import React from 'react'
+import React from 'react';
+
+// Material-UI Components
+import Box from '@material-ui/core/Box';
+
+// React Components
+import TeamsButton from "../components/TeamsButton";
+import SearchField from "../components/SearchField"
+
 
 const styles = {
-    logo: {
-        width: "50%",
-        display: "block",
-        margin: "0 auto"
+    box: {
+        paddingTop: "10rem"
     }
 }
 
 export default function Home() {
     return (
         <div>
-            <img style={styles.logo} src="./logo.png" alt="5 Point Play Logo" />
+            <Box style={styles.box}>
+                <TeamsButton />
+                <SearchField />
+            </Box>
         </div>
     )
 }
