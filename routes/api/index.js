@@ -17,10 +17,8 @@ module.exports = function(app) {
         }
       }
     }).then(response => {
-      // console.log(response)
       let results = [];
       response.forEach(item =>{
-        // console.log(item.dataValues);
         results.push({
           id: item.dataValues.id,
           playerName: item.dataValues.playerName,
@@ -41,25 +39,64 @@ module.exports = function(app) {
         })
       })
       res.json(results)
-
     }).catch(err => res.status(404).json(err));
   })
 
-/*
-db.Production.findAndCountAll(
-    attributes: [
-        [Sequelize.literal('ListPrice * 1.15'), 'NewPrice'],
-    ]
-).then(function(orders){
-    return res.jsonp(output);
-})
-*/
+  // fantasy point calculator
+  app.get("/api/fantasyCalculator/:type", (req, res) => {
+    let typ = req.params.type;
+    let type = typ.toLowerCase();
 
-  app.get("/api/fantasyCalculator/", (req, res) => {
-    db.Stats.findOne({})
-    .then(response => {
-      res.json(response.dataValues)
-    }).catch(err => res.json(err));
+    switch(type) {
+      case "standard":
+        console.log("standard scoring system")
+    
+        db.Stats.findAll({
+          attributes: ['id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
+          'lsFieldGoalPercentage', 'lsThreePointPercentage', 'lsFreeThrowPercentage', 'lsRebounds', 'lsBlocks', 'lsSteals',
+          'lsFouls', 'lsTurnovers', 'lsPointsPerGame',
+            [Sequelize.literal('(lsRebounds + lsBlocks + lsSteals + lsFouls + lsPointsPerGame) - lsTurnovers'), 'fantasyValue']
+          ],
+          order: [
+            [Sequelize.literal('fantasyValue'), 'DESC']
+          ]
+        })
+        .then(response => {
+          let results = [];
+          response.forEach(item =>{
+            results.push({
+              fantasyValue: item.dataValues.fantasyValue,
+              id: item.dataValues.id,
+              playerName: item.dataValues.playerName,
+              team: item.dataValues.team,
+              position: item.dataValues.position,
+              image: item.dataValues.image,
+              gamesPlayed: item.dataValues.lsGamesPlayed,
+              minutesPerGame: item.dataValues.lsMinutesPerGame,
+              fieldGoalPercentage: item.dataValues.lsFieldGoalPercentage,
+              threePointPercentage: item.dataValues.lsThreePointPercentage,
+              freeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
+              rebounds: item.dataValues.lsRebounds,
+              blocks: item.dataValues.lsBlocks,
+              steals: item.dataValues.lsSteals,
+              fouls: item.dataValues.lsFouls,
+              turnovers: item.dataValues.lsTurnovers,
+              pointsPerGame: item.dataValues.lsPointsPerGame
+            });
+          });
+          res.json(results);
+        }).catch(err => res.json(err));
+        break;
+      case "espn":
+        console.log("espn");
+        break;
+      case "yahoo":
+        console.log("yahoo");
+      break;
+      default:
+        console.log("no score system selected")
+        res.json("whoopsie, choose a scoring system");
+    }
   });
 
   // =================================================================================
