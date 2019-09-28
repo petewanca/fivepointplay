@@ -88,7 +88,44 @@ module.exports = function(app) {
     }).catch(err => res.status(404).json(err));
   })
 
-  // fantasy point calculator
+  // get roster of team selected by id
+  app.get("/api/getTeam/:teamName", (req, res) => {
+    let team = req.params.teamName;
+    
+    db.Players.findAll({
+      where: {
+        teamName: team
+      }
+    }).then(response => {
+      roster = [];
+      response.forEach(player => {
+        roster.push({
+          id: player.dataValues.id,
+          playerName: player.dataValues.playerName,
+          playerImage: player.dataValues.playerImage,
+          playerLink: player.dataValues.playerLink,
+          position: player.dataValues.position,
+          age: player.dataValues.age,
+          height: player.dataValues.height,
+          weight: player.dataValues.weight,
+          teamName: player.dataValues.teamName,
+          teamLogo: player.dataValues.teamLogo,
+        })
+      })
+      res.json(roster);
+    }).catch(err => res.json(err));
+  });
+
+  // get player info by id when clicked from roster
+  // /api/player/:id
+
+  // get player stats by id when clicked from roster
+  // /api/stats/:id
+  
+  // fantasy point calculator for single player
+  // /api/player/fantasyCalculator/:type
+
+  // fantasy point calculator for all players
   app.get("/api/fantasyCalculator/:type", (req, res) => {
     let typ = req.params.type;
     let type = typ.toLowerCase();
