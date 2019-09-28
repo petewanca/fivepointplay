@@ -117,13 +117,123 @@ module.exports = function(app) {
   });
 
   // get player info by id when clicked from roster
-  // /api/player/:id
+  app.get("/api/player/:id", (req, res) => {
+    let playerId = req.params.id;
+    db.Players.findAll({
+      where: {
+        id: playerId
+      }
+    }).then(response => {
+      let player;
+      response.forEach(item => {
+        player = {
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          playerImage: item.dataValues.playerImage,
+          playerLink: item.dataValues.playerLink,
+          position: item.dataValues.position,
+          age: item.dataValues.age,
+          height: item.dataValues.height,
+          weight: item.dataValues.weight,
+          teamName: item.dataValues.teamName,
+          teamLogo: item.dataValues.teamLogo,
+         };
+      });
+      res.json(player);
+    }).catch(err => res.json(err));
+  });
 
-  // get player stats by id when clicked from roster
-  // /api/stats/:id
+  // get player stats with player and team name
+  app.post("/api/stats/", (req, res) => {
+    db.Stats.findAll({
+        where: {
+          playerName: req.body.playerName,
+          team: req.body.team
+        }
+    }).then(response => {
+      let player;
+      response.forEach(item => {
+        player = {
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          team: item.dataValues.team,
+          position: item.dataValues.position,
+          image: item.dataValues.image,
+          lsGamesPlayed: item.dataValues.lsGamesPlayed,
+          lsMinutesPerGame: item.dataValues.lsMinutesPerGame,
+          lsFieldGoalPercentage: item.dataValues.lsFieldGoalPercentage,
+          lsThreePointPercentage: item.dataValues.lsThreePointPercentage,
+          lsFreeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
+          lsRebounds: item.dataValues.lsRebounds,
+          lsBlocks: item.dataValues.lsBlocks,
+          lsSteals: item.dataValues.lsSteals,
+          lsFouls: item.dataValues.lsFouls,
+          lsTurnovers: item.dataValues.lsTurnovers,
+          lsPointsPerGame: item.dataValues.lsPointsPerGame
+         };
+      });
+      res.json(player);
+    }).catch(err => res.json(err));
+  });
   
   // fantasy point calculator for single player
-  // /api/player/fantasyCalculator/:type
+  app.post("/api/player/fantasyCalculator/", (req, res) => {
+    let typ = req.body.type;
+    let type = typ.toLowerCase();
+    let playerName = req.body.playerName;
+    let team = req.body.team;
+
+    switch(type) {
+      case "standard":
+        console.log("standard scoring system")
+        db.Stats.findOne({
+          where: {
+            playerName: playerName,
+            team: team
+          },
+          attributes: [
+            'id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
+            'lsFieldGoalPercentage', 'lsThreePointPercentage', 'lsFreeThrowPercentage', 'lsRebounds', 'lsBlocks', 
+            'lsSteals', 'lsFouls', 'lsTurnovers', 'lsPointsPerGame', 
+            [Sequelize.literal('(lsRebounds + lsBlocks + lsSteals + lsFouls + lsPointsPerGame) - lsTurnovers'), 'fantasyValue']
+          ],
+          order: [[Sequelize.literal('fantasyValue'), 'DESC']
+          ]
+        })
+        .then(response => {
+          let player = {
+            fantasyValue: response.dataValues.fantasyValue,
+              id: response.dataValues.id,
+              playerName: response.dataValues.playerName,
+              team: response.dataValues.team,
+              position: response.dataValues.position,
+              image: response.dataValues.image,
+              gamesPlayed: response.dataValues.lsGamesPlayed,
+              minutesPerGame: response.dataValues.lsMinutesPerGame,
+              fieldGoalPercentage: response.dataValues.lsFieldGoalPercentage,
+              threePointPercentage: response.dataValues.lsThreePointPercentage,
+              freeThrowPercentage: response.dataValues.lsFreeThrowPercentage,
+              rebounds: response.dataValues.lsRebounds,
+              blocks: response.dataValues.lsBlocks,
+              steals: response.dataValues.lsSteals,
+              fouls: response.dataValues.lsFouls,
+              turnovers: response.dataValues.lsTurnovers,
+              pointsPerGame: response.dataValues.lsPointsPerGame
+          };
+          res.json(player);
+        }).catch(err => res.json(err));
+        break;
+      case "espn":
+        console.log("espn");
+        break;
+      case "yahoo":
+        console.log("yahoo");
+      break;
+      default:
+        console.log("no score system selected")
+        res.json("whoopsie, choose a scoring system");
+    }
+  });
 
   // fantasy point calculator for all players
   app.get("/api/fantasyCalculator/:type", (req, res) => {
