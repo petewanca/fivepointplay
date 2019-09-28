@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 
-// MaterialUI Components
+// Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 // React APIs 
 import API from "../utils/API";
 
 const styles = {
     button: {
-        marginTop: "1rem"
+        marginTop: "2rem",
+        width: "80%"
+    },
+    login: {
+        width: "80%"
     }
 }
 
@@ -46,6 +51,7 @@ export default class LoginForm extends Component {
                     value={this.state.email}
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={styles.login}
                 />
                 </div>
                 <div>
@@ -56,13 +62,14 @@ export default class LoginForm extends Component {
                     name="password"
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={styles.login}
                     />
                 </div>
                 <Button
                     onClick={this.handleSubmitForm}
                     style={styles.button}
                     variant="outlined"
-                    size="small">Login</Button>
+                    size="small">Log In</Button>
             </form>
         )
     }

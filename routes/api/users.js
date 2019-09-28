@@ -111,7 +111,7 @@ module.exports = function(app) {
 	);
 
 	// @route PUT api/users/:id
-	// @desc updates a user
+	// @desc updates a user password
 	app.put(
 		"/api/users/password/:id",
         passport.authenticate("jwt", { session: false }), (req, res) => {

@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 
 // MaterialUI Components
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+// React Components
+import SecondaryButton from "../components/SecondaryButton";
+import DefaultButton from "../components/DefaultButton";
+
 // React APIs 
 import API from "../utils/API";
 
-const styles = {
-    button: {
-        marginTop: "1rem"
-    }
-}
+export default class RegisterForm extends Component {
 
-export default class SignUpForm extends Component {
+    styles = {
+        secButton: {
+            marginTop: "1rem",
+            marginRight: "1.7rem",
+            float: "right"
+        },
+        defButton: {
+            marginTop: "1rem",
+            marginLeft: "1.7rem",
+            float: "left"
+        },
+        register: {
+            width: "80%",
+        }
+    }
 
     state = {
         firstName: "",
@@ -42,7 +56,6 @@ export default class SignUpForm extends Component {
     render() {
         return (
             <form noValidate autoComplete="off">
-                <div>
                 <TextField
                     id="first-name"
                     label="First Name"
@@ -50,9 +63,8 @@ export default class SignUpForm extends Component {
                     value={this.state.firstName}
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={this.styles.register}
                 />
-                </div>
-                <div>
                 <TextField
                     id="last-name"
                     label="Last Name"
@@ -60,9 +72,8 @@ export default class SignUpForm extends Component {
                     value={this.state.lastName}
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={this.styles.register}
                 />
-                </div>
-                <div>
                 <TextField
                     id="email"
                     label="Email"
@@ -70,9 +81,8 @@ export default class SignUpForm extends Component {
                     value={this.state.email}
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={this.styles.register}
                 />
-                </div>
-                <div>
                 <TextField
                     id="password"
                     label="Password"
@@ -80,13 +90,10 @@ export default class SignUpForm extends Component {
                     name="password"
                     onChange={this.handleInputChange}
                     margin="normal"
+                    style={this.styles.register}
                     />
-                </div>
-                <Button
-                    onClick={this.handleSubmitForm}
-                    style={styles.button}
-                    variant="outlined"
-                    size="small">Sign Up</Button>
+                <SecondaryButton style={this.styles.secButton} message={"Register"} />
+                <DefaultButton style={this.styles.defButton} message={"Cancel"} />
             </form>
         )
     }

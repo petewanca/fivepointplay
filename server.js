@@ -34,6 +34,7 @@ require('./config/passport.js')(passport, db.User);
 require("./routes/api/index")(app);
 require("./routes/api/users")(app);
 require("./routes/api/auth")(app);
+require("./routes/api/teams")(app);
 require("./routes/api/list")(app);
 
 db.sequelize.sync(syncOptions).then(function() {
