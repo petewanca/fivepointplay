@@ -2,7 +2,7 @@ import React from 'react';
 
 const styles = {
     logo: {
-        width: "35%",
+        maxWidth: 100,
         marginTop: ".5rem",
         marginLeft: "-1rem",
         float: "left"

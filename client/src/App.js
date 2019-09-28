@@ -19,16 +19,20 @@ import Error404 from "./pages/Error404";
 
 // React Component
 import Logo from "./components/Logo";
-import LoginButton from "./components/LoginButton";
+import PrimaryButton from "./components/PrimaryButton";
 
-import Container from '@material-ui/core/Container';
+// Material-UI Component
+import Box from '@material-ui/core/Box';
 
 const styles = {
-  container: {
-    textAlign: "center",
+  box: {
     width: "100vw",
-    height: "100vh",
-    backgroundColor: "#FFF"
+    height: "21vh",
+    padding: "0 1rem"
+  },
+  priButton: {
+    marginTop: "1rem",
+    float: "right"
   }
 };
 
@@ -41,6 +45,12 @@ const theme = createMuiTheme({
       light: "#F88717",
       main: "#F87C00",
       dark: "#E27100",
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: "#2EC9F8",
+      main: "#00BDF7",
+      dark: "#009BCB",
       contrastText: '#fff',
     }
   },
@@ -59,9 +69,10 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
     <CssBaseline>
-      <Container style={styles.container}>
-        <Logo />
-        <LoginButton />
+        <Box style={styles.box}>
+          <Logo />
+          <PrimaryButton style={styles.priButton} message={"Log In"} />
+        </Box> 
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -77,7 +88,6 @@ function App() {
             <Route component={Error404} />
           </Switch>
         </Router>
-      </Container>
     </CssBaseline>
     </MuiThemeProvider>
   );

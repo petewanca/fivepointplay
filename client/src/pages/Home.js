@@ -7,11 +7,13 @@ import Box from '@material-ui/core/Box';
 import TeamsButton from "../components/TeamsButton";
 import SearchField from "../components/SearchField"
 
-
 const styles = {
     box: {
-        paddingTop: "10rem"
-    }
+        height: "79vh",
+        padding: "7rem 1rem",
+        textAlign: "center",
+        color: "white"
+    },
 }
 
 export default function Home() {
