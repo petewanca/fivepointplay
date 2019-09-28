@@ -8,7 +8,7 @@ import "./index.css"
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Profile from "./pages/Profile";
+import UserProfile from "./pages/UserProfile";
 import UpdatePassword from "./pages/UpdatePassword";
 import UpdateAvatar from "./pages/UpdateAvatar";
 import AllTeams from "./pages/AllTeams";
@@ -25,10 +25,15 @@ import PrimaryButton from "./components/PrimaryButton";
 import Box from '@material-ui/core/Box';
 
 const styles = {
-  box: {
+  header: {
     width: "100vw",
     height: "21vh",
     padding: "0 1rem"
+  },
+  wrapper: {
+    // height: "79vh",
+    padding: "0 1rem",
+    textAlign: "center",
   },
   priButton: {
     marginTop: "1rem",
@@ -62,32 +67,34 @@ const theme = createMuiTheme({
     fontWeightRegular: 500,
     fontWeightMedium: 700,
     fontSize: 16
-  }
+  },
 });
 
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
     <CssBaseline>
-        <Box style={styles.box}>
+        <Box style={styles.header}>
           <Logo />
           <PrimaryButton style={styles.priButton} message={"Log In"} />
         </Box> 
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/update-password" component={UpdatePassword} />
-            <Route exact path="/update-avatar" component={UpdateAvatar} />
-            <Route exact path="/all-teams" component={AllTeams} />
-            <Route exact path="/team" component={Team} />
-            <Route exact path="/results" component={Results} />
-            <Route exact path="/player-profile" component={PlayerProfile} />
-            <Route component={Error404} />
-          </Switch>
-        </Router>
+        <Box style={styles.wrapper}>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/profile" component={UserProfile} />
+              <Route exact path="/update-password" component={UpdatePassword} />
+              <Route exact path="/update-avatar" component={UpdateAvatar} />
+              <Route exact path="/all-teams" component={AllTeams} />
+              <Route exact path="/team" component={Team} />
+              <Route exact path="/results" component={Results} />
+              <Route exact path="/player-profile" component={PlayerProfile} />
+              <Route component={Error404} />
+            </Switch>
+          </Router>
+        </Box>
     </CssBaseline>
     </MuiThemeProvider>
   );

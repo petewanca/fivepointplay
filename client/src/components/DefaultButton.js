@@ -16,13 +16,11 @@ export default class DefaultButton extends Component {
 
     render() {
         return (
-            <div>
-                <Button
-                    style={this.props.style}
-                    color="default"
-                    variant="contained">{this.state.message}
-                </Button>
-            </div>
+            <Button
+                style={this.props.style}
+                color="default"
+                variant="contained">{this.state.message}
+            </Button>
         )
     }
 }

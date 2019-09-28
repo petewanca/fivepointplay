@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 // MaterialUI Components
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
 
 // React Components
 import SecondaryButton from "../components/SecondaryButton";
@@ -10,34 +9,6 @@ import DefaultButton from "../components/DefaultButton";
 
 // React APIs 
 import API from "../utils/API";
-
-const CssTextField = withStyles({
-    root: {
-    "& label.MuiInputLabel-formControl": {
-            color: "white"
-        },
-      '& label.Mui-focused': {
-        color: 'orange',
-      },
-      "& .MuiInput-underline:before": {
-        borderColor: "white"  
-      },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: 'orange',
-      },
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: 'white',
-        },
-        '&:hover fieldset': {
-          borderColor: 'white',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: 'white',
-        },
-      },
-    },
-  })(TextField);
 
 export default class RegisterForm extends Component {
 
@@ -54,7 +25,6 @@ export default class RegisterForm extends Component {
         },
         register: {
             width: "80%",
-            fontColor: "white"
         }
     }
 
@@ -86,8 +56,7 @@ export default class RegisterForm extends Component {
     render() {
         return (
             <form noValidate autoComplete="off">
-                <div>
-                <CssTextField
+                <TextField
                     id="first-name"
                     label="First Name"
                     name="firstName"
@@ -96,9 +65,7 @@ export default class RegisterForm extends Component {
                     margin="normal"
                     style={this.styles.register}
                 />
-                </div>
-                <div>
-                <CssTextField
+                <TextField
                     id="last-name"
                     label="Last Name"
                     name="lastName"
@@ -107,9 +74,7 @@ export default class RegisterForm extends Component {
                     margin="normal"
                     style={this.styles.register}
                 />
-                </div>
-                <div>
-                <CssTextField
+                <TextField
                     id="email"
                     label="Email"
                     name="email"
@@ -118,9 +83,7 @@ export default class RegisterForm extends Component {
                     margin="normal"
                     style={this.styles.register}
                 />
-                </div>
-                <div>
-                <CssTextField
+                <TextField
                     id="password"
                     label="Password"
                     type="password"
@@ -129,12 +92,6 @@ export default class RegisterForm extends Component {
                     margin="normal"
                     style={this.styles.register}
                     />
-                </div>
-                {/* <Button
-                    onClick={this.handleSubmitForm}
-                    style={styles.button}
-                    variant="outlined"
-                    size="small">Sign Up</Button> */}
                 <SecondaryButton style={this.styles.secButton} message={"Register"} />
                 <DefaultButton style={this.styles.defButton} message={"Cancel"} />
             </form>

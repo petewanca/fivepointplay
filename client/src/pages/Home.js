@@ -1,28 +1,14 @@
 import React from 'react';
 
-// Material-UI Components
-import Box from '@material-ui/core/Box';
-
 // React Components
 import TeamsButton from "../components/TeamsButton";
 import SearchField from "../components/SearchField"
 
-const styles = {
-    box: {
-        height: "79vh",
-        padding: "7rem 1rem",
-        textAlign: "center",
-        color: "white"
-    },
-}
-
 export default function Home() {
     return (
         <div>
-            <Box style={styles.box}>
-                <TeamsButton />
-                <SearchField />
-            </Box>
+            <TeamsButton />
+            <SearchField />
         </div>
     )
 }
