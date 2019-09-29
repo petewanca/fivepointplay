@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 export default class UserProfile extends Component {
 
     styles = {
-        profilePic: {
+        avatar: {
             display: "block",
             margin: "0 auto",
             borderRadius: "50%"
@@ -30,7 +30,7 @@ export default class UserProfile extends Component {
         firstName: "Terrence",
         lastName: "Mahnken",
         email: "terrencemm2@gmail.com",
-        profilePic: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
+        avatar: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
     }
 
     handleInputChange = event => {
@@ -44,8 +44,8 @@ export default class UserProfile extends Component {
             <div>
                 <h1 style={this.styles.header}>Hey, {this.state.firstName}</h1>
                 <img
-                    style={this.styles.profilePic}
-                    src={this.state.profilePic}
+                    style={this.styles.avatar}
+                    src={this.state.avatar}
                     alt={this.state.name + " profile picture"}/>
                 <Link style={this.styles.link} href="/update-avatar">Update Avatar</Link>
                 <Box>

@@ -70,6 +70,10 @@ const theme = createMuiTheme({
   },
 });
 
+const state = {
+  teams: "",
+}
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>

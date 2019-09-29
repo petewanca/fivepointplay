@@ -8,5 +8,9 @@ export default {
   // POST to sign up a new user.
   signup: function(userObj) {
     return axios.post("/api/users", userObj);
+  },
+  // GET all teams.
+  getTeams: function() {
+    return axios.get("/api/getTeams");
   }
 };

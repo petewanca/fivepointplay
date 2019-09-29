@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 // React Components
 import SecondaryButton from "../components/SecondaryButton";
 import DefaultButton from "../components/DefaultButton";
 
 // React APIs 
-import API from "../utils/API";
+// import API from "../utils/API";
 
 const styles = {
     secButton: {
@@ -27,7 +26,7 @@ const styles = {
     }
 }
 
-export default class LoginForm extends Component {
+export default class PasswordForm extends Component {
 
     state = {
         currentPassword: "",
@@ -82,13 +81,8 @@ export default class LoginForm extends Component {
                     margin="normal"
                     style={styles.input}
                     />
-                {/* <Button
-                    onClick={this.handleSubmitForm}
-                    style={styles.button}
-                    variant="outlined"
-                    size="small">Update</Button> */}
                 <SecondaryButton style={styles.secButton} message={"Update"} />
-                <DefaultButton style={styles.defButton} message={"Cancel"} />
+                <DefaultButton style={styles.defButton} href="/profile" message={"Cancel"} />
             </form>
         )
     }

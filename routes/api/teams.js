@@ -13,7 +13,7 @@ module.exports = function(app) {
     });
 
     app.get("/api/teams", passport.authenticate("jwt", { session: false }), (req, res) => {
-        db.Players.findAll({})
+        db.Teams.findAll({})
         .then((data) => {
             res.status(200).json(data);
         }).catch((err) => {
