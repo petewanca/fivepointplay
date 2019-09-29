@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 // React Components
-import SecondaryButton from "../components/SecondaryButton";
-import DefaultButton from "../components/DefaultButton";
+import PrimaryButton from "../components/PrimaryButton";
 
 // React APIs 
 import API from "../utils/API";
@@ -92,8 +91,8 @@ export default class RegisterForm extends Component {
                     margin="normal"
                     style={this.styles.register}
                     />
-                <SecondaryButton style={this.styles.secButton} message={"Register"} />
-                <DefaultButton style={this.styles.defButton} message={"Cancel"} />
+                <PrimaryButton color={"secondary"} style={this.styles.secButton} message={"Register"} />
+                <PrimaryButton color={"default"} style={this.styles.defButton} message={"Cancel"} />
             </form>
         )
     }

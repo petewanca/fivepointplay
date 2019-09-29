@@ -10,7 +10,9 @@ export default class PrimaryButton extends Component {
 
         this.state = {
             message: props.message,
-            style: props.style
+            style: props.style,
+            color: props.color,
+            href: props.href
         };
     }
 
@@ -18,8 +20,9 @@ export default class PrimaryButton extends Component {
         return (
             <div>
                 <Button
-                    style={this.props.style}
-                    color="primary"
+                    href={this.state.href}
+                    style={this.state.style}
+                    color={this.state.color}
                     variant="contained">{this.state.message}
                 </Button>
             </div>

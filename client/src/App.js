@@ -57,6 +57,12 @@ const theme = createMuiTheme({
       main: "#00BDF7",
       dark: "#009BCB",
       contrastText: '#fff',
+    },
+    error: {
+      light: "#F92E2E",
+      main: "#F80000",
+      dark: "#CB0000",
+      contrastText: '#fff',
     }
   },
   typography: {
@@ -70,22 +76,19 @@ const theme = createMuiTheme({
   },
 });
 
-const state = {
-  teams: "",
-}
-
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
     <CssBaseline>
         <Box style={styles.header}>
           <Logo />
-          <PrimaryButton style={styles.priButton} message={"Log In"} />
+          {localStorage.getItem('jwt') ? (<PrimaryButton color={"default"} style={styles.priButton} message={"Log Out"} />)
+          : <PrimaryButton href={"/login"} color={"primary"} style={styles.priButton} message={"Log In"} />
+           }
         </Box> 
         <Box style={styles.wrapper}>
           <Router>
             <Switch>
-              <Route exact path="/" component={Home} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profile" component={UserProfile} />
@@ -95,6 +98,7 @@ function App() {
               <Route exact path="/team" component={Team} />
               <Route exact path="/results" component={Results} />
               <Route exact path="/player-profile" component={PlayerProfile} />
+              <Route exact path="/" component={Home} />
               <Route component={Error404} />
             </Switch>
           </Router>

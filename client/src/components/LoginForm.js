@@ -37,7 +37,11 @@ export default class LoginForm extends Component {
             email : this.state.email,
             password : this.state.password
         }
-        API.login(newLogin).then(res => console.log(res)).catch(err => console.log(err));
+        API.login(newLogin).then(res => {
+            var result = JSON.stringify(res);
+            localStorage.setItem("jwt", result);
+            this.props.history.push('/profile');
+        }).catch(err => console.log(err));
     };
 
     render() {

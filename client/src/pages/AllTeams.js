@@ -17,6 +17,12 @@ export default class AllTeams extends Component {
         };
     }
 
+    styles = {
+        paper: {
+            padding: ".5rem"
+        }
+    }
+
     // Async/Await - Source: https://www.valentinog.com/blog/await-react/
     async componentDidMount() {
         try {
@@ -31,8 +37,8 @@ export default class AllTeams extends Component {
     render() {
         return (
             <div>
-                <Grid container>
-                    {this.state.teamsArr.map(team => (<Grid xs={4} item><Paper>{team.teamName}</Paper></Grid>))}
+                <Grid alignItems="center" justify="space-between" container>
+                    {this.state.teamsArr.map(team => (<Grid key={team.teamName} style={this.styles.paper} xs={4} item><Paper>{team.teamName}</Paper></Grid>))}
                 </Grid>
             </div>
         )

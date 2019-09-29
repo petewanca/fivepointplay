@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 // React Components
-import SecondaryButton from "./SecondaryButton";
-import DefaultButton from "./DefaultButton";
+import PrimaryButton from "./PrimaryButton";
 
 // React APIs 
 // import API from "../utils/API";
@@ -60,8 +59,8 @@ export default class AvatarForm extends Component {
                     margin="normal"
                     style={styles.input}
                 />
-                <SecondaryButton style={styles.secButton} message={"Update"} />
-                <DefaultButton href="/profile" style={styles.defButton} message={"Cancel"} />
+                <PrimaryButton color={"secondary"} style={styles.secButton} message={"Update"} />
+                <PrimaryButton color={"default"} href="/profile" style={styles.defButton} message={"Cancel"} />
             </form>
         )
     }
