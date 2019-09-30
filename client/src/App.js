@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+// Custom fonts
 import "./index.css"
 
 // React Pages
@@ -23,6 +23,8 @@ import PrimaryButton from "./components/PrimaryButton";
 
 // Material-UI Component
 import Box from '@material-ui/core/Box';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const styles = {
   header: {
@@ -31,7 +33,6 @@ const styles = {
     padding: "0 1rem"
   },
   wrapper: {
-    // height: "79vh",
     padding: "0 1rem",
     textAlign: "center",
   },
@@ -82,8 +83,17 @@ function App() {
     <CssBaseline>
         <Box style={styles.header}>
           <Logo />
-          {localStorage.getItem('jwt') ? (<PrimaryButton color={"default"} style={styles.priButton} message={"Log Out"} />)
-          : <PrimaryButton href={"/login"} color={"primary"} style={styles.priButton} message={"Log In"} />
+          {localStorage.getItem('jwt')
+          ? (<PrimaryButton
+            color={"default"}
+            style={styles.priButton}
+            logout={true}
+            message={"Log Out"} />)
+          : (<PrimaryButton
+            href={"/login"}
+            color={"primary"}
+            style={styles.priButton}
+            message={"Log In"} />)
            }
         </Box> 
         <Box style={styles.wrapper}>

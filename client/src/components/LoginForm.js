@@ -56,7 +56,7 @@ export default class LoginForm extends Component {
 
         if (this.state.redirect) {
             return <Redirect to='/profile'/>;
-          }
+        }
 
         return (
             <form noValidate autoComplete="off">

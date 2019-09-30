@@ -71,9 +71,4 @@ module.exports = function(app) {
             });
         });
     });
-
-    app.get('/api/auth/logout', function(req, res){
-        req.logout();
-        res.redirect('/');
-      });
 };

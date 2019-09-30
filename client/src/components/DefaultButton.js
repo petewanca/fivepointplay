@@ -11,7 +11,7 @@ export default class DefaultButton extends Component {
         this.state = {
             message: props.message,
             style: props.style,
-            href: props.href
+            href: props.href,
         };
     }
 
