@@ -36,11 +36,8 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     teamLogo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       // allowNull: false,
-        get() {
-          return this.getDataValue('img').toString('utf8');
-        },
     }
   });
 

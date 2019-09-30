@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const styles = {
     button: {
@@ -9,9 +10,20 @@ const styles = {
 }
 
 export default function TeamsButton() {
-    return (
-        <Button style={styles.button} variant="outlined">
-            All Teams
-        </Button>
-    )
+  const handleClick = () => {
+    console.log("hello");
+    axios.get("/api/getTeams", () => {
+    }).then(res => {
+      console.log(res);
+    }).catch(err => console.log(err));
+  };
+  
+  return (
+    <Button
+    style={styles.button}
+    variant="outlined"
+    onClick={handleClick}>
+        All Teams
+    </Button>
+  )
 }
