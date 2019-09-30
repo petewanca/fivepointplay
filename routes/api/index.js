@@ -88,7 +88,7 @@ module.exports = function(app) {
     }).catch(err => res.status(404).json(err));
   })
 
-  // get roster of team selected by id
+  // get roster of team selected by teamName
   app.get("/api/getTeam/:teamName", (req, res) => {
     let team = req.params.teamName;
     
