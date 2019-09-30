@@ -10,8 +10,8 @@ const styles = {
 }
 
 export default function TeamsButton() {
+  
   const handleClick = () => {
-    console.log("hello");
     axios.get("/api/getTeams", () => {
     }).then(res => {
       console.log(res);
