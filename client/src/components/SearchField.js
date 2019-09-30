@@ -16,12 +16,13 @@ export default class SearchField extends Component {
     playerSearch: ""
   }
 
-  // get search field value
+  // get search field value and set to state
   handleChange = (e) => {
     this.setState({playerSearch: e.target.value})
   };
 
-  // use search field value to call db
+  // use search field value to call db and
+  // hits Stats table - not standard Players (profile) table
   handleSubmit = (e) => {
     alert(this.state.playerSearch)
     e.preventDefault();
