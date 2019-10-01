@@ -17,11 +17,8 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     image: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       // allowNull: false,
-        get() {
-          return this.getDataValue('img').toString('utf8');
-        },
     },
     lsGamesPlayed: {
       type: DataTypes.INTEGER,

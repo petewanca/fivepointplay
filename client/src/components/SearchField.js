@@ -13,7 +13,8 @@ const styles = {
 
 export default class SearchField extends Component {
   state = {
-    playerSearch: ""
+    playerSearch: "",
+    players: []
   }
 
   // get search field value and set to state
@@ -22,13 +23,14 @@ export default class SearchField extends Component {
   };
 
   // use search field value to call db and
-  // hits Stats table - not standard Players (profile) table
+  // hits Players table and sets state to returned players
   handleSubmit = (e) => {
     alert(this.state.playerSearch)
     e.preventDefault();
       axios.get(`/api/findPlayer/${this.state.playerSearch}`, (req, res) => {
       }).then(res => {
-          console.log(res);
+        console.log(res.data);
+        this.setState({players: res.data})
       }).catch(err => console.log(err));
   };
 
@@ -43,15 +45,6 @@ export default class SearchField extends Component {
               onChange={this.handleChange}
             >
             </input>
-            {/* <TextField
-              id="outlined-search"
-              label="Search field"
-              type="text"
-              style={styles.textfield}
-              margin="normal"
-              variant="outlined"
-              name="search"
-            /> */}
           </label>
           <input 
             type="submit" 
@@ -61,6 +54,21 @@ export default class SearchField extends Component {
             size="small"
           />
         </form>
+
+        {
+          this.state.players.map(player => (
+            <div id={player.id} key={player.playerLink}>
+              <h2>{player.playerName}</h2>
+              <p>{player.teamName}</p>
+              <p>{player.height}</p>
+              <p>{player.weight}</p>
+              <p>{player.age}</p>
+              <img src={player.playerImage} alt="player image"></img>
+              <p>{player.position}</p>
+              <img src={player.teamLogo} alt="team logo"></img>
+            </div>
+          ))
+        }
       </div>
     )
   }
