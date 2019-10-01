@@ -4,12 +4,12 @@ import { Link }  from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-
 import axios from 'axios';
 
 const styles = {
     textfield : {
-        width: "80%"
+        width: "80%",
+        marginTop: ".5rem",
     }
 }
 

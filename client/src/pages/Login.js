@@ -10,11 +10,11 @@ const styles = {
     }
 }
 
-export default function Login() {
+export default function Login(props) {
     return (
         <div>
             <h1 style={styles.heading}>Login</h1>
-            <LoginForm />
+            <LoginForm handleIsLoggedIn={props.handleIsLoggedIn}/>
         </div>
     )
 }

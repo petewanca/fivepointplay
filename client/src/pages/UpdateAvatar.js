@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-export default function UpdateAvatar() {
-    return (
-        <div>
-            <h1>Update Avatar</h1>
-        </div>
-    )
+// React Components
+import AvatarForm from "../components/AvatarForm";
+
+export default class UpdateAvatar extends Component {
+
+    styles = {
+        avatar: {
+            display: "block",
+            margin: "0 auto",
+            borderRadius: "50%"
+        }
+    }
+
+    state = {
+        avatarImg: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Update Avatar</h1>
+                <img alt="Current Avatar" style={this.styles.avatar} src={this.state.avatarImg} />
+                <AvatarForm />
+            </div>
+        )
+    }
 }
+
