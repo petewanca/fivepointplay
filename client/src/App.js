@@ -86,6 +86,7 @@ export default class App extends Component {
         var token = localStorage.getItem('jwt');
         console.log("token", token)
         if (token !== undefined) {
+            console.log("true")
             this.setState({isLoggedIn: true})
         } else {
             this.setState({isLoggedIn: false})
@@ -93,22 +94,25 @@ export default class App extends Component {
     }
 
     render() {
+
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline>
                     <Box style={styles.header}>
                         <Logo/>
                         {this.state.isLoggedIn
-                            ? (
-                              <PrimaryButton
+                            ? (<PrimaryButton
+                                href={"#"}
                                 color={"default"}
                                 style={styles.priButton}
-                                message={"Log Out"}/>)
+                                message={"Log Out"}
+                                />)
                             : (<PrimaryButton
                                 href={"/login"}
                                 color={"primary"}
                                 style={styles.priButton}
-                                message={"Log In"}/>)}
+                                message={"Log In"}/>)
+                        }                       
                     </Box>
                     <Box style={styles.wrapper}>
                         <Router>

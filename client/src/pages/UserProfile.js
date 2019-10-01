@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
+
 
 // Material-UI Components
-import Link from '@material-ui/core/Link';
+import UILink from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 
@@ -47,7 +49,7 @@ export default class UserProfile extends Component {
                     style={this.styles.avatar}
                     src={this.state.avatar}
                     alt={this.state.name + " profile picture"}/>
-                <Link style={this.styles.link} href="/update-avatar">Update Avatar</Link>
+                <UILink style={this.styles.link} component={ Link } to="/update-avatar">Update Avatar</UILink>
                 <Box>
                     <TextField
                         id="first-name"
@@ -74,8 +76,8 @@ export default class UserProfile extends Component {
                         margin="normal"
                         style={this.styles.input}/>
                 </Box>
-                <Link style={this.styles.link} href="#">Update Profile Info</Link>
-                <Link style={this.styles.link} href="/update-password">Update Password</Link>
+                <UILink style={this.styles.link} component={ Link } to="#">Update Profile Info</UILink>
+                <UILink style={this.styles.link} component={ Link } to="/update-password">Update Password</UILink>
             </div>
         )
     }

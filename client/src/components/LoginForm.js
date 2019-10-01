@@ -52,9 +52,6 @@ export default class LoginForm extends Component {
                 this.props.handleIsLoggedIn();
             })
             .catch(err => console.log(err));
-
-            
-
         
     };
 
