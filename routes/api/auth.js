@@ -71,4 +71,12 @@ module.exports = function(app) {
             });
         });
     });
+
+    app.get('/api/auth/logout', passport.authenticate('jwt', { session: false }), function(req, res){
+        req.logout();
+        res.json({
+            msg: "You have been successfully logout",
+            success: true
+        })
+      });
 };

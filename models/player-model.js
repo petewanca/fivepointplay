@@ -9,11 +9,8 @@ module.exports = function(sequelize, DataTypes) {
       // allowNull: false
     },
     playerImage: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       // allowNull: false,
-        get() {
-          return this.getDataValue('img').toString('utf8');
-        },
     },
     position: {
       type: DataTypes.STRING,
