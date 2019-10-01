@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import { Link }  from 'react-router-dom';
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 
 import axios from 'axios';
 
@@ -58,14 +60,18 @@ export default class SearchField extends Component {
         {
           this.state.players.map(player => (
             <div id={player.id} key={player.playerLink}>
-              <h2>{player.playerName}</h2>
-              <p>{player.teamName}</p>
-              <p>{player.height}</p>
-              <p>{player.weight}</p>
-              <p>{player.age}</p>
-              <img src={player.playerImage} alt="player image"></img>
-              <p>{player.position}</p>
               <img src={player.teamLogo} alt="team logo"></img>
+              <h2>{player.teamName}</h2>
+              <h2>{player.playerName}</h2>
+              <h3>{player.position}</h3>
+              <img src={player.playerImage} alt="player image"></img>
+              <Link to={{
+                pathname: '/player-profile',
+                  state: {
+                    players: player
+                  }
+              }}>Player Profile
+              </Link>
             </div>
           ))
         }
