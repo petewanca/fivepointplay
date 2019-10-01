@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 // Material-UI Components
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 
-// React APIs 
+// React APIs
 import API from "../utils/API";
 
 export default class AllTeams extends Component {
@@ -20,6 +21,9 @@ export default class AllTeams extends Component {
     styles = {
         paper: {
             padding: ".5rem"
+        },
+        image: {
+            maxWidth: "-webkit-fill-available"
         }
     }
 
@@ -38,7 +42,14 @@ export default class AllTeams extends Component {
         return (
             <div>
                 <Grid alignItems="center" justify="space-between" container>
-                    {this.state.teamsArr.map(team => (<Grid key={team.teamName} style={this.styles.paper} xs={4} item><Paper>{team.teamName}</Paper></Grid>))}
+                    {this
+                        .state
+                        .teamsArr
+                        .map(team => (
+                            <Grid key={team.teamName} style={this.styles.paper} xs={4} item>
+                                <img style={this.styles.image} src={team.teamLogo} alt={team.teamName}/>
+                            </Grid>
+                        ))}
                 </Grid>
             </div>
         )

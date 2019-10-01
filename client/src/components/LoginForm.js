@@ -36,6 +36,7 @@ export default class LoginForm extends Component {
     };
 
     handleSubmitForm = () => {
+
         let newLogin = {
             email: this.state.email,
             password: this.state.password
@@ -48,8 +49,13 @@ export default class LoginForm extends Component {
                 this.setState({
                     redirect: true
                 })
+                this.props.handleIsLoggedIn();
             })
             .catch(err => console.log(err));
+
+            
+
+        
     };
 
     render() {
