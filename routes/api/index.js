@@ -10,7 +10,7 @@ module.exports = function(app) {
   // find player by name
   app.get("/api/findPlayer/:playerName", (req, res) => {
     let searchTerm = req.params.playerName;
-    db.Stats.findAll({
+    db.Players.findAll({
       where: {
         playerName: {
           [Op.like]: `%${searchTerm}%`
@@ -20,22 +20,16 @@ module.exports = function(app) {
       let results = [];
       response.forEach(item =>{
         results.push({
+          age: item.dataValues.age,
+          height: item.dataValues.height,
+          weight: item.dataValues.weight,
+          teamLogo: item.dataValues.teamLogo,
           id: item.dataValues.id,
           playerName: item.dataValues.playerName,
-          team: item.dataValues.team,
+          playerLink: item.dataValues.playerLink,
+          teamName: item.dataValues.teamName,
           position: item.dataValues.position,
-          image: item.dataValues.image,
-          gamesPlayed: item.dataValues.lsGamesPlayed,
-          minutesPerGame: item.dataValues.lsMinutesPerGame,
-          fieldGoalPercentage: item.dataValues.fieldGoalPercentage,
-          threePointPercentage: item.dataValues.lsThreePointPercentage,
-          freeThrowPercentage: item.dataValues.lsFreeThrowPercentage,
-          rebounds: item.dataValues.lsRebounds,
-          blocks: item.dataValues.lsBlocks,
-          steals: item.dataValues.lsSteals,
-          fouls: item.dataValues.lsFouls,
-          turnovers: item.dataValues.lsTurnovers,
-          pointsPerGame: item.dataValues.lsPointsPerGame
+          playerImage: item.dataValues.playerImage,
         })
       })
       res.json(results)
