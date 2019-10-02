@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
@@ -81,8 +81,8 @@ export default class PasswordForm extends Component {
                     margin="normal"
                     style={styles.input}
                     />
-                <PrimaryButton color={"secondary"} style={styles.secButton} component={ Link } to="/profile" message={"Update"} />
-                <PrimaryButton color={"default"} style={styles.defButton} component={ Link } to="/profile" message={"Cancel"} />
+                <PrimaryButton color={"secondary"} style={styles.secButton} to={"/profile"} message={"Update"} />
+                <PrimaryButton color={"default"} style={styles.defButton} to={"/profile"} message={"Cancel"} />
             </form>
         )
     }

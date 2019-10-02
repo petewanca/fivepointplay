@@ -5,9 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const styles = {
+    textfieldBox: {
+        marginTop: ".5rem"
+    },
     textfield : {
         width: "80%",
-        marginTop: ".5rem",
     }
 }
 
@@ -31,14 +33,16 @@ export default class SearchField extends Component {
 
     render() {
         return (
-            <div style={styles.textfield}>
+            <div style={styles.textfieldBox}>
                 <TextField
                     id="outlined-search"
                     label="Search field"
                     type="search"
                     margin="normal"
-                    variant="outlined"/>
+                    variant="outlined"
+                    style={styles.textfield}/>
                 <Button
+                    style={styles.textfield}
                     onClick={this.handleSubmitForm}
                     variant="outlined"
                     size="small">Search</Button>

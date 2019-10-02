@@ -19,13 +19,13 @@ import Error404 from "./pages/Error404";
 
 // React Component
 import Logo from "./components/Logo";
-import PrimaryButton from "./components/PrimaryButton";
+import LoginButton from "./components/LoginButton";
 
 // Material-UI Component
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
-import API from './utils/API';
+// import API from './utils/API';
 
 const styles = {
     header: {
@@ -87,7 +87,9 @@ export default class App extends Component {
         console.log("token", token)
         if (token !== undefined) {
             console.log("true")
-            this.setState({isLoggedIn: true})
+            this.setState({
+                isLoggedIn: true
+            })
         } else {
             this.setState({isLoggedIn: false})
         }
@@ -101,13 +103,13 @@ export default class App extends Component {
                     <Box style={styles.header}>
                         <Logo/>
                         {this.state.isLoggedIn
-                            ? (<PrimaryButton
+                            ? (<LoginButton
                                 href={"#"}
                                 color={"default"}
                                 style={styles.priButton}
                                 message={"Log Out"}
                                 />)
-                            : (<PrimaryButton
+                            : (<LoginButton
                                 href={"/login"}
                                 color={"primary"}
                                 style={styles.priButton}

@@ -13,7 +13,8 @@ export default class UserProfile extends Component {
         avatar: {
             display: "block",
             margin: "0 auto",
-            borderRadius: "50%"
+            borderRadius: "50%",
+            maxWidth: "50%"
         },
         input: {
             width: "80%",
@@ -29,10 +30,17 @@ export default class UserProfile extends Component {
     }
 
     state = {
-        firstName: "Terrence",
-        lastName: "Mahnken",
-        email: "terrencemm2@gmail.com",
-        avatar: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
+        firstName: "",
+        lastName: "",
+        email: "",
+        avatar: "avatar.png"
+    }
+
+    componentDidMount() {
+        var userData = JSON.parse(localStorage.getItem("jwt"));
+        var userId = userData.data.id;
+        console.log(userId)
+        API.
     }
 
     handleInputChange = event => {
