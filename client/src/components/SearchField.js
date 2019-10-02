@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import { Link }  from 'react-router-dom';
 // Material-UI Components
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+// import Button from '@material-ui/core/Button';
 
 
 import axios from 'axios';
 
 const styles = {
+    textfieldBox: {
+        marginTop: ".5rem"
+    },
     textfield : {
         width: "80%",
-        marginTop: ".5rem",
     }
 }
 

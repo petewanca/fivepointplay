@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
-
 // Material-UI Components
 import UILink from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+
+// React APIs
+import API from "../utils/API";
+import axios from 'axios';
 
 export default class UserProfile extends Component {
 
@@ -13,7 +16,8 @@ export default class UserProfile extends Component {
         avatar: {
             display: "block",
             margin: "0 auto",
-            borderRadius: "50%"
+            borderRadius: "50%",
+            maxWidth: "50%"
         },
         input: {
             width: "80%",
@@ -29,10 +33,32 @@ export default class UserProfile extends Component {
     }
 
     state = {
-        firstName: "Terrence",
-        lastName: "Mahnken",
-        email: "terrencemm2@gmail.com",
-        avatar: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
+        firstName: "",
+        lastName: "",
+        email: "",
+        avatarUrl: "avatar.png"
+    }
+
+    componentDidMount() {
+        var jwt = localStorage.getItem("jwt")
+        var userData = JSON.parse(jwt);
+        var userId = userData.data.id;
+        var token = userData.data.token;
+        axios.get(`/api/users/${userId}`,
+            { headers: {
+                "Authorization": `${token}`
+            }}).then(res => {
+            var { firstName, lastName, email, avatarUrl} = res.data;
+            if (avatarUrl === undefined) {
+                avatarUrl = "avatar.png"
+            }
+            this.setState({
+                firstName,
+                lastName,
+                email,
+                avatarUrl
+            }) 
+        })
     }
 
     handleInputChange = event => {
@@ -47,7 +73,7 @@ export default class UserProfile extends Component {
                 <h1 style={this.styles.header}>Hey, {this.state.firstName}</h1>
                 <img
                     style={this.styles.avatar}
-                    src={this.state.avatar}
+                    src={this.state.avatarUrl}
                     alt={this.state.name + " profile picture"}/>
                 <UILink style={this.styles.link} component={ Link } to="/update-avatar">Update Avatar</UILink>
                 <Box>

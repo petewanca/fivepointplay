@@ -9,6 +9,9 @@ export default {
   logout: function() {
     return axios.get("/api/auth/logout");
   },
+  userData: function(id, token) {
+    return axios.get("/api/users/" + id, token)
+  },
   // POST to sign up a new user.
   signup: function(userObj) {
     return axios.post("/api/users", userObj);

@@ -63,26 +63,22 @@ export default class LoginForm extends Component {
 
         return (
             <form noValidate autoComplete="off">
-                <div>
-                    <TextField
-                        id="email"
-                        label="Email"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.handleInputChange}
-                        margin="normal"
-                        style={styles.login}/>
-                </div>
-                <div>
-                    <TextField
-                        id="password"
-                        label="Password"
-                        type="password"
-                        name="password"
-                        onChange={this.handleInputChange}
-                        margin="normal"
-                        style={styles.login}/>
-                </div>
+                <TextField
+                    id="email"
+                    label="Email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleInputChange}
+                    margin="normal"
+                    style={styles.login}/>
+                <TextField
+                    id="password"
+                    label="Password"
+                    type="password"
+                    name="password"
+                    onChange={this.handleInputChange}
+                    margin="normal"
+                    style={styles.login}/>
                 <Button
                     onClick={this.handleSubmitForm}
                     style={styles.button}

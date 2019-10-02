@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 
 // React APIs
-import API from "../utils/API";
+// import API from "../utils/API";
 
 export default class AllTeams extends Component {
 
