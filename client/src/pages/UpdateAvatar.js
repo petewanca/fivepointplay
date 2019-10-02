@@ -9,12 +9,13 @@ export default class UpdateAvatar extends Component {
         avatar: {
             display: "block",
             margin: "0 auto",
-            borderRadius: "50%"
+            borderRadius: "50%",
+            maxWidth: "50%"
         }
     }
 
     state = {
-        avatarImg: "https://secure.gravatar.com/avatar/166d6e82c51dc3e46ef6841e9f24ab70?s=150"
+        avatarImg: "avatar.png",
     }
 
     render() {

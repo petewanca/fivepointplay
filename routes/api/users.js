@@ -116,6 +116,17 @@ module.exports = function(app) {
 		}
 	);
 
+		// @route PUT api/users/:id
+	// @desc updates a user
+	app.put(
+		"/api/users/avatar/:id",
+		passport.authenticate("jwt", { session: false }),
+		(req, res) => {
+			// Gravatar Code Here
+			// https://en.gravatar.com/site/implement/images/
+			// https://en.gravatar.com/site/implement/hash/
+		});
+
 	// @route PUT api/users/:id
 	// @desc updates a user password
 	app.put(
