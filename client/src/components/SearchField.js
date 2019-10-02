@@ -4,6 +4,7 @@ import { Link }  from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+
 import axios from 'axios';
 
 const styles = {
@@ -27,7 +28,6 @@ export default class SearchField extends Component {
   // use search field value to call db and
   // hits Players table and sets state to returned players
   handleSubmit = (e) => {
-    alert(this.state.playerSearch)
     e.preventDefault();
       axios.get(`/api/findPlayer/${this.state.playerSearch}`, (req, res) => {
       }).then(res => {
@@ -57,22 +57,23 @@ export default class SearchField extends Component {
           />
         </form>
 
+        {/* once search term entered, player results begin here */}
         {
           this.state.players.map(player => (
-            <div id={player.id} key={player.playerLink}>
-              <img src={player.teamLogo} alt="team logo"></img>
-              <h2>{player.teamName}</h2>
-              <h2>{player.playerName}</h2>
-              <h3>{player.position}</h3>
-              <img src={player.playerImage} alt="player image"></img>
-              <Link to={{
-                pathname: '/player-profile',
-                  state: {
-                    players: player
-                  }
-              }}>Player Profile
-              </Link>
-            </div>
+              <div id={player.id} key={player.playerLink}>
+                <img src={player.teamLogo} alt="team logo"></img>
+                <h2>{player.teamName}</h2>
+                <h2>{player.playerName}</h2>
+                <h3>{player.position}</h3>
+                <img src={player.playerImage} alt="player image"></img>
+                <Link to={{
+                  pathname: '/player-profile',
+                    state: {
+                      players: player
+                    }
+                }}>Player Profile
+                </Link>
+              </div>
           ))
         }
       </div>
