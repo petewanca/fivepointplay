@@ -5,11 +5,17 @@ module.exports = function(app) {
     const passport = require("passport");
     const keys = require('../../config/keys');
 
-	app.get("/api/users/test", (req, res) => {
-		res.json({
-			success: true,
-			msg: "Testing endpoint works correctly.",
-		});
+	app.get("/api/users/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
+		db.Users.findOne({
+			where: {
+				id: req.params.id
+			}
+		}).then(user =>{
+			res.status(200).json(user);
+		}).catch(err => {
+			res.status(500).json(err)
+		})
+
 	});
 
 	// @route POST api/users/

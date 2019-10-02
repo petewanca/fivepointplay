@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
-
 // Material-UI Components
 import UILink from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+
+// React APIs
+import API from "../utils/API";
+import axios from 'axios';
 
 export default class UserProfile extends Component {
 
@@ -33,14 +36,29 @@ export default class UserProfile extends Component {
         firstName: "",
         lastName: "",
         email: "",
-        avatar: "avatar.png"
+        avatarUrl: "avatar.png"
     }
 
     componentDidMount() {
-        var userData = JSON.parse(localStorage.getItem("jwt"));
+        var jwt = localStorage.getItem("jwt")
+        var userData = JSON.parse(jwt);
         var userId = userData.data.id;
-        console.log(userId)
-        API.
+        var token = userData.data.token;
+        axios.get(`/api/users/${userId}`,
+            { headers: {
+                "Authorization": `${token}`
+            }}).then(res => {
+            var { firstName, lastName, email, avatarUrl} = res.data;
+            if (avatarUrl === undefined) {
+                avatarUrl = "avatar.png"
+            }
+            this.setState({
+                firstName,
+                lastName,
+                email,
+                avatarUrl
+            }) 
+        })
     }
 
     handleInputChange = event => {
@@ -55,7 +73,7 @@ export default class UserProfile extends Component {
                 <h1 style={this.styles.header}>Hey, {this.state.firstName}</h1>
                 <img
                     style={this.styles.avatar}
-                    src={this.state.avatar}
+                    src={this.state.avatarUrl}
                     alt={this.state.name + " profile picture"}/>
                 <UILink style={this.styles.link} component={ Link } to="/update-avatar">Update Avatar</UILink>
                 <Box>
