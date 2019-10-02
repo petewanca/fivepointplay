@@ -120,7 +120,9 @@ module.exports = function(app) {
 	// @desc updates a user password
 	app.put(
 		"/api/users/password/:id",
-        passport.authenticate("jwt", { session: false }), (req, res) => {
+		passport.authenticate("jwt", { session: false }),
+		(req, res) => {
+			console.log(req.body);
             const { passwordNew, passwordVerify } = req.body;
 
             if (passwordNew === passwordVerify) {

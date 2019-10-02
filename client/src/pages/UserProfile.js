@@ -44,9 +44,11 @@ export default class UserProfile extends Component {
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
         var token = userData.data.token;
+        // Make an API call based on jwt data to get/set user data.
+        // Source: https://stackoverflow.com/questions/51586458/how-to-pass-header-jwt-token-with-axios-react
         axios.get(`/api/users/${userId}`,
             { headers: {
-                "Authorization": `${token}`
+                Authorization: `${token}`
             }}).then(res => {
             var { firstName, lastName, email, avatarUrl} = res.data;
             if (avatarUrl === undefined) {
@@ -58,6 +60,8 @@ export default class UserProfile extends Component {
                 email,
                 avatarUrl
             }) 
+        }).catch(err => {
+            console.log(err);
         })
     }
 
