@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { Link }  from 'react-router-dom';
 // Material-UI Components
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 
 import axios from 'axios';
@@ -12,7 +13,28 @@ const styles = {
         marginTop: ".5rem"
     },
     textfield : {
-        width: "80%",
+        width: "30%",
+    },
+    image: {
+        maxWidth: "-webkit-fill-available"
+    },
+    profileButton: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      height: 48,
+      padding: '0 30px',
+    },
+    searchButton: {
+      width: "10%",
+      padding: "13.5px 16px",
+      margin: "20px 0 0 5px"
+    },
+    playerImage: {
+      height: "160px",
+      width: "220px"
     }
 }
 
@@ -42,42 +64,47 @@ export default class SearchField extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label>Search a player
-            <input 
-              type="text"
-              value={this.state.value}
+          <TextField
+              id="search"
+              label="search a player"
+              name="search"
+              value={this.state.playerSearch}
               onChange={this.handleChange}
-            >
-            </input>
-          </label>
-          <input 
-            type="submit" 
-            value="Submit" 
-            style={styles.button}
-            variant="outlined"
-            size="small"
-          />
+              margin="normal"
+              style={styles.textfield}/>
+          <Button
+              // onClick={this.handleSubmit}
+              style={styles.searchButton}
+              variant="outlined"
+              margin="normal"
+              size="small">Search</Button>
         </form>
 
         {/* once search term entered, player results begin here */}
-        {
-          this.state.players.map(player => (
-              <div id={player.id} key={player.playerLink}>
-                <img src={player.teamLogo} alt="team logo"></img>
-                <h2>{player.teamName}</h2>
-                <h2>{player.playerName}</h2>
-                <h3>{player.position}</h3>
-                <img src={player.playerImage} alt="player image"></img>
-                <Link to={{
-                  pathname: '/player-profile',
-                    state: {
-                      players: player
-                    }
-                }}>Player Profile
-                </Link>
-              </div>
-          ))
-        }
+        <Grid alignItems="center" justify="space-between" container>
+          {
+            this.state.players.map(player => (
+              <Grid key={player.playerName} style={styles.image} xs={4} item>
+
+                <div id={player.id} key={player.playerLink}>
+                  <img src={player.teamLogo} alt="team logo"></img>
+                  <h2>{player.teamName}</h2>
+                  <h2>{player.playerName}</h2>
+                  <h3>{player.position}</h3>
+                  <img src={player.playerImage} alt="player image" style={styles.playerImage}></img>
+                    <Link variant="body2"to={{
+                      pathname: '/player-profile',
+                        state: {
+                          players: player
+                        }
+                    }}><Button style={styles.profileButton}>Player Profile</Button>
+                    </Link>
+                </div>
+                </Grid>
+            ))
+          }
+        </Grid>
+
       </div>
     )
   }

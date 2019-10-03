@@ -6,6 +6,15 @@ export default class PlayerProfile extends Component {
     stats: [],
     fantasy: []
   }
+
+  styles = {
+    // paper: {
+    //     padding: ".5rem"
+    // },
+    // image: {
+    //     maxWidth: "-webkit-fill-available"
+    // }
+  }
   
   getStats = () => {
     axios.post(`/api/stats/`, {
@@ -16,6 +25,7 @@ export default class PlayerProfile extends Component {
       this.setState({stats: res.data})
     }).catch(err => console.log(err));
   }
+
   getFantasyValue = () => {
     axios.post(`/api/player/fantasyCalculator/`, {
       type: "standard",
