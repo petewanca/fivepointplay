@@ -24,14 +24,15 @@ import LoginButton from "./components/LoginButton";
 // Material-UI Component
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Button from '@material-ui/core/Button';
 import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
-// import API from './utils/API';
+
+import axios from 'axios';
 
 const styles = {
     header: {
-        width: "100vw",
         height: "21vh",
-        padding: "0 1rem"
+        padding: 0
     },
     wrapper: {
         padding: "0 1rem",
@@ -84,9 +85,7 @@ export default class App extends Component {
 
     handleIsLoggedIn = () => {
         var token = localStorage.getItem('jwt');
-        console.log("token", token)
         if (token !== undefined) {
-            console.log("true")
             this.setState({
                 isLoggedIn: true
             })
@@ -95,29 +94,47 @@ export default class App extends Component {
         }
     }
 
+    handleLogout = () => {
+        var jwt = localStorage.getItem("jwt");
+        var userData = JSON.parse(jwt);
+        var token = userData.data.token;
+        axios.get("/api/auth/logout", {
+            headers: {
+                Authorization: `${token}`
+            }
+        }).then(res => {
+            localStorage.removeItem("jwt");
+            this.setState({
+                isLoggedIn: false
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     render() {
 
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline>
-                    <Box style={styles.header}>
-                        <Logo/>
-                        {this.state.isLoggedIn
-                            ? (<LoginButton
-                                href={"#"}
-                                color={"default"}
-                                style={styles.priButton}
-                                message={"Log Out"}
-                                />)
-                            : (<LoginButton
-                                href={"/login"}
-                                color={"primary"}
-                                style={styles.priButton}
-                                message={"Log In"}/>)
-                        }                       
-                    </Box>
                     <Box style={styles.wrapper}>
                         <Router>
+                            <Box style={styles.header}>
+                                    <Logo/>
+                                    {this.state.isLoggedIn
+                                        ? (<Button
+                                            onClick={this.handleLogout}
+                                            color="default"
+                                            style={styles.priButton}
+                                            variant="outlined"
+                                            >Log Out</Button>)
+                                        : (<LoginButton
+                                            to={"/login"}
+                                            color={"primary"}
+                                            style={styles.priButton}
+                                            message={"Log In"}/>)
+                                    }                       
+                                </Box>
                             <Switch>
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/login" component={() => <Login handleIsLoggedIn={this.handleIsLoggedIn} />} />

@@ -3,7 +3,8 @@ module.exports = function(app) {
     const db = require("../../models");
     const jwt = require('jsonwebtoken');
     const passport = require("passport");
-    const keys = require('../../config/keys');
+	const keys = require('../../config/keys');
+	var md5 = require('md5');
 
 	app.get("/api/users/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
 		db.Users.findOne({
@@ -116,11 +117,60 @@ module.exports = function(app) {
 		}
 	);
 
+		// @route PUT api/users/:id
+	// @desc updates a user
+	app.put(
+		"/api/users/avatar/:id",
+		passport.authenticate("jwt", { session: false }),
+		(req, res) => {
+			// Gravatar Code Here
+			// https://en.gravatar.com/site/implement/images/
+			// https://en.gravatar.com/site/implement/hash/
+			var hash = md5(req.body.email.trim());
+			var avatarUrl = `https://www.gravatar.com/avatar/${hash}?s=150`;
+			db.Users.update(
+				{
+					imageFile: avatarUrl
+				},
+				{
+					where: {
+						id: req.params.id,
+					},
+				}).then(() => {
+					db.Users.findByPk(req.params.id)
+					.then(data => {
+						const payload = {
+							id: data.id,
+							firstName: data.firstName,
+							lastName: data.lastName,
+							avatarUrl: user.imageFile
+						};
+
+						jwt.sign(
+							payload,
+							keys.secretOrKey,
+							{ expiresIn: 3600 * 12 },
+							(err, token) => {
+								res.json({
+									...payload,
+									success: true,
+									token: `Bearer ${token}`
+								});
+							}
+						);
+					}).catch(err => {
+						res.status(200).json(err)
+					});
+				});
+		});
+
 	// @route PUT api/users/:id
 	// @desc updates a user password
 	app.put(
 		"/api/users/password/:id",
-        passport.authenticate("jwt", { session: false }), (req, res) => {
+		passport.authenticate("jwt", { session: false }),
+		(req, res) => {
+			console.log(req.body);
             const { passwordNew, passwordVerify } = req.body;
 
             if (passwordNew === passwordVerify) {
@@ -145,7 +195,8 @@ module.exports = function(app) {
                                         const payload = {
                                             id: data.id,
                                             firstName: data.firstName,
-                                            lastName: data.lastName
+											lastName: data.lastName,
+											avatarUrl: user.imageFile
                                         };
 
                                         jwt.sign(
