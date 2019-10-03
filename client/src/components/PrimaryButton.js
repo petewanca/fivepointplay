@@ -9,7 +9,6 @@ function PrimaryButton(props) {
         return (
             <div>
                 <Button
-                    href={props.href}
                     style={props.style}
                     color={props.color}
                     component={ Link }
