@@ -98,7 +98,7 @@ export default class UserProfile extends Component {
             headers: {
                 Authorization: `${token}`,     
             }}).then(res => {
-                var { firstName, lastName, email, imageFile} = res.data;
+                var { firstName, lastName, email} = res.data;
                 this.setState({
                     shownName: firstName,
                     firstName,
