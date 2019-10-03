@@ -26,9 +26,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     imageFile: {
       type: DataTypes.STRING,
-      // get() {
-      //     return this.getDataValue('img').toString('utf8');
-      // },
   }
   });
 

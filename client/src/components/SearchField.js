@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import { Link }  from 'react-router-dom';
 // Material-UI Components
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 
 import axios from 'axios';
@@ -12,7 +18,37 @@ const styles = {
         marginTop: ".5rem"
     },
     textfield : {
-        width: "80%",
+        width: "30%",
+    },
+    profileButton: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      height: 48,
+      padding: '0 30px',
+    },
+    searchButton: {
+      width: "10%",
+      padding: "13.5px 16px",
+      margin: "20px 0 0 5px"
+    },
+    playerImage: {
+      height: "160px",
+      width: "220px"
+    },
+    teamLogo: {
+      width: "15%"
+    },
+    card: {
+      maxWidth: "30%",
+    },
+    media: {
+      height: 140,
+    },
+    cardContainer: {
+      textDecoration: "none"
     }
 }
 
@@ -42,40 +78,63 @@ export default class SearchField extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label>Search a player
-            <input 
-              type="text"
-              value={this.state.value}
+          <TextField
+              id="search"
+              label="search a player"
+              name="search"
+              value={this.state.playerSearch}
               onChange={this.handleChange}
-            >
-            </input>
-          </label>
-          <input 
-            type="submit" 
-            value="Submit" 
-            style={styles.button}
-            variant="outlined"
-            size="small"
-          />
+              margin="normal"
+              style={styles.textfield}/>
+          <Button
+              style={styles.searchButton}
+              variant="outlined"
+              margin="normal"
+              size="small">Search</Button>
         </form>
 
         {/* once search term entered, player results begin here */}
         {
           this.state.players.map(player => (
-              <div id={player.id} key={player.playerLink}>
-                <img src={player.teamLogo} alt="team logo"></img>
-                <h2>{player.teamName}</h2>
-                <h2>{player.playerName}</h2>
-                <h3>{player.position}</h3>
-                <img src={player.playerImage} alt="player image"></img>
-                <Link to={{
+            <Card style={styles.card}>
+              <CardActionArea>
+              <Link style={styles.cardContainer} to={{
+              pathname: '/player-profile',
+                state: {
+                  players: player
+                }
+              }}>
+                <CardMedia
+                  image={player.playerImage}
+                  title="Contemplative Reptile"
+                />
+                <CardContent>
+                  <img src={player.playerImage} alt={player.playerName} style={styles.playerImage}></img>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    <img style={styles.teamLogo} src={player.teamLogo} alt={player.teamName}></img>
+                    {player.playerName}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    {player.position} // {player.teamName}
+                  </Typography>
+                </CardContent>
+                </Link>
+              </CardActionArea>
+              <CardActions>
+                {/* <Button><Link style={{ textDecoration: 'none' }} to={{
                   pathname: '/player-profile',
                     state: {
                       players: player
                     }
                 }}>Player Profile
-                </Link>
-              </div>
+                </Link></Button> */}
+                
+                {/* <Button size="small" color="primary">
+                  Player Profile
+                </Button> */}
+              </CardActions>
+            </Card>
+            // </Link>
           ))
         }
       </div>
