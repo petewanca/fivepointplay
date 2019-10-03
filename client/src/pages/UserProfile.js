@@ -36,7 +36,7 @@ export default class UserProfile extends Component {
         firstName: "",
         lastName: "",
         email: "",
-        avatarUrl: "avatar.png"
+        avatarUrl: ""
     }
 
     componentDidMount() {
@@ -50,15 +50,17 @@ export default class UserProfile extends Component {
             { headers: {
                 Authorization: `${token}`
             }}).then(res => {
-            var { firstName, lastName, email, avatarUrl} = res.data;
-            if (avatarUrl === undefined) {
-                avatarUrl = "avatar.png"
+            var { firstName, lastName, email, imageFile} = res.data;
+            if (imageFile === undefined) {
+                this.setState({
+                    avatarUrl: "avatar.png"
+                })
             }
             this.setState({
                 firstName,
                 lastName,
                 email,
-                avatarUrl
+                avatarUrl: imageFile
             }) 
         }).catch(err => {
             console.log(err);

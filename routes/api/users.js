@@ -3,7 +3,8 @@ module.exports = function(app) {
     const db = require("../../models");
     const jwt = require('jsonwebtoken');
     const passport = require("passport");
-    const keys = require('../../config/keys');
+	const keys = require('../../config/keys');
+	var md5 = require('md5');
 
 	app.get("/api/users/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
 		db.Users.findOne({
@@ -125,7 +126,23 @@ module.exports = function(app) {
 			// Gravatar Code Here
 			// https://en.gravatar.com/site/implement/images/
 			// https://en.gravatar.com/site/implement/hash/
-		});
+			var hash = md5(req.body.email.trim());
+			var avatarUrl = `https://www.gravatar.com/avatar/${hash}?s=150`;
+
+			db.Users.update(
+				{
+					imageFile: avatarUrl
+				},
+				{
+					where: {
+						id: req.params.id,
+					},
+				}).then(data => {
+					res.status(200).json(data)
+				}).catch(err => {
+					res.status(200).json(data)
+				});
+			});
 
 	// @route PUT api/users/:id
 	// @desc updates a user password

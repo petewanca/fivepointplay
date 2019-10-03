@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 // React Components
 import PrimaryButton from "./PrimaryButton";
@@ -24,6 +25,9 @@ const styles = {
     },
     input: {
         width: "80%"
+    },
+    buttonBox: {
+        height: "12vh"
     }
 }
 
@@ -47,8 +51,7 @@ export default class AvatarForm extends Component {
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
         var token = userData.data.token;
-        var data = this.state.avatarEmail
-        axios.put(`/api/users/avatar/${userId}`, data, {
+        axios.put(`/api/users/avatar/${userId}`, {email: this.state.email}, {
             headers: {
                 Authorization: `${token}`,     
             }}).then(res => {
@@ -72,8 +75,10 @@ export default class AvatarForm extends Component {
                     margin="normal"
                     style={styles.input}
                 />
-                <Button variant="contained" color="secondary" style={styles.secButton} onClick={this.handleSubmitForm}>Update</Button>
-                <PrimaryButton color={"default"} href="/profile" style={styles.defButton} message={"Cancel"} />
+                <Box style={styles.buttonBox}>
+                    <Button variant="contained" color="secondary" style={styles.secButton} onClick={this.handleSubmitForm}>Update</Button>
+                    <PrimaryButton color={"default"} to="/profile" style={styles.defButton} message={"Cancel"} />
+                </Box>
             </form>
         )
     }

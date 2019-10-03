@@ -47,7 +47,8 @@ module.exports = function(app) {
                             const payload = {
                                 id: user.id,
                                 firstName: user.firstName,
-                                lastName: user.lastName
+                                lastName: user.lastName,
+                                avatarUrl: user.imageFile
                             };
 
                             // sign the token
