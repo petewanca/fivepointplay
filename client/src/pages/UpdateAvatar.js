@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 // React Components
 import AvatarForm from "../components/AvatarForm";
+
+// Material UI Components
 import UILink from '@material-ui/core/Link';
 
 export default class UpdateAvatar extends Component {
@@ -27,7 +29,6 @@ export default class UpdateAvatar extends Component {
         var jwt = localStorage.getItem("jwt")
         var userData = JSON.parse(jwt);
         var avatarUrl = userData.data.avatarUrl;
-        console.log(avatarUrl)
         if (avatarUrl) {
             this.setState({
                 avatarUrl

@@ -6,8 +6,10 @@ import UILink from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 
+// React Components
+import Alert from "../components/Alert";
+
 // React APIs
-import API from "../utils/API";
 import axios from 'axios';
 
 export default class UserProfile extends Component {
@@ -33,38 +35,47 @@ export default class UserProfile extends Component {
     }
 
     state = {
+        shownName: "",
         firstName: "",
         lastName: "",
         email: "",
-        avatarUrl: ""
+        avatarUrl: "",
+        alertShow: false
     }
 
     componentDidMount() {
-        var jwt = localStorage.getItem("jwt")
+        var jwt = localStorage.getItem("jwt");
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
         var token = userData.data.token;
-        // Make an API call based on jwt data to get/set user data.
-        // Source: https://stackoverflow.com/questions/51586458/how-to-pass-header-jwt-token-with-axios-react
         axios.get(`/api/users/${userId}`,
-            { headers: {
+        {
+            headers: {
                 Authorization: `${token}`
-            }}).then(res => {
-            var { firstName, lastName, email, imageFile} = res.data;
-            if (imageFile === undefined) {
-                this.setState({
-                    avatarUrl: "avatar.png"
-                })
             }
-            this.setState({
-                firstName,
-                lastName,
-                email,
-                avatarUrl: imageFile
-            }) 
+        }).then(res => {
+            var {firstName, lastName, email, imageFile} = res.data;
+            if (res.data.imageFile === "" || res.data.imageFile === undefined) {
+                this.setState({
+                    shownName: firstName,
+                    firstName,
+                    lastName,
+                    email,
+                    avatarUrl: "avatar.png"
+                }) 
+            } else {
+                this.setState({
+                    shownName: firstName,
+                    firstName,
+                    lastName,
+                    email,
+                    avatarUrl: imageFile
+                }) 
+            }
         }).catch(err => {
-            console.log(err);
+            console.log(err)
         })
+
     }
 
     handleInputChange = event => {
@@ -73,10 +84,43 @@ export default class UserProfile extends Component {
         this.setState({[name]: value});
     };
 
+    handleSubmitForm = () => {
+        var jwt = localStorage.getItem("jwt")
+        var userData = JSON.parse(jwt);
+        var userId = userData.data.id;
+        var token = userData.data.token;
+        axios.put(`/api/users/${userId}`, 
+        {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email
+        }, {
+            headers: {
+                Authorization: `${token}`,     
+            }}).then(res => {
+                var { firstName, lastName, email, imageFile} = res.data;
+                this.setState({
+                    shownName: firstName,
+                    firstName,
+                    lastName,
+                    email,
+                    alertShow: true
+                })
+            }).catch(err => {
+                console.log(err)
+            }) 
+    };
+
+    handleClose = () => {
+        this.setState({
+            alertShow: false
+        })
+    }
+
     render() {
         return (
             <div>
-                <h1 style={this.styles.header}>Hey, {this.state.firstName}</h1>
+                <h1 style={this.styles.header}>Hey, {this.state.shownName}</h1>
                 <img
                     style={this.styles.avatar}
                     src={this.state.avatarUrl}
@@ -108,8 +152,9 @@ export default class UserProfile extends Component {
                         margin="normal"
                         style={this.styles.input}/>
                 </Box>
-                <UILink style={this.styles.link} component={ Link } to="#">Update Profile Info</UILink>
+                <UILink style={this.styles.link} onClick={this.handleSubmitForm}>Update Profile Info</UILink>
                 <UILink style={this.styles.link} component={ Link } to="/update-password">Update Password</UILink>
+                <Alert alertTitle={"Update Successful"} handleClose={this.handleClose} open={this.state.alertShow} alertBody={"Your user profile was updated successfully."} />
             </div>
         )
     }

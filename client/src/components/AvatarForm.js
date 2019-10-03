@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
@@ -64,6 +65,11 @@ export default class AvatarForm extends Component {
     };
 
     render() {
+        
+        if (this.state.redirect) {
+            return <Redirect to='/profile'/>;
+        }
+
         return (
             <form noValidate autoComplete="off">
                 <TextField

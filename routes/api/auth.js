@@ -48,6 +48,7 @@ module.exports = function(app) {
                                 id: user.id,
                                 firstName: user.firstName,
                                 lastName: user.lastName,
+                                email: user.email,
                                 avatarUrl: user.imageFile
                             };
 
