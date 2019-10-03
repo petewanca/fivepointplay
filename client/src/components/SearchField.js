@@ -3,7 +3,12 @@ import { Link }  from 'react-router-dom';
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 
 import axios from 'axios';
@@ -14,9 +19,6 @@ const styles = {
     },
     textfield : {
         width: "30%",
-    },
-    image: {
-        maxWidth: "-webkit-fill-available"
     },
     profileButton: {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -35,6 +37,18 @@ const styles = {
     playerImage: {
       height: "160px",
       width: "220px"
+    },
+    teamLogo: {
+      width: "15%"
+    },
+    card: {
+      maxWidth: "30%",
+    },
+    media: {
+      height: 140,
+    },
+    cardContainer: {
+      textDecoration: "none"
     }
 }
 
@@ -73,7 +87,6 @@ export default class SearchField extends Component {
               margin="normal"
               style={styles.textfield}/>
           <Button
-              // onClick={this.handleSubmit}
               style={styles.searchButton}
               variant="outlined"
               margin="normal"
@@ -81,30 +94,49 @@ export default class SearchField extends Component {
         </form>
 
         {/* once search term entered, player results begin here */}
-        <Grid alignItems="center" justify="space-between" container>
-          {
-            this.state.players.map(player => (
-              <Grid key={player.playerName} style={styles.image} xs={4} item>
-
-                <div id={player.id} key={player.playerLink}>
-                  <img src={player.teamLogo} alt="team logo"></img>
-                  <h2>{player.teamName}</h2>
-                  <h2>{player.playerName}</h2>
-                  <h3>{player.position}</h3>
-                  <img src={player.playerImage} alt="player image" style={styles.playerImage}></img>
-                    <Link variant="body2"to={{
-                      pathname: '/player-profile',
-                        state: {
-                          players: player
-                        }
-                    }}><Button style={styles.profileButton}>Player Profile</Button>
-                    </Link>
-                </div>
-                </Grid>
-            ))
-          }
-        </Grid>
-
+        {
+          this.state.players.map(player => (
+            <Card style={styles.card}>
+              <CardActionArea>
+              <Link style={styles.cardContainer} to={{
+              pathname: '/player-profile',
+                state: {
+                  players: player
+                }
+              }}>
+                <CardMedia
+                  image={player.playerImage}
+                  title="Contemplative Reptile"
+                />
+                <CardContent>
+                  <img src={player.playerImage} alt={player.playerName} style={styles.playerImage}></img>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    <img style={styles.teamLogo} src={player.teamLogo} alt={player.teamName}></img>
+                    {player.playerName}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    {player.position} // {player.teamName}
+                  </Typography>
+                </CardContent>
+                </Link>
+              </CardActionArea>
+              <CardActions>
+                {/* <Button><Link style={{ textDecoration: 'none' }} to={{
+                  pathname: '/player-profile',
+                    state: {
+                      players: player
+                    }
+                }}>Player Profile
+                </Link></Button> */}
+                
+                {/* <Button size="small" color="primary">
+                  Player Profile
+                </Button> */}
+              </CardActions>
+            </Card>
+            // </Link>
+          ))
+        }
       </div>
     )
   }
