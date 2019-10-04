@@ -18,7 +18,7 @@ const styles = {
     margin: 0,
     padding: 0
   },
-  cardContainer: {
+  link: {
     textDecoration: "none",
   },
 };
@@ -64,7 +64,7 @@ export class Team extends Component {
               {this.state.roster.map(player => (
                 <TableRow key={player.id}>
                     <TableCell component="th" scope="row">
-                      <Link style={styles.cardContainer} to={{
+                      <Link style={styles.link} to={{
                         pathname: '/player-profile',
                           state: {
                           players: player
