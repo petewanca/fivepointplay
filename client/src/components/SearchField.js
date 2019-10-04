@@ -5,11 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
+import Grid from '@material-ui/core/Grid';
 
 import axios from 'axios';
 
@@ -35,22 +34,26 @@ const styles = {
       margin: "20px 0 0 5px"
     },
     playerImage: {
-      height: "160px",
-      width: "220px"
+      width: "100%",
+      borderBottom: "1px solid gray"
     },
     teamLogo: {
       width: "15%"
     },
     card: {
-      maxWidth: "30%",
+      maxWidth: "100%",
+      align: "center"
     },
     media: {
       height: 140,
     },
     cardContainer: {
-      textDecoration: "none"
+      textDecoration: "none",
+    },
+    searchForm: {
+      marginBottom: "5%"
     }
-}
+};
 
 export default class SearchField extends Component {
   state = {
@@ -77,10 +80,10 @@ export default class SearchField extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form style={styles.searchForm} onSubmit={this.handleSubmit}>
           <TextField
               id="search"
-              label="search a player"
+              label="player"
               name="search"
               value={this.state.playerSearch}
               onChange={this.handleChange}
@@ -90,12 +93,14 @@ export default class SearchField extends Component {
               style={styles.searchButton}
               variant="outlined"
               margin="normal"
+              onClick={this.handleSubmit}
               size="small">Search</Button>
         </form>
-
-        {/* once search term entered, player results begin here */}
-        {
+        <Grid container justify="center" spacing={3}>
+        {/* search results area for players */}
+        { 
           this.state.players.map(player => (
+            <Grid item xs={12} md={4} lg={4} xl={4}>
             <Card style={styles.card}>
               <CardActionArea>
               <Link style={styles.cardContainer} to={{
@@ -115,28 +120,16 @@ export default class SearchField extends Component {
                     {player.playerName}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    {player.position} // {player.teamName}
+                    {player.position}  |  {player.teamName}
                   </Typography>
                 </CardContent>
                 </Link>
               </CardActionArea>
-              <CardActions>
-                {/* <Button><Link style={{ textDecoration: 'none' }} to={{
-                  pathname: '/player-profile',
-                    state: {
-                      players: player
-                    }
-                }}>Player Profile
-                </Link></Button> */}
-                
-                {/* <Button size="small" color="primary">
-                  Player Profile
-                </Button> */}
-              </CardActions>
             </Card>
-            // </Link>
+            </Grid>
           ))
         }
+        </Grid>
       </div>
     )
   }

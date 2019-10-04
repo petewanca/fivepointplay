@@ -1,21 +1,57 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const styles = {
+  playerImage: {
+    width: "60%",
+    borderBottom: "1px solid gray",
+    marginBottom: 0,
+    paddingBottom: 0
+  },
+  teamLogo: {
+    width: "13%",
+    padding: 0,
+    margin: 0
+  },
+  root: {
+    maxWidth: '100%',
+    overflowX: 'auto',
+    marginBottom: "10%"
+  }
+}
 
 export default class PlayerProfile extends Component {
   state = {
     stats: [],
     fantasy: []
   }
-
-  styles = {
-    // paper: {
-    //     padding: ".5rem"
-    // },
-    // image: {
-    //     maxWidth: "-webkit-fill-available"
-    // }
-  }
   
+  saveFavorite = () => {
+    axios
+      .post(`/api/addList`, {
+        // backend route is using the following object format...
+          // {
+          // playerName: req.body.id,
+          // commonName: req.body.playerName,
+          // UserId: req.body.userId
+          // }
+
+      // what you will use to send data with function
+        //id: id, //the player's id
+        //commonName: playerName,
+        //userId: userId //the logged in user's id
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
+
   getStats = () => {
     axios.post(`/api/stats/`, {
       playerName: this.props.location.state.players.playerName,
@@ -47,50 +83,153 @@ export default class PlayerProfile extends Component {
     const props = this.props.location.state.players;
 
     return (
-      <div id ={props.id} key={props.playerLink}>
-        <img src={props.playerImage} alt="player image"></img>
-        <img src={props.teamLogo} alt="team logo"></img>
-        <h1>{props.playerName}</h1>
-        <h2>{props.teamName}</h2>
-        <h3>{props.position}</h3>
-        <p>{props.height} / {props.weight} / {props.age} years old</p>
+      <Grid justify="center" container spacing={3}>
+        {/* <Grid item xs={12} md={6} lg={6} xl={6}> */}
+          <img style={styles.playerImage} src={props.playerImage} alt="profile pic"></img>
+        {/* </Grid> */}
+        {/* <Grid item xs={12} md={3} lg={3} xl={3}> */}
+          {/* <img style={styles.teamLogo} src={props.teamLogo} alt="team logo"></img>           */}
+          <h1 >{props.playerName}</h1>
+        {/* </Grid> */}
 
-        <h1>Last Season's Stats</h1>
-        <h5>*per game averages</h5>
-        <table>
-          <tr>
-            <th>Games</th>
-            <th>Minutes</th>
-            <th>Points</th>
-            <th>Rebounds</th>
-            <th>Assists</th>
-            <th>Steals</th>
-            <th>Blocks</th>
-            <th>Turnovers</th>
-            <th>Fouls</th>
-            <th>FG%</th>
-            <th>3P%</th>
-            <th>FT%</th>
-            <th>Fantasy</th>
-          </tr>
-          <tr>
-            <td>{this.state.stats.lsGamesPlayed}</td>
-            <td>{this.state.stats.lsMinutesPerGame}</td>
-            <td>{this.state.stats.lsPointsPerGame}</td>
-            <td>{this.state.stats.lsRebounds}</td>
-            <td>whoops!</td>
-            <td>{this.state.stats.lsSteals}</td>
-            <td>{this.state.stats.lsBlocks}</td>
-            <td>{this.state.stats.lsTurnovers}</td>
-            <td>{this.state.stats.lsFouls}</td>
-            <td>{this.state.stats.lsFieldGoalPercentage}</td>
-            <td>{this.state.stats.lsThreePointPercentage}</td>
-            <td>{this.state.stats.lsFreeThrowPercentage}</td>
-            <td>{this.state.fantasy.fantasyValue}</td>
-          </tr>
-        </table>
-        
-      </div>
+
+        {/* Gen Info Table */}
+        <Paper style={styles.root}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>General Info</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Team
+                </TableCell>
+                <TableCell align="right">{props.teamName}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Position
+                </TableCell>
+                <TableCell align="right">{props.position}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Height
+                </TableCell>
+                <TableCell align="right">{props.height}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Weight
+                </TableCell>
+                <TableCell align="right">{props.weight}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Age
+                </TableCell>
+                <TableCell align="right">{props.age}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+
+        {/* Stats Table */}
+        <Paper style={styles.root}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Last Season's Stats</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Fantasy Value
+                </TableCell>
+                <TableCell align="right">{this.state.fantasy.fantasyValue}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Games Played
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsGamesPlayed}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Minutes Per Game
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsMinutesPerGame}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Points
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsPointsPerGame}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Rebounds
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsRebounds}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Assists
+                </TableCell>
+                <TableCell align="right">Whoops!</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Blocks
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsBlocks}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Steals
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsSteals}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Turnovers
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsTurnovers}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    Fouls
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsFouls}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    FG%
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsFieldGoalPercentage}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    3P%
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsThreePointPercentage}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                    FT%
+                </TableCell>
+                <TableCell align="right">{this.state.stats.lsFreeThrowPercentage}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+
+      </Grid>
     )
   }
 }
