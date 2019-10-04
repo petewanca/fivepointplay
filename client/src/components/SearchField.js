@@ -10,7 +10,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-
 import axios from 'axios';
 
 const styles = {
@@ -54,7 +53,7 @@ const styles = {
     searchForm: {
       marginBottom: "5%"
     }
-}
+};
 
 export default class SearchField extends Component {
   state = {

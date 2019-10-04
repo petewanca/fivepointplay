@@ -89,7 +89,8 @@ module.exports = function(app) {
     db.Players.findAll({
       where: {
         teamName: team
-      }
+      },
+      order: [['playerName', 'ASC']]
     }).then(response => {
       roster = [];
       response.forEach(player => {
