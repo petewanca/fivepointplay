@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link }  from 'react-router-dom';
 
 // Material-UI Components
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,11 @@ export default class AllTeams extends Component {
         },
         image: {
             maxWidth: "-webkit-fill-available"
+        },
+        header: {
+            padding: 0,
+            margin: "5% 0px 0px 0px",
+            fontSize: "1rem"
         }
     }
 
@@ -45,7 +51,10 @@ export default class AllTeams extends Component {
                         .teamsArr
                         .map(team => (
                             <Grid key={team.teamName} style={this.styles.paper} xs={4} item>
-                                <img style={this.styles.image} src={team.teamLogo} alt={team.teamName}/>
+                                <h3 style={this.styles.header}>{team.teamName}</h3>
+                                <Link to="/">
+                                  <img style={this.styles.image} src={team.teamLogo} alt={team.teamName}/>
+                                </Link>
                             </Grid>
                         ))}
                 </Grid>

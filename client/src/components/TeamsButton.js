@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { Link }  from 'react-router-dom';
 
 const styles = {
     button: {
@@ -11,19 +12,11 @@ const styles = {
 
 export default function TeamsButton() {
   
-  const handleClick = () => {
-    axios.get("/api/getTeams", () => {
-    }).then(res => {
-      console.log(res);
-    }).catch(err => console.log(err));
-  };
-  
   return (
-    <Button
-    style={styles.button}
-    variant="outlined"
-    onClick={handleClick}>
-        All Teams
-    </Button>
+    <Link to="/all-teams" style={{ textDecoration: 'none' }}>
+      <Button style={styles.button} variant="outlined">
+          All Teams
+      </Button>
+    </Link>
   )
 }

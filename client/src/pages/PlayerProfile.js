@@ -10,7 +10,7 @@ const styles = {
     paddingBottom: 0
   },
   teamLogo: {
-    width: "15%",
+    width: "13%",
     padding: 0,
     margin: 0
   },
