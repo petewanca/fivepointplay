@@ -33,6 +33,26 @@ export default class PlayerProfile extends Component {
     fantasy: []
   }
   
+  saveFavorite = () => {
+    axios
+      .post(`/api/addList`, {
+        // backend route is using the following object format...
+          // {
+          // playerName: req.body.id,
+          // commonName: req.body.playerName,
+          // UserId: req.body.userId
+          // }
+
+      // what you will use to send data with function
+        //id: id, //the player's id
+        //commonName: playerName,
+        //userId: userId //the logged in user's id
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
+  }
+
   getStats = () => {
     axios.post(`/api/stats/`, {
       playerName: this.props.location.state.players.playerName,

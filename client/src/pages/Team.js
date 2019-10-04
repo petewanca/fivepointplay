@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 const styles = {
   root: {
     maxWidth: '100%',
-    // marginTop: spacing(3),
     overflowX: 'auto',
+    marginBottom: "5%"
   },
   logo: {
     margin: 0,
@@ -62,20 +62,19 @@ export class Team extends Component {
             </TableHead>
             <TableBody>
               {this.state.roster.map(player => (
-                
-                  <TableRow key={player.id}>
+                <TableRow key={player.id}>
                     <TableCell component="th" scope="row">
-                    <Link style={styles.cardContainer} to={{
-                  pathname: '/player-profile',
-                    state: {
-                      players: player
-                    }
-                }}>
-                      {player.playerName}
-                </Link>
+                      <Link style={styles.cardContainer} to={{
+                        pathname: '/player-profile',
+                          state: {
+                          players: player
+                        }
+                      }}>
+                        {player.playerName}
+                      </Link>
                     </TableCell>
                     <TableCell align="right">{player.position}</TableCell>
-                  </TableRow>
+                </TableRow>
               ))}
             </TableBody>
           </Table>

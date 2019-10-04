@@ -286,6 +286,18 @@ module.exports = function(app) {
     }
   });
 
+  // add player to list
+  app.post("/api/addList", (req, res) => {
+    db.Lists.create({
+      playerName: req.body.id,
+      commonName: req.body.playerName,
+      UserId: req.body.userId
+    }).then(response => {
+      res.json(response);
+    }).catch(err => res.json(err));
+  });
+
+  
   // =================================================================================
   // =========================== don't even think about it =========================== 
   // =================================================================================  
