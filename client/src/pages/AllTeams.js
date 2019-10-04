@@ -46,17 +46,21 @@ export default class AllTeams extends Component {
         return (
             <div>
                 <Grid alignItems="center" justify="space-between" container>
-                    {this
-                        .state
-                        .teamsArr
-                        .map(team => (
+                    {
+                        this.state.teamsArr.map(team => (
                             <Grid key={team.teamName} style={this.styles.paper} xs={4} item>
                                 <h3 style={this.styles.header}>{team.teamName}</h3>
-                                <Link to="/">
-                                  <img style={this.styles.image} src={team.teamLogo} alt={team.teamName}/>
+                                <Link to={{
+                                  pathname: '/team',
+                                  state: {
+                                    team
+                                  }
+                                }}>
+                                    <img style={this.styles.image} src={team.teamLogo} alt={team.teamName}/>
                                 </Link>
                             </Grid>
-                        ))}
+                        ))
+                    }
                 </Grid>
             </div>
         )
