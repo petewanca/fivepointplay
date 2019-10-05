@@ -96,8 +96,9 @@ export default class SearchField extends Component {
               onClick={this.handleSubmit}
               size="small">Search</Button>
         </form>
-        <Grid container justify="center" spacing={3}>
+
         {/* search results area for players */}
+        <Grid container justify="center" spacing={3}>
         { 
           this.state.players.map(player => (
             <Grid item xs={12} md={4} lg={4} xl={4}>

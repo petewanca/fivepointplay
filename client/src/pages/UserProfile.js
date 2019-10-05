@@ -5,6 +5,12 @@ import {Link} from 'react-router-dom';
 import UILink from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 // React Components
 import Alert from "../components/Alert";
@@ -31,6 +37,11 @@ export default class UserProfile extends Component {
         link: {
             margin: ".5rem 0 1rem 0",
             display: "block"
+        },
+        root: {
+          maxWidth: '100%',
+          overflowX: 'auto',
+          marginBottom: "5%"
         }
     }
 
@@ -40,7 +51,8 @@ export default class UserProfile extends Component {
         lastName: "",
         email: "",
         avatarUrl: "",
-        alertShow: false
+        alertShow: false,
+        favorites: []
     }
 
     componentDidMount() {
@@ -65,8 +77,24 @@ export default class UserProfile extends Component {
             .catch(err => {
                 console.log(err)
             })
-
+        
+        this.getFavorites(userId);
     }
+
+    getFavorites = (param) => {
+      axios.get(`/api/retrieve-favorites/${param}`, (req, res) => {})
+      .then(response => {
+        let results = [];
+        response.data.forEach(item =>{
+          results.push({
+            playerName: item.playerName,
+            teamName: item.teamName,
+          })
+        })
+        this.setState({favorites: results})
+      })
+      .catch(err => console.log(err));
+    };
 
     handleInputChange = event => {
         const {name, value} = event.target;
@@ -141,6 +169,38 @@ export default class UserProfile extends Component {
                     handleClose={this.handleClose}
                     open={this.state.alertShow}
                     alertBody={"Your user profile was updated successfully."}/>
+
+                <Paper style={this.styles.root}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Team</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {
+                          this.state.favorites.map(player => (
+                          <TableRow>
+                              <TableCell component="th" scope="row">
+                                <Link style={this.styles.link} to={{
+                                  pathname: '/player-profile',
+                                    state: {
+                                    players: player
+                                  }
+                                }}>
+                                  {player.playerName}
+                                </Link>
+                              </TableCell>
+                              <TableCell align="right">{player.teamName}</TableCell>
+                          </TableRow>
+                          ))
+                      }
+                    </TableBody>
+                  </Table>
+                </Paper>
+                
+
             </div>
         )
     }
