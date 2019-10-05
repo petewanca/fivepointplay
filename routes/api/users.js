@@ -28,8 +28,7 @@ module.exports = function(app) {
 			},
 		}).then(user => {
 			if (user) {
-				return res.status(400).json({
-					email: "This email already exists.",
+				return res.status(400).json({ msgTitle: 'Email Taken', msgBody: 'This email already exists. Please use another email address.'
 				});
 			} else {
 				const newUser = {
