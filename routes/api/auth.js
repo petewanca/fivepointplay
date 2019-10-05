@@ -32,7 +32,6 @@ module.exports = function(app) {
         db.Users.findOne({ where: { email } }).then((user) => {
             // Check the user exists
             if (!user) {
-                console.log("error")
                 return res.status(404).json({ msgTitle: 'User Not Found', msgBody: 'Please enter a valid email or click "Register" to create a new account.' });
             }
 
@@ -68,8 +67,7 @@ module.exports = function(app) {
                             );
                         })
                         .catch((err) => {
-                            console.log(err);
-                            res.status(200).json(err.response)
+                            res.status(200).json(err)
                         });
                 } else {
                     return res.status(400).json({ msgTitle: 'Incorrect Password', msgBody: 'Please enter the correct password for this account.' });
