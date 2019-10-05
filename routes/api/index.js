@@ -15,7 +15,8 @@ module.exports = function(app) {
         playerName: {
           [Op.like]: `%${searchTerm}%`
         }
-      }
+      },
+      order: [['playerName', 'ASC']]
     }).then(response => {
       let results = [];
       response.forEach(item =>{
@@ -287,15 +288,36 @@ module.exports = function(app) {
   });
 
   // add player to list
-  app.post("/api/addList", (req, res) => {
+  app.post("/api/add-to-list", (req, res) => {
     db.Lists.create({
-      playerName: req.body.id,
-      commonName: req.body.playerName,
+      playerName: req.body.playerName,
+      teamName: req.body.teamName,
       UserId: req.body.userId
     }).then(response => {
       res.json(response);
     }).catch(err => res.json(err));
   });
+
+  // get players from user's list by userId
+  app.get("/api/retrieve-favorites/:userId", (req, res) => {
+    let userId = req.params.userId;
+    
+    db.Lists.findAll({
+      where: {
+        UserId: userId
+      }
+    })
+    .then(response => {
+      let results = [];
+      response.forEach(item =>{
+        results.push({
+          playerName: item.dataValues.playerName,
+          teamName: item.dataValues.teamName,
+        })
+      })
+      res.json(results)
+    }).catch(err => res.json(err))
+  })
 
   
   // =================================================================================
