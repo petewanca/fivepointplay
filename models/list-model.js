@@ -1,9 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
   var Lists = sequelize.define("Lists", {
-    playerName: {
-      type: DataTypes.INTEGER
+    // playerId: {
+      // type: DataTypes.INTEGER
+    // },
+    teamName: {
+      type: DataTypes.STRING
     },
-    commonName: {
+    playerName: {
       type: DataTypes.STRING,
       allowNull: false
     }

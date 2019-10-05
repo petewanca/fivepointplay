@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { Link }  from 'react-router-dom';
 
 // Custom fonts
 import "./index.css"
@@ -41,6 +42,12 @@ const styles = {
     priButton: {
         marginTop: "1rem",
         float: "right"
+    },
+    link: {
+      textDecoration: "none",
+      "&:visited": {
+        color: "black"
+      }
     }
 };
 
@@ -122,12 +129,21 @@ export default class App extends Component {
                             <Box style={styles.header}>
                                     <Logo/>
                                     {this.state.isLoggedIn
-                                        ? (<Button
+                                        ? (
+                                        <div>
+                                          <Button
                                             onClick={this.handleLogout}
                                             color="default"
                                             style={styles.priButton}
                                             variant="outlined"
-                                            >Log Out</Button>)
+                                            >Log Out</Button>
+                                            <Button 
+                                              color="default"
+                                              styles={styles.priButton}
+                                              variant="outlined">
+                                                <Link to="/" style={styles.link}>Search</Link>
+                                            </Button>
+                                        </div>)
                                         : (<LoginButton
                                             to={"/login"}
                                             color={"primary"}

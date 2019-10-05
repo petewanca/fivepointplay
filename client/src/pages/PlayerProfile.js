@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link }  from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -10,20 +12,23 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = {
   playerImage: {
-    width: "60%",
+    width: "50%",
     borderBottom: "1px solid gray",
     marginBottom: 0,
     paddingBottom: 0
   },
   teamLogo: {
-    width: "13%",
+    maxWidth: "13%",
     padding: 0,
     margin: 0
   },
   root: {
-    maxWidth: '100%',
+    width: '100%',
     overflowX: 'auto',
     marginBottom: "10%"
+  },
+  link: {
+    textDecoration: 'none'
   }
 }
 
@@ -33,23 +38,30 @@ export default class PlayerProfile extends Component {
     fantasy: []
   }
   
-  saveFavorite = () => {
-    axios
-      .post(`/api/addList`, {
-        // backend route is using the following object format...
-          // {
-          // playerName: req.body.id,
-          // commonName: req.body.playerName,
-          // UserId: req.body.userId
-          // }
+  saveToList = () => {
+    let jwt = localStorage.getItem("jwt")
+    let userData = JSON.parse(jwt);
+    let userId = userData.data.id;
+    let token = userData.data.token;
+    console.log(userId)
 
-      // what you will use to send data with function
-        //id: id, //the player's id
-        //commonName: playerName,
-        //userId: userId //the logged in user's id
+    if (userId) {
+    axios
+      .post(`/api/add-to-list`, {
+        playerName: this.props.location.state.players.playerName,
+        teamName: this.props.location.state.players.teamName,
+        userId: userId
       })
-      .then(res => console.log(res))
+      .then(res => {
+        alert('Player saved to list.')
+        console.log(res)
+      })
       .catch(err => console.log(err));
+    } else {
+      alert('You must log in to use this functionality.')
+    }
+
+
   }
 
   getStats = () => {
@@ -83,151 +95,166 @@ export default class PlayerProfile extends Component {
     const props = this.props.location.state.players;
 
     return (
+
       <Grid justify="center" container spacing={3}>
-        {/* <Grid item xs={12} md={6} lg={6} xl={6}> */}
+        
+        <Grid container justify="center" spacing={3}>
+          <Grid item xs={12} md={2} lg={2} xl={2}>
+            <Button 
+              color="default"
+              styles={styles.priButton}
+              variant="outlined"
+              onClick={this.saveToList}>
+                ADD TO LIST
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={9} lg={9} xl={9}>
           <img style={styles.playerImage} src={props.playerImage} alt="profile pic"></img>
-        {/* </Grid> */}
-        {/* <Grid item xs={12} md={3} lg={3} xl={3}> */}
           {/* <img style={styles.teamLogo} src={props.teamLogo} alt="team logo"></img>           */}
           <h1 >{props.playerName}</h1>
-        {/* </Grid> */}
-
+        </Grid>
 
         {/* Gen Info Table */}
-        <Paper style={styles.root}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>General Info</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Team
-                </TableCell>
-                <TableCell align="right">{props.teamName}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Position
-                </TableCell>
-                <TableCell align="right">{props.position}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Height
-                </TableCell>
-                <TableCell align="right">{props.height}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Weight
-                </TableCell>
-                <TableCell align="right">{props.weight}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Age
-                </TableCell>
-                <TableCell align="right">{props.age}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
+        <Grid item xs={12} md={4} lg={4} xl={4}>
+          <Paper style={styles.root}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>General Info</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Team
+                  </TableCell>
+                  <TableCell align="right">{props.teamName}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Position
+                  </TableCell>
+                  <TableCell align="right">{props.position}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Height
+                  </TableCell>
+                  <TableCell align="right">{props.height}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Weight
+                  </TableCell>
+                  <TableCell align="right">{props.weight}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Age
+                  </TableCell>
+                  <TableCell align="right">{props.age}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
 
         {/* Stats Table */}
-        <Paper style={styles.root}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Last Season's Stats</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Fantasy Value
-                </TableCell>
-                <TableCell align="right">{this.state.fantasy.fantasyValue}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Games Played
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsGamesPlayed}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Minutes Per Game
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsMinutesPerGame}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Points
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsPointsPerGame}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Rebounds
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsRebounds}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Assists
-                </TableCell>
-                <TableCell align="right">Whoops!</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Blocks
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsBlocks}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Steals
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsSteals}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Turnovers
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsTurnovers}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    Fouls
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsFouls}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    FG%
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsFieldGoalPercentage}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    3P%
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsThreePointPercentage}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                    FT%
-                </TableCell>
-                <TableCell align="right">{this.state.stats.lsFreeThrowPercentage}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
+        <Grid item xs={12} md={4} lg={4} xl={4}>
+          <Paper style={styles.root}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Last Season's Stats (per game)</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Fantasy Points
+                  </TableCell>
+                  <TableCell align="right">{this.state.fantasy.fantasyValue}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Games Played
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsGamesPlayed}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Minutes
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsMinutesPerGame}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Points
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsPointsPerGame}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Rebounds
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsRebounds}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Assists
+                  </TableCell>
+                  <TableCell align="right">Whoops!</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Blocks
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsBlocks}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Steals
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsSteals}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Turnovers
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsTurnovers}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      Fouls
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsFouls}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      FG%
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsFieldGoalPercentage}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      3P%
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsThreePointPercentage}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                      FT%
+                  </TableCell>
+                  <TableCell align="right">{this.state.stats.lsFreeThrowPercentage}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
 
       </Grid>
     )
