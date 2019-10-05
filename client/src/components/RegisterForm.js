@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 // MaterialUI Components
 import TextField from '@material-ui/core/TextField';
@@ -6,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 // React Components
 import PrimaryButton from "../components/PrimaryButton";
 
-// React APIs 
+// React APIs
 import API from "../utils/API";
 
 export default class RegisterForm extends Component {
@@ -23,7 +24,7 @@ export default class RegisterForm extends Component {
             float: "left"
         },
         register: {
-            width: "80%",
+            width: "80%"
         }
     }
 
@@ -35,21 +36,22 @@ export default class RegisterForm extends Component {
     };
 
     handleInputChange = event => {
-		const { name, value } = event.target;
-	
-		this.setState({
-			[name]: value
-		});
+        const {name, value} = event.target;
+
+        this.setState({[name]: value});
     };
 
     handleSubmitForm = () => {
         let newSignup = {
-            firstName : this.state.firstName,
-            lastName : this.state.lastName,
-            email : this.state.email,
-            password : this.state.password
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password
         }
-        API.signup(newSignup).then(res => console.log(res)).catch(err => console.log(err));
+        API
+            .signup(newSignup)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     };
 
     render() {
@@ -62,8 +64,7 @@ export default class RegisterForm extends Component {
                     value={this.state.firstName}
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={this.styles.register}
-                />
+                    style={this.styles.register}/>
                 <TextField
                     id="last-name"
                     label="Last Name"
@@ -71,8 +72,7 @@ export default class RegisterForm extends Component {
                     value={this.state.lastName}
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={this.styles.register}
-                />
+                    style={this.styles.register}/>
                 <TextField
                     id="email"
                     label="Email"
@@ -80,8 +80,7 @@ export default class RegisterForm extends Component {
                     value={this.state.email}
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={this.styles.register}
-                />
+                    style={this.styles.register}/>
                 <TextField
                     id="password"
                     label="Password"
@@ -89,10 +88,17 @@ export default class RegisterForm extends Component {
                     name="password"
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={this.styles.register}
-                    />
-                <PrimaryButton color={"secondary"} style={this.styles.secButton} message={"Register"} />
-                <PrimaryButton color={"default"} style={this.styles.defButton} message={"Cancel"} />
+                    style={this.styles.register}/>
+                <PrimaryButton
+                    color={"secondary"}
+                    style={this.styles.secButton}
+                    message={"Register"}/>
+                <PrimaryButton
+                    component={Link}
+                    to={"/login"}
+                    color={"default"}
+                    style={this.styles.defButton}
+                    message={"Cancel"}/>
             </form>
         )
     }
