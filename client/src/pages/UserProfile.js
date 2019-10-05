@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // Material-UI Components
 import UILink from '@material-ui/core/Link';
@@ -48,33 +48,23 @@ export default class UserProfile extends Component {
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
         var token = userData.data.token;
-        axios.get(`/api/users/${userId}`,
-        {
+        axios
+            .get(`/api/users/${userId}`, {
             headers: {
                 Authorization: `${token}`
             }
-        }).then(res => {
-            var {firstName, lastName, email, imageFile} = res.data;
-            if (res.data.imageFile === "" || res.data.imageFile === undefined) {
-                this.setState({
-                    shownName: firstName,
-                    firstName,
-                    lastName,
-                    email,
-                    avatarUrl: "avatar.png"
-                }) 
-            } else {
-                this.setState({
-                    shownName: firstName,
-                    firstName,
-                    lastName,
-                    email,
-                    avatarUrl: imageFile
-                }) 
-            }
-        }).catch(err => {
-            console.log(err)
         })
+            .then(res => {
+                var {firstName, lastName, email, imageFile} = res.data;
+                if (res.data.imageFile === "" || res.data.imageFile === undefined) {
+                    this.setState({shownName: firstName, firstName, lastName, email, avatarUrl: "avatar.png"})
+                } else {
+                    this.setState({shownName: firstName, firstName, lastName, email, avatarUrl: imageFile})
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
     }
 
@@ -89,32 +79,24 @@ export default class UserProfile extends Component {
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
         var token = userData.data.token;
-        axios.put(`/api/users/${userId}`, 
-        {
+        axios.put(`/api/users/${userId}`, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email
         }, {
             headers: {
-                Authorization: `${token}`,     
-            }}).then(res => {
-                var { firstName, lastName, email} = res.data;
-                this.setState({
-                    shownName: firstName,
-                    firstName,
-                    lastName,
-                    email,
-                    alertShow: true
-                })
-            }).catch(err => {
-                console.log(err)
-            }) 
+                Authorization: `${token}`
+            }
+        }).then(res => {
+            var {firstName, lastName, email} = res.data;
+            this.setState({shownName: firstName, firstName, lastName, email, alertShow: true})
+        }).catch(err => {
+            console.log(err)
+        })
     };
 
     handleClose = () => {
-        this.setState({
-            alertShow: false
-        })
+        this.setState({alertShow: false})
     }
 
     render() {
@@ -125,7 +107,7 @@ export default class UserProfile extends Component {
                     style={this.styles.avatar}
                     src={this.state.avatarUrl}
                     alt={this.state.name + " profile picture"}/>
-                <UILink style={this.styles.link} component={ Link } to="/update-avatar">Update Avatar</UILink>
+                <UILink style={this.styles.link} component={Link} to="/update-avatar">Update Avatar</UILink>
                 <Box>
                     <TextField
                         id="first-name"
@@ -153,8 +135,12 @@ export default class UserProfile extends Component {
                         style={this.styles.input}/>
                 </Box>
                 <UILink style={this.styles.link} onClick={this.handleSubmitForm}>Update Profile Info</UILink>
-                <UILink style={this.styles.link} component={ Link } to="/update-password">Update Password</UILink>
-                <Alert alertTitle={"Update Successful"} handleClose={this.handleClose} open={this.state.alertShow} alertBody={"Your user profile was updated successfully."} />
+                <UILink style={this.styles.link} component={Link} to="/update-password">Update Password</UILink>
+                <Alert
+                    alertTitle={"Update Successful"}
+                    handleClose={this.handleClose}
+                    open={this.state.alertShow}
+                    alertBody={"Your user profile was updated successfully."}/>
             </div>
         )
     }

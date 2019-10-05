@@ -32,7 +32,8 @@ module.exports = function(app) {
         db.Users.findOne({ where: { email } }).then((user) => {
             // Check the user exists
             if (!user) {
-                return res.status(404).json({ msg: 'User not found.' });
+                console.log("error")
+                return res.status(404).json({ msgTitle: 'User Not Found', msgBody: 'Please enter a valid email or click "Register" to create a new account.' });
             }
 
             let currentUser = user.get();
@@ -66,9 +67,12 @@ module.exports = function(app) {
                                 }
                             );
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {
+                            console.log(err);
+                            res.status(200).json(err.response)
+                        });
                 } else {
-                    return res.status(400).json({ msg: 'User password could not be validated.' });
+                    return res.status(400).json({ msgTitle: 'Incorrect Password', msgBody: 'Please enter the correct password for this account.' });
                 }
             });
         });
@@ -77,7 +81,7 @@ module.exports = function(app) {
     app.get('/api/auth/logout', passport.authenticate('jwt', { session: false }), function(req, res){
         req.logout();
         res.json({
-            msg: "You have been successfully logout",
+            msgTitle: 'Logout Successful', msgBody: 'You have been successfully logged out.',
             success: true
         })
       });
