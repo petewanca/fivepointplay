@@ -35,7 +35,8 @@ const styles = {
 export default class PlayerProfile extends Component {
   state = {
     stats: [],
-    fantasy: []
+    fantasy: [],
+    profile: []
   }
   
   saveToList = () => {
@@ -60,8 +61,6 @@ export default class PlayerProfile extends Component {
     } else {
       alert('You must log in to use this functionality.')
     }
-
-
   }
 
   getStats = () => {
@@ -85,10 +84,22 @@ export default class PlayerProfile extends Component {
     }).catch(err => console.log(err));
   }
 
+  getProfileInfo = () => {
+    axios.post("/api/player-profile/", {
+      playerName: this.props.location.state.players.playerName,
+      teamName: this.props.location.state.players.teamName
+    }).then(res => {
+      this.setState({
+        profile: res.data
+      })
+    }).catch(err => console.log(err))
+  }
+
   componentDidMount = () => {
     console.log("component mounted")
     this.getStats();
     this.getFantasyValue();
+    this.getProfileInfo();
   }
 
   render() {
@@ -137,7 +148,7 @@ export default class PlayerProfile extends Component {
                   <TableCell component="th" scope="row">
                       Position
                   </TableCell>
-                  <TableCell align="right">{props.position}</TableCell>
+                  <TableCell align="right">{this.state.profile.position}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
