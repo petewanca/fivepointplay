@@ -17,12 +17,21 @@ import API from "../utils/API";
 import Alert from "../components/Alert";
 
 const styles = {
-    button: {
-        marginTop: "2rem",
-        width: "80%"
+    priButton: {
+        marginTop: "1rem",
+        marginLeft: "1rem",
+        float: "right"
+    },
+    defButton: {
+        marginTop: "1rem",
+        float: "left"
     },
     login: {
-        width: "80%"
+        width: "80%",
+    },
+    buttonContainer: {
+        width: "80%",
+        margin: "1rem auto",
     }
 }
 
@@ -43,7 +52,8 @@ export default class LoginForm extends Component {
         this.setState({[name]: value});
     };
 
-    handleSubmitForm = () => {
+    handleSubmitForm = event => {
+        event.preventDefault();
         let newLogin = {
             email: this.state.email,
             password: this.state.password
@@ -76,7 +86,7 @@ export default class LoginForm extends Component {
 
         return (
             <div>
-                <form noValidate autoComplete="off">
+                <form onSubmit={this.handleSubmitForm}>
                     <TextField
                         id="email"
                         label="Email"
@@ -94,17 +104,29 @@ export default class LoginForm extends Component {
                         onChange={this.handleInputChange}
                         margin="normal"
                         style={styles.login}/>
+                    <div style={styles.buttonContainer}>
                     <Button
                         onClick={this.handleSubmitForm}
-                        style={styles.button}
-                        variant="outlined"
-                        size="small">Log In</Button>
+                        style={styles.priButton}
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                        >Log In</Button>
                     <Button
                         component={ Link }
                         to={"/register"}
-                        style={styles.button}
-                        variant={"outlined"}
+                        color="primary"
+                        style={styles.priButton}
+                        variant={"contained"}
                         message={"Log In"}>Register</Button>
+                    <Button
+                        component={Link}
+                        to={"/"}
+                        color={"default"}
+                        variant="contained"
+                        style={styles.defButton}
+                        >Cancel</Button>
+                    </div>
                 </form>
                 <Alert
                     alertTitle={this.state.alertTitle}

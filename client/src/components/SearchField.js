@@ -13,25 +13,14 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 const styles = {
-    textfieldBox: {
-        marginTop: ".5rem"
+    search : {
+      margin: "1rem 0",
+      padding: "18.5px 14px",
+      lineHeight: "1.25rem"
     },
-    textfield : {
-        width: "30%",
-    },
-    profileButton: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      border: 0,
-      borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
-      height: 48,
-      padding: '0 30px',
-    },
-    searchButton: {
-      width: "10%",
-      padding: "13.5px 16px",
-      margin: "20px 0 0 5px"
+    searchButton : {
+      float: "right",
+      marginTop: '1rem'
     },
     playerImage: {
       width: "100%",
@@ -49,9 +38,6 @@ const styles = {
     },
     cardContainer: {
       textDecoration: "none",
-    },
-    searchForm: {
-      marginBottom: "5%"
     }
 };
 
@@ -62,17 +48,16 @@ export default class SearchField extends Component {
   }
 
   // get search field value and set to state
-  handleChange = (e) => {
-    this.setState({playerSearch: e.target.value})
+  handleChange = event => {
+    this.setState({playerSearch: event.target.value})
   };
 
   // use search field value to call db and
   // hits Players table and sets state to returned players
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
       axios.get(`/api/findPlayer/${this.state.playerSearch}`, (req, res) => {
       }).then(res => {
-        console.log(res.data);
         this.setState({players: res.data})
       }).catch(err => console.log(err));
   };
@@ -80,21 +65,30 @@ export default class SearchField extends Component {
   render() {
     return (
       <div>
-        <form style={styles.searchForm} onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
+          <Button
+                fullWidth
+                style={styles.search}
+                size="large"
+                variant="outlined"
+                component={ Link }
+                to="/all-teams"
+                >All Teams</Button>
           <TextField
+              fullWidth
               id="search"
-              label="player"
+              label="Player Search"
               name="search"
-              value={this.state.playerSearch}
-              onChange={this.handleChange}
-              margin="normal"
-              style={styles.textfield}/>
+              variant="outlined"
+              value={this.state.searchField}
+              onChange={this.handleChange}/>
           <Button
               style={styles.searchButton}
-              variant="outlined"
-              margin="normal"
+              size="large"
+              color="secondary"
+              variant="contained"
               onClick={this.handleSubmit}
-              size="small">Search</Button>
+              >Search</Button>
         </form>
 
         {/* search results area for players */}

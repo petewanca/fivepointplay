@@ -5,7 +5,6 @@ import { Link }  from 'react-router-dom';
 const styles = {
     button: {
         width: "80%",
-        padding: "13.5px 16px",
     }
 }
 

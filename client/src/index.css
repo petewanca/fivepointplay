@@ -24,3 +24,21 @@
     font-weight: 500;
     font-style: normal;
 }
+
+html {
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #FFF;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #777;
+    border-radius: 10px;
+    -webkit-transition: color 0.25s ease;
+}
