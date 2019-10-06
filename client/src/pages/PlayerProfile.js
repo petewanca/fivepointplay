@@ -100,11 +100,6 @@ export default class PlayerProfile extends Component {
             .catch(err => console.log(err));
     }
 
-    componentDidMount = () => {
-        this.getStats();
-        this.getFantasyValue();
-    }
-
     getProfileInfo = () => {
         axios
             .post("/api/player-profile/", {
@@ -124,8 +119,6 @@ export default class PlayerProfile extends Component {
     }
 
     render() {
-        const props = this.props.location.state.players;
-
         return (
             <div>
 

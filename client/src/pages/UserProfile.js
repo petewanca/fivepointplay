@@ -94,7 +94,7 @@ export default class UserProfile extends Component {
       axios.get(`/api/retrieve-favorites/${param}`, (req, res) => {})
       .then(response => {
         let results = [];
-        console.log(response)
+        // console.log(response)
         response.data.forEach(item =>{
           results.push({
             playerName: item.playerName,
@@ -106,8 +106,17 @@ export default class UserProfile extends Component {
       .catch(err => console.log(err));
     };
 
-    handleDeletePlayer = () => {
-
+    handleDeletePlayer = (player) => {
+      var jwt = localStorage.getItem("jwt");
+      var userData = JSON.parse(jwt);
+      var userId = userData.data.id;
+      console.log(player)
+      
+      axios.delete(`/api/delete-from-list/${userId}/${player.playerName}/${player.teamName}`, (req, res) => {
+      }).then(res => {
+        console.log(res)
+        this.getFavorites(userId)
+      }).catch(err => {console.log(err)});
     }
 
     handleInputChange = event => {
@@ -206,7 +215,7 @@ export default class UserProfile extends Component {
                                 }}>
                                   {player.playerName}
                                 </UILink>
-                                <DeleteIcon style={this.styles.delete}></DeleteIcon>
+                                <DeleteIcon onClick={() => this.handleDeletePlayer(player)} style={this.styles.delete}></DeleteIcon>
                               </TableCell>
                               <TableCell align="right">{player.teamName}</TableCell>
                           </TableRow>
