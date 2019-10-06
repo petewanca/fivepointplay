@@ -1,4 +1,4 @@
-# Five Point Play <img align="right" width="100" height="100" src="../media/icon.png">
+# Five Point Play <img align="right" width="100" height="100" src="../media/logo.png">
 Live Link: Coming Soon ...  
    
 ## Purpose  
@@ -55,4 +55,7 @@ To get started ...
 
 **Step 2** - **HACK AWAY!** 🔨🔨🔨
 
-**Step 3** - 🔃 Create a new pull request using [https://github.com/petewanca/fivepointplay/compare](https://github.com/petewanca/fivepointplay/compare)
+**Step 3** - 🔃 Create a new pull request using [https://github.com/petewanca/fivepointplay/compare](https://github.com/petewanca/fivepointplay/compare)  
+
+### Acknowledgements  
+
