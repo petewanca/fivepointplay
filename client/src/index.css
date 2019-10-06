@@ -26,7 +26,8 @@
 }
 
 html {
-    overflow-y: scroll;
+    overflow-y: overlay;
+    width: "100vw"
 }
 
 ::-webkit-scrollbar {
@@ -41,4 +42,11 @@ html {
     background-color: #777;
     border-radius: 10px;
     -webkit-transition: color 0.25s ease;
+}
+
+@media only screen and (min-width: 1200px) {
+    html {
+        width: 70%;
+        margin: 0 auto;
+    }
 }

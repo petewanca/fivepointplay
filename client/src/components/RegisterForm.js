@@ -17,16 +17,18 @@ export default class RegisterForm extends Component {
     styles = {
         secButton: {
             marginTop: "1rem",
-            marginRight: "1.7rem",
             float: "right"
         },
         defButton: {
             marginTop: "1rem",
-            marginLeft: "1.7rem",
             float: "left"
         },
         register: {
             width: "80%"
+        },
+        buttonContainer: {
+            width: "80%",
+            margin: "1rem auto",
         }
     }
 
@@ -78,7 +80,7 @@ export default class RegisterForm extends Component {
 
         return (
             <div>
-                <form noValidate autoComplete="off">
+                <form onSubmit={this.handleSubmitForm}>
                     <TextField
                         id="first-name"
                         label="First Name"
@@ -112,11 +114,13 @@ export default class RegisterForm extends Component {
                         onChange={this.handleInputChange}
                         margin="normal"
                         style={this.styles.register}/>
+                    <div style={this.styles.buttonContainer}>
                     <Button
                         onClick={this.handleSubmitForm}
                         color={"secondary"}
                         variant="contained"
                         style={this.styles.secButton}
+                        type="submit"
                         >Register</Button>
                     <Button
                         component={Link}
@@ -125,6 +129,7 @@ export default class RegisterForm extends Component {
                         variant="contained"
                         style={this.styles.defButton}
                         >Cancel</Button>
+                    </div>
                 </form>
                 <Alert
                     alertTitle={this.state.alertTitle}

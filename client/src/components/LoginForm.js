@@ -106,6 +106,13 @@ export default class LoginForm extends Component {
                         style={styles.login}/>
                     <div style={styles.buttonContainer}>
                     <Button
+                        component={Link}
+                        to={"/"}
+                        color={"default"}
+                        variant="contained"
+                        style={styles.defButton}
+                        >Cancel</Button>
+                    <Button
                         onClick={this.handleSubmitForm}
                         style={styles.priButton}
                         variant="contained"
@@ -119,13 +126,6 @@ export default class LoginForm extends Component {
                         style={styles.priButton}
                         variant={"contained"}
                         message={"Log In"}>Register</Button>
-                    <Button
-                        component={Link}
-                        to={"/"}
-                        color={"default"}
-                        variant="contained"
-                        style={styles.defButton}
-                        >Cancel</Button>
                     </div>
                 </form>
                 <Alert

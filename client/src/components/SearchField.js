@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link }  from 'react-router-dom';
+
 // Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,11 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 const styles = {
+  // container: {
+  //   width: "80%",
+  //   margin: "0 auto",
+  //   paddingTop: "11rem"
+  // },
     search : {
       margin: "1rem 0",
       padding: "18.5px 14px",
@@ -64,7 +70,7 @@ export default class SearchField extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <form onSubmit={this.handleSubmit}>
           <Button
                 fullWidth

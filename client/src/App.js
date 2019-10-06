@@ -31,10 +31,11 @@ import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import axios from 'axios';
 
 const styles = {
-    header: {
-        height: "21vh",
-        padding: 0
-    },
+    container: {
+        width: "80%",
+        margin: "0 auto",
+        paddingTop: "15vh"
+      },
     wrapper: {
         padding: "0 1rem",
         textAlign: "center"
@@ -128,7 +129,7 @@ export default class App extends Component {
                 <CssBaseline>
                     <Box style={styles.wrapper}>
                         <Router>
-                            <Box style={styles.header}>
+                            <Box>
                                 <Logo/> {this.state.isLoggedIn
                                     ? (
                                         <div>
@@ -165,6 +166,7 @@ export default class App extends Component {
                                     Search
                                 </Button>
                             </Box>
+                            <Box style={styles.container}>
                             <Switch>
                                 <Route exact path="/register" component={Register}/>
                                 <Route
@@ -181,6 +183,7 @@ export default class App extends Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route component={Error404}/>
                             </Switch>
+                            </Box>
                         </Router>
                     </Box>
                 </CssBaseline>
