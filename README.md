@@ -5,7 +5,17 @@ Live Link: Coming Soon ...
 Five Point Play allows fantasy basketball participants view player statistics, assess fantasy values based on specific league systems, and save players to a personalized list.  
 
 ## Screenshots  
-
+**All Teams Search - Desktop**
+![All Teams Screenshot](../media/allteams.png?raw=true)  
+  
+**All Teams Search - Mobile**
+![All Teams Screenshot](../media/allteams-mobile.png?raw=true)  
+  
+**Player Profile - Desktop**
+![All Teams Screenshot](../media/playerprofile.png?raw=true)  
+  
+**Player Profile - Mobile**
+![All Teams Screenshot](../media/playerprofile-mobile.png?raw=true)
   
 ## Instructions  
 1. Navigate to --insert link here--.
@@ -25,8 +35,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 | <a href="http://petewanca.github.io/portfolio" target="_blank">**Pete Wanca**</a> | <a href="https://terrence.codes" target="_blank">**Terrence Mahnken**</a> |
 | :---: | :---: |
 | [![Pete Wanca GitHub Profile Pic](https://avatars1.githubusercontent.com/u/31027058?v=3&s=200)](http://fvcproductions.com)    | [![Terrence Mahnken GitHub Profile Pic](https://avatars1.githubusercontent.com/u/25600473?v=3&s=200)](http://fvcproductions.com) |
-| :--- | :--- |
-| <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> | <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> |
+| <a href="mailto:petewanca@gmail.com" target="_blank">(../media/email.png?raw=true)</a><a href="https://github.com/petewanca" target="_blank">(../media/github.png?raw=true)</a><a href="https://www.linkedin.com/in/petewanca/" target="_blank">(../media/linkedin.png?raw=true)</a> | <a href="mailto:terrencemm2@gmail.com" target="_blank">(../media/email.png?raw=true)</a><a href="mailto:petewanca@gmail.com" target="_blank">(../media/github.png?raw=true)</a><a href="https://www.linkedin.com/in/terrencemahnken/" target="_blank">(../media/linkedin.png?raw=true)</a><a href="https://twitter.com/TerrenceMahnken" target="_blank">(../media/twitter.png?raw=true)</a>
  
 ### Built With
 - HTML, CSS, & JavaScript
