@@ -106,20 +106,21 @@ export default class PlayerProfile extends Component {
     }
 
     getProfileInfo = () => {
-      axios.post("/api/player-profile/", {
-        playerName: this.props.location.state.players.playerName,
-        teamName: this.props.location.state.players.teamName
-      }).then(res => {
-        this.setState({
-          profile: res.data
+        axios
+            .post("/api/player-profile/", {
+            playerName: this.props.location.state.players.playerName,
+            teamName: this.props.location.state.players.teamName
         })
-      }).catch(err => console.log(err))
+            .then(res => {
+                this.setState({profile: res.data})
+            })
+            .catch(err => console.log(err))
     }
-  
+
     componentDidMount = () => {
-      this.getStats();
-      this.getFantasyValue();
-      this.getProfileInfo();
+        this.getStats();
+        this.getFantasyValue();
+        this.getProfileInfo();
     }
 
     render() {
@@ -142,57 +143,59 @@ export default class PlayerProfile extends Component {
                         </Grid>
                     </Grid>
 
-        <Grid item xs={12} md={9} lg={9} xl={9}>
-          <img style={styles.playerImage} src={this.state.profile.playerImage} alt="profile pic"></img>
-          {/* <img style={styles.teamLogo} src={props.teamLogo} alt="team logo"></img>           */}
-          <h1 >{this.state.profile.playerName}</h1>
-        </Grid>
+                    <Grid item xs={12} md={9} lg={9} xl={9}>
+                        <img
+                            style={styles.playerImage}
+                            src={this.state.profile.playerImage}
+                            alt="profile pic"></img>
+                        <h1 >{this.state.profile.playerName}</h1>
+                    </Grid>
 
-        {/* Gen Info Table */}
-        <Grid item xs={12} md={4} lg={4} xl={4}>
-          <Paper style={styles.root}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>General Info</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                      Team
-                  </TableCell>
-                  <TableCell align="right">{this.state.profile.teamName}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                      Position
-                  </TableCell>
-                  <TableCell align="right">{this.state.profile.position}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                      Height
-                  </TableCell>
-                  <TableCell align="right">{this.state.profile.height}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                      Weight
-                  </TableCell>
-                  <TableCell align="right">{this.state.profile.weight}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                      Age
-                  </TableCell>
-                  <TableCell align="right">{this.state.profile.age}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+                    {/* Gen Info Table */}
+                    <Grid item xs={12} md={4} lg={4} xl={4}>
+                        <Paper style={styles.root}>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>General Info</TableCell>
+                                        <TableCell></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            Team
+                                        </TableCell>
+                                        <TableCell align="right">{this.state.profile.teamName}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            Position
+                                        </TableCell>
+                                        <TableCell align="right">{this.state.profile.position}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            Height
+                                        </TableCell>
+                                        <TableCell align="right">{this.state.profile.height}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            Weight
+                                        </TableCell>
+                                        <TableCell align="right">{this.state.profile.weight}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            Age
+                                        </TableCell>
+                                        <TableCell align="right">{this.state.profile.age}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Paper>
+                    </Grid>
 
                     {/* Stats Table */}
                     <Grid item xs={12} md={4} lg={4} xl={4}>
