@@ -34,14 +34,14 @@ const styles = {
     container: {
         width: "80%",
         margin: "0 auto",
-        paddingTop: "15vh"
+        paddingTop: "17vh"
       },
     wrapper: {
         padding: "0 1rem",
         textAlign: "center"
     },
     priButton: {
-        margin: ".5rem",
+        margin: "1rem 0 0 1rem",
         float: "right"
     }
 };

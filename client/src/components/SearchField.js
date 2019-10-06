@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link }  from 'react-router-dom';
 
 // Material-UI Components
+import UILink from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -14,11 +15,6 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 const styles = {
-  // container: {
-  //   width: "80%",
-  //   margin: "0 auto",
-  //   paddingTop: "11rem"
-  // },
     search : {
       margin: "1rem 0",
       padding: "18.5px 14px",
@@ -70,7 +66,7 @@ export default class SearchField extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
+      <div>
         <form onSubmit={this.handleSubmit}>
           <Button
                 fullWidth
@@ -104,7 +100,7 @@ export default class SearchField extends Component {
             <Grid item xs={12} md={4} lg={4} xl={4}>
             <Card style={styles.card}>
               <CardActionArea>
-              <Link style={styles.cardContainer} to={{
+              <UILink component={ Link } style={styles.cardContainer} to={{
               pathname: '/player-profile',
                 state: {
                   players: player
@@ -124,7 +120,7 @@ export default class SearchField extends Component {
                     {player.position}  |  {player.teamName}
                   </Typography>
                 </CardContent>
-                </Link>
+                </UILink>
               </CardActionArea>
             </Card>
             </Grid>
