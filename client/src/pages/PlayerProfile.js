@@ -44,6 +44,7 @@ export default class PlayerProfile extends Component {
     state = {
         stats: [],
         fantasy: [],
+        profile: [],
         alertShow: false,
         alertTitle: "",
         alertBody: ""
@@ -104,23 +105,25 @@ export default class PlayerProfile extends Component {
         this.getFantasyValue();
     }
 
-  getProfileInfo = () => {
-    axios.post("/api/player-profile/", {
-      playerName: this.props.location.state.players.playerName,
-      teamName: this.props.location.state.players.teamName
-    }).then(res => {
-      this.setState({
-        profile: res.data
-      })
-    }).catch(err => console.log(err))
-  }
+    getProfileInfo = () => {
+      axios.post("/api/player-profile/", {
+        playerName: this.props.location.state.players.playerName,
+        teamName: this.props.location.state.players.teamName
+      }).then(res => {
+        this.setState({
+          profile: res.data
+        })
+      }).catch(err => console.log(err))
+    }
+  
+    componentDidMount = () => {
+      this.getStats();
+      this.getFantasyValue();
+      this.getProfileInfo();
+    }
 
-  componentDidMount = () => {
-    console.log("component mounted")
-    this.getStats();
-    this.getFantasyValue();
-    this.getProfileInfo();
-  }
+    render() {
+        const props = this.props.location.state.players;
 
         return (
             <div>
@@ -141,6 +144,7 @@ export default class PlayerProfile extends Component {
 
         <Grid item xs={12} md={9} lg={9} xl={9}>
           <img style={styles.playerImage} src={this.state.profile.playerImage} alt="profile pic"></img>
+          {/* <img style={styles.teamLogo} src={props.teamLogo} alt="team logo"></img>           */}
           <h1 >{this.state.profile.playerName}</h1>
         </Grid>
 
