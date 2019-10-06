@@ -39,7 +39,8 @@ export default class RegisterForm extends Component {
         password: "",
         alertShow: false,
         alertTitle: "",
-        alertBody: ""
+        alertBody: "",
+        redirect: false
     };
 
     handleInputChange = event => {
@@ -48,7 +49,8 @@ export default class RegisterForm extends Component {
         this.setState({[name]: value});
     };
 
-    handleSubmitForm = () => {
+    handleSubmitForm = event => {
+        event.preventDefault();
         let newSignup = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
