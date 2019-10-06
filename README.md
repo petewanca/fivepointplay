@@ -28,7 +28,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 | :--- | :--- |
 | <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> | <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> |
  
-### Technology
+### Built With
 - HTML, CSS, & JavaScript
 - [React](https://reactjs.org/)
 - [Material-UI](https://material-ui.com/)
