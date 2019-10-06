@@ -238,7 +238,7 @@ module.exports = function(app) {
 
     switch(type) {
       case "standard":
-        console.log("standard scoring system")
+        // console.log("standard scoring system")
         db.Stats.findAll({
           attributes: [
             'id', 'playerName', 'team', 'position', 'image', 'lsGamesPlayed', 'lsMinutesPerGame',
@@ -276,10 +276,10 @@ module.exports = function(app) {
         }).catch(err => res.json(err));
         break;
       case "espn":
-        console.log("espn");
+        // console.log("espn");
         break;
       case "yahoo":
-        console.log("yahoo");
+        // console.log("yahoo");
       break;
       default:
         console.log("no score system selected")
@@ -319,7 +319,19 @@ module.exports = function(app) {
     })
     .catch(err => res.json(err));
 
-  })
+  });
+
+  app.delete("/api/delete-from-list/:userId/:playerName/:teamName", (req, res) => {
+    db.Lists.destroy({
+      where: {
+        playerName: req.params.playerName,
+        teamName: req.params.teamName,
+        UserId: req.params.userId
+      }
+    }).then(res => {
+      res.json(res)
+    }).catch(err => res.json(err));
+  });
 
   // get player profile
   app.post("/api/player-profile/", (req, res) => {
@@ -346,7 +358,7 @@ module.exports = function(app) {
       })
       res.json(player)
     }).catch(err => res.status(404).json(err));
-  })
+  });
 
   // =================================================================================
   // =========================== don't even think about it =========================== 

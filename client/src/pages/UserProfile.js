@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // Material-UI Components
 import UILink from '@material-ui/core/Link';
@@ -38,10 +39,18 @@ export default class UserProfile extends Component {
             margin: ".5rem 0 1rem 0",
             display: "block"
         },
+        playerLink: {
+            margin: ".5rem 0 1rem 0"
+        },
         root: {
           maxWidth: '100%',
           overflowX: 'auto',
           marginBottom: "5%"
+        },
+        delete: {
+            fontSize: "1.25rem",
+            marginLeft: "1rem",
+            marginBottom: "-.2rem"
         }
     }
 
@@ -85,6 +94,7 @@ export default class UserProfile extends Component {
       axios.get(`/api/retrieve-favorites/${param}`, (req, res) => {})
       .then(response => {
         let results = [];
+        // console.log(response)
         response.data.forEach(item =>{
           results.push({
             playerName: item.playerName,
@@ -95,6 +105,19 @@ export default class UserProfile extends Component {
       })
       .catch(err => console.log(err));
     };
+
+    handleDeletePlayer = (player) => {
+      var jwt = localStorage.getItem("jwt");
+      var userData = JSON.parse(jwt);
+      var userId = userData.data.id;
+      console.log(player)
+      
+      axios.delete(`/api/delete-from-list/${userId}/${player.playerName}/${player.teamName}`, (req, res) => {
+      }).then(res => {
+        console.log(res)
+        this.getFavorites(userId)
+      }).catch(err => {console.log(err)});
+    }
 
     handleInputChange = event => {
         const {name, value} = event.target;
@@ -170,6 +193,7 @@ export default class UserProfile extends Component {
                     open={this.state.alertShow}
                     alertBody={"Your user profile was updated successfully."}/>
 
+                <h2>Saved Players</h2> 
                 <Paper style={this.styles.root}>
                   <Table>
                     <TableHead>
@@ -183,14 +207,15 @@ export default class UserProfile extends Component {
                           this.state.favorites.map(player => (
                           <TableRow>
                               <TableCell component="th" scope="row">
-                                <Link style={this.styles.link} to={{
+                                <UILink component={Link} style={this.styles.playerLink} to={{
                                   pathname: '/player-profile',
                                     state: {
                                     players: player
                                   }
                                 }}>
                                   {player.playerName}
-                                </Link>
+                                </UILink>
+                                <DeleteIcon onClick={() => this.handleDeletePlayer(player)} style={this.styles.delete}></DeleteIcon>
                               </TableCell>
                               <TableCell align="right">{player.teamName}</TableCell>
                           </TableRow>
