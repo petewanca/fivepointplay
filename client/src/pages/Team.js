@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link }  from 'react-router-dom';
 import axios from 'axios';
+
+// Material UI Components
+import UILink from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,6 +12,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 const styles = {
+  container: {
+    width: "80%",
+    margin: "0 auto"
+  },
   root: {
     maxWidth: '100%',
     overflowX: 'auto',
@@ -36,7 +43,6 @@ export class Team extends Component {
     axios
       .get(`/api/getTeam/${teamName}`)
       .then(res => {
-        console.log(res.data)
         this.setState({
           teamName: teamName,
           teamLogo: teamLogo,
@@ -48,7 +54,7 @@ export class Team extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <img style={styles.logo} src={this.state.teamLogo} alt="teamLogo" />
         <h1>{this.state.teamName}</h1>
 
@@ -64,14 +70,14 @@ export class Team extends Component {
               {this.state.roster.map(player => (
                 <TableRow key={player.id}>
                     <TableCell component="th" scope="row">
-                      <Link style={styles.link} to={{
+                      <UILink component={Link} style={styles.link} to={{
                         pathname: '/player-profile',
                           state: {
                           players: player
                         }
                       }}>
                         {player.playerName}
-                      </Link>
+                      </UILink>
                     </TableCell>
                     <TableCell align="right">{player.position}</TableCell>
                 </TableRow>

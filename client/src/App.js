@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import { Link }  from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // Custom fonts
 import "./index.css"
@@ -31,27 +31,31 @@ import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import axios from 'axios';
 
 const styles = {
-    header: {
-        height: "21vh",
-        padding: 0
-    },
+    container: {
+        width: "80%",
+        margin: "0 auto",
+        paddingTop: "17vh"
+      },
     wrapper: {
         padding: "0 1rem",
         textAlign: "center"
     },
     priButton: {
-        marginTop: "1rem",
+        margin: "1rem 0 0 1rem",
         float: "right"
-    },
-    link: {
-      textDecoration: "none",
-      "&:visited": {
-        color: "black"
-      }
     }
 };
 
 const theme = createMuiTheme({
+    overrides: {
+        MuiInput: {
+            underline: {
+                '&:hover:not($disabled):before': {
+                    borderBottom: '1px solid #F87C00',
+                }
+            }
+        }
+    },
     palette: {
         background: {
             default: "#FFF"
@@ -93,9 +97,7 @@ export default class App extends Component {
     handleIsLoggedIn = () => {
         var token = localStorage.getItem('jwt');
         if (token !== undefined) {
-            this.setState({
-                isLoggedIn: true
-            })
+            this.setState({isLoggedIn: true})
         } else {
             this.setState({isLoggedIn: false})
         }
@@ -105,18 +107,19 @@ export default class App extends Component {
         var jwt = localStorage.getItem("jwt");
         var userData = JSON.parse(jwt);
         var token = userData.data.token;
-        axios.get("/api/auth/logout", {
+        axios
+            .get("/api/auth/logout", {
             headers: {
                 Authorization: `${token}`
             }
-        }).then(res => {
-            localStorage.removeItem("jwt");
-            this.setState({
-                isLoggedIn: false
-            })
-        }).catch(err => {
-            console.log(err);
         })
+            .then(res => {
+                localStorage.removeItem("jwt");
+                this.setState({isLoggedIn: false})
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     render() {
@@ -126,34 +129,50 @@ export default class App extends Component {
                 <CssBaseline>
                     <Box style={styles.wrapper}>
                         <Router>
-                            <Box style={styles.header}>
-                                    <Logo/>
-                                    {this.state.isLoggedIn
-                                        ? (
+                            <Box>
+                                <Logo/> {this.state.isLoggedIn
+                                    ? (
                                         <div>
-                                          <Button
-                                            onClick={this.handleLogout}
-                                            color="default"
-                                            style={styles.priButton}
-                                            variant="outlined"
-                                            >Log Out</Button>
-                                            <Button 
-                                              color="default"
-                                              styles={styles.priButton}
-                                              variant="outlined">
-                                                <Link to="/" style={styles.link}>Search</Link>
+                                            <Button
+                                                onClick={this.handleLogout}
+                                                color="default"
+                                                style={styles.priButton}
+                                                variant="outlined">Log Out</Button>
+                                            <Button
+                                                color="default"
+                                                component={Link}
+                                                to="profile"
+                                                style={styles.priButton}
+                                                variant="outlined">
+                                                Profile
                                             </Button>
-                                        </div>)
-                                        : (<LoginButton
-                                            to={"/login"}
-                                            color={"primary"}
-                                            style={styles.priButton}
-                                            message={"Log In"}/>)
-                                    }                       
-                                </Box>
+                                        </div>
+                                    )
+                                    : (
+                                        <div>
+                                            <LoginButton
+                                                to={"/login"}
+                                                color={"primary"}
+                                                style={styles.priButton}
+                                                message={"Log In"}/>
+                                        </div>
+                                    )}
+                                <Button
+                                    color="primary"
+                                    component={Link}
+                                    to="/"
+                                    style={styles.priButton}
+                                    variant="contained">
+                                    Search
+                                </Button>
+                            </Box>
+                            <Box style={styles.container}>
                             <Switch>
                                 <Route exact path="/register" component={Register}/>
-                                <Route exact path="/login" component={() => <Login handleIsLoggedIn={this.handleIsLoggedIn} />} />
+                                <Route
+                                    exact
+                                    path="/login"
+                                    component={() => <Login handleIsLoggedIn={this.handleIsLoggedIn}/>}/>
                                 <Route exact path="/profile" component={UserProfile}/>
                                 <Route exact path="/update-password" component={UpdatePassword}/>
                                 <Route exact path="/update-avatar" component={UpdateAvatar}/>
@@ -164,6 +183,7 @@ export default class App extends Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route component={Error404}/>
                             </Switch>
+                            </Box>
                         </Router>
                     </Box>
                 </CssBaseline>

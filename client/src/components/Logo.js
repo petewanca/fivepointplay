@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const styles = {
     logo: {
@@ -11,6 +12,8 @@ const styles = {
 
 export default function Logo() {
     return (
-        <img style={styles.logo} src="./logo.png" alt="5 Point Play Logo" />
+        <Link to="/">
+            <img style={styles.logo} src="./logo.png" alt="5 Point Play Logo" />
+        </Link>
     )
 }
