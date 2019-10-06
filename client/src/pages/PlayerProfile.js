@@ -122,9 +122,9 @@ export default class PlayerProfile extends Component {
         </Grid>
 
         <Grid item xs={12} md={9} lg={9} xl={9}>
-          <img style={styles.playerImage} src={props.playerImage} alt="profile pic"></img>
+          <img style={styles.playerImage} src={this.state.profile.playerImage} alt="profile pic"></img>
           {/* <img style={styles.teamLogo} src={props.teamLogo} alt="team logo"></img>           */}
-          <h1 >{props.playerName}</h1>
+          <h1 >{this.state.profile.playerName}</h1>
         </Grid>
 
         {/* Gen Info Table */}
@@ -142,7 +142,7 @@ export default class PlayerProfile extends Component {
                   <TableCell component="th" scope="row">
                       Team
                   </TableCell>
-                  <TableCell align="right">{props.teamName}</TableCell>
+                  <TableCell align="right">{this.state.profile.teamName}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -154,19 +154,19 @@ export default class PlayerProfile extends Component {
                   <TableCell component="th" scope="row">
                       Height
                   </TableCell>
-                  <TableCell align="right">{props.height}</TableCell>
+                  <TableCell align="right">{this.state.profile.height}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
                       Weight
                   </TableCell>
-                  <TableCell align="right">{props.weight}</TableCell>
+                  <TableCell align="right">{this.state.profile.weight}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
                       Age
                   </TableCell>
-                  <TableCell align="right">{props.age}</TableCell>
+                  <TableCell align="right">{this.state.profile.age}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

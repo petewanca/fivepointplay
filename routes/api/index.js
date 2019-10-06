@@ -329,9 +329,9 @@ module.exports = function(app) {
         teamName: req.body.teamName
       }
     }).then(response => {
-      let results = [];
+      let player;
       response.forEach(item =>{
-        results.push({
+        player = {
           age: item.dataValues.age,
           height: item.dataValues.height,
           weight: item.dataValues.weight,
@@ -342,10 +342,9 @@ module.exports = function(app) {
           teamName: item.dataValues.teamName,
           position: item.dataValues.position,
           playerImage: item.dataValues.playerImage,
-        })
+        }
       })
-      res.json(results)
-      console.log(results)
+      res.json(player)
     }).catch(err => res.status(404).json(err));
   })
 
