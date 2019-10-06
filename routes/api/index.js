@@ -321,7 +321,33 @@ module.exports = function(app) {
 
   })
 
-  
+  // get player profile
+  app.post("/api/player-profile/", (req, res) => {
+    db.Players.findAll({
+      where: {
+        playerName: req.body.playerName,
+        teamName: req.body.teamName
+      }
+    }).then(response => {
+      let player;
+      response.forEach(item =>{
+        player = {
+          age: item.dataValues.age,
+          height: item.dataValues.height,
+          weight: item.dataValues.weight,
+          teamLogo: item.dataValues.teamLogo,
+          id: item.dataValues.id,
+          playerName: item.dataValues.playerName,
+          playerLink: item.dataValues.playerLink,
+          teamName: item.dataValues.teamName,
+          position: item.dataValues.position,
+          playerImage: item.dataValues.playerImage,
+        }
+      })
+      res.json(player)
+    }).catch(err => res.status(404).json(err));
+  })
+
   // =================================================================================
   // =========================== don't even think about it =========================== 
   // =================================================================================  
