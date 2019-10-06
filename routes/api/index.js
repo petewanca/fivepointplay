@@ -181,7 +181,7 @@ module.exports = function(app) {
 
     switch(type) {
       case "standard":
-        console.log("standard scoring system")
+        // console.log("standard scoring system")
         db.Stats.findOne({
           where: {
             playerName: playerName,
@@ -220,10 +220,10 @@ module.exports = function(app) {
         }).catch(err => res.json(err));
         break;
       case "espn":
-        console.log("espn");
+        // console.log("espn");
         break;
       case "yahoo":
-        console.log("yahoo");
+        // console.log("yahoo");
       break;
       default:
         console.log("no score system selected")

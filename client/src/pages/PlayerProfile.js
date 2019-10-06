@@ -43,8 +43,8 @@ export default class PlayerProfile extends Component {
     let jwt = localStorage.getItem("jwt")
     let userData = JSON.parse(jwt);
     let userId = userData.data.id;
-    let token = userData.data.token;
-    console.log(userId)
+    // let token = userData.data.token;
+    // console.log(userId)
 
     if (userId) {
     axios
@@ -55,7 +55,7 @@ export default class PlayerProfile extends Component {
       })
       .then(res => {
         alert('Player saved to list.')
-        console.log(res)
+        // console.log(res)
       })
       .catch(err => console.log(err));
     } else {
@@ -68,7 +68,7 @@ export default class PlayerProfile extends Component {
       playerName: this.props.location.state.players.playerName,
       team: this.props.location.state.players.teamName
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.setState({stats: res.data})
     }).catch(err => console.log(err));
   }
@@ -79,7 +79,7 @@ export default class PlayerProfile extends Component {
       playerName: this.props.location.state.players.playerName,
       team: this.props.location.state.players.teamName
     }).then(res => {
-      console.log(`fantasy calc: ${res.data}`)
+      // console.log(`fantasy calc: ${res.data}`)
       this.setState({fantasy: res.data})
     }).catch(err => console.log(err));
   }
