@@ -5,16 +5,16 @@ Live Link: Coming Soon ...
 Five Point Play allows fantasy basketball participants view player statistics, assess fantasy values based on specific league systems, and save players to a personalized list.  
 
 ## Screenshots  
-**All Teams Search - Desktop**
+**All Teams Search - Desktop**  
 ![All Teams Screenshot](../media/allteams.png?raw=true)  
   
-**All Teams Search - Mobile**
+**All Teams Search - Mobile**  
 ![All Teams Screenshot](../media/allteams-mobile.png?raw=true)  
   
-**Player Profile - Desktop**
+**Player Profile - Desktop**  
 ![All Teams Screenshot](../media/playerprofile.png?raw=true)  
   
-**Player Profile - Mobile**
+**Player Profile - Mobile**  
 ![All Teams Screenshot](../media/playerprofile-mobile.png?raw=true)
   
 ## Instructions  
@@ -23,7 +23,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
    1. Click the "All Teams" button to view all 30 NBA teams.  
    2. Select a team.  
    3. Choose a player from the current roster.  
-   OR  
+    **OR**  
    - Using the search box, search for a player by name.  
 3. To add a player to a list you must create a local account and login.
 #### User Account Management
@@ -35,7 +35,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 | <a href="http://petewanca.github.io/portfolio" target="_blank">**Pete Wanca**</a> | <a href="https://terrence.codes" target="_blank">**Terrence Mahnken**</a> |
 | :---: | :---: |
 | [![Pete Wanca GitHub Profile Pic](https://avatars1.githubusercontent.com/u/31027058?v=3&s=200)](http://fvcproductions.com)    | [![Terrence Mahnken GitHub Profile Pic](https://avatars1.githubusercontent.com/u/25600473?v=3&s=200)](http://fvcproductions.com) |
-| <a href="mailto:petewanca@gmail.com" target="_blank">(../media/email.png?raw=true)</a><a href="https://github.com/petewanca" target="_blank">(../media/github.png?raw=true)</a><a href="https://www.linkedin.com/in/petewanca/" target="_blank">(../media/linkedin.png?raw=true)</a> | <a href="mailto:terrencemm2@gmail.com" target="_blank">(../media/email.png?raw=true)</a><a href="mailto:petewanca@gmail.com" target="_blank">(../media/github.png?raw=true)</a><a href="https://www.linkedin.com/in/terrencemahnken/" target="_blank">(../media/linkedin.png?raw=true)</a><a href="https://twitter.com/TerrenceMahnken" target="_blank">(../media/twitter.png?raw=true)</a>
+| <a href="mailto:petewanca@gmail.com" target="_blank"><img src="../media/email.png?raw=true"/></a><a href="https://github.com/petewanca" target="_blank"><img src="../media/github.png?raw=true"/></a><a href="https://www.linkedin.com/in/petewanca/" target="_blank"><img src="../media/linkedin.png?raw=true"/></a> | <a href="mailto:terrencemm2@gmail.com" target="_blank"><img src="../media/email.png?raw=true"/></a><a href="https://github.com/TerrenceMM2" target="_blank"><img src="../media/github.png?raw=true"/></a><a href="https://www.linkedin.com/in/terrencemahnken/" target="_blank"><img src="../media/linkedin.png?raw=true"/></a><a href="https://twitter.com/TerrenceMahnken" target="_blank"><img src="../media/twitter.png?raw=true"/></a>
  
 ### Built With
 - HTML, CSS, & JavaScript
