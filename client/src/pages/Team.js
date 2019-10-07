@@ -13,7 +13,6 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = {
   container: {
-    width: "80%",
     margin: "0 auto"
   },
   root: {
@@ -22,7 +21,8 @@ const styles = {
     marginBottom: "5%"
   },
   logo: {
-    margin: 0,
+    margin: "1rem auto",
+    display: "block",
     padding: 0
   },
   link: {
