@@ -21,10 +21,17 @@ const styles = {
         marginBottom: 0,
         paddingBottom: 0
     },
+    playerName: {
+        marginTop: ".5rem",
+        marginBottom: 0
+    },
     teamLogo: {
         maxWidth: "13%",
         padding: 0,
         margin: 0
+    },
+    saveButton: {
+        marginBottom: "1rem"
     },
     root: {
         width: '100%',
@@ -124,24 +131,24 @@ export default class PlayerProfile extends Component {
 
                 <Grid style={styles.container} justify="center" container spacing={3}>
 
-                    <Grid container justify="center" spacing={3}>
-                        <Grid item xs={12} md={2} lg={2} xl={2}>
-                            <Button
-                                color="default"
-                                styles={styles.priButton}
-                                variant="outlined"
-                                onClick={this.saveToList}>
-                                ADD TO LIST
-                            </Button>
-                        </Grid>
-                    </Grid>
-
                     <Grid item xs={12} md={9} lg={9} xl={9}>
                         <img
                             style={styles.playerImage}
                             src={this.state.profile.playerImage}
                             alt="profile pic"></img>
-                        <h1 >{this.state.profile.playerName}</h1>
+                        <h1 style={styles.playerName}>{this.state.profile.playerName}</h1>
+                    </Grid>
+
+                    <Grid container justify="center" spacing={3}>
+                        <Grid item xs={12} md={2} lg={2} xl={2}>
+                            <Button
+                                color="secondary"
+                                style={styles.saveButton}
+                                variant="contained"
+                                onClick={this.saveToList}>
+                                ADD TO LIST
+                            </Button>
+                        </Grid>
                     </Grid>
 
                     {/* Gen Info Table */}
