@@ -16,7 +16,7 @@ export default class UpdateAvatar extends Component {
             maxWidth: "50%"
         },
         link: {
-            margin: ".5rem 0 1rem 0",
+            margin: "1rem 0 1rem 0",
             display: "block"
         }
     }
