@@ -1,5 +1,5 @@
 # Five Point Play <img align="right" width="100" height="100" src="../media/logo.png">
-Live Link: http://fivepointplay.herokuapp.com/player-profile  
+Live Link: http://fivepointplay.herokuapp.com/
    
 ## Purpose  
 Five Point Play allows fantasy basketball participants view player statistics, assess fantasy values based on specific league systems, and save players to a personalized list.  
@@ -18,7 +18,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 ![All Teams Screenshot](../media/playerprofile-mobile.png?raw=true)
   
 ## Instructions  
-1. Navigate to http://fivepointplay.herokuapp.com/player-profile.
+1. Navigate to http://fivepointplay.herokuapp.com/.
 2. To search for a player,  
    1. Click the "All Teams" button to view all 30 NBA teams.  
    2. Select a team.  
@@ -43,6 +43,7 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 - [Material-UI](https://material-ui.com/)
 - [NodeJS](https://nodejs.org/en/)
 - [Express](https://www.npmjs.com/package/express)
+- [Heroku](https://www.heroku.com/)
 - [PassportJS](http://www.passportjs.org/)
 - [MySQL](https://www.mysql.com/)
 - [Sequelize](https://www.npmjs.com/package/sequelize)
