@@ -169,7 +169,6 @@ module.exports = function(app) {
 		"/api/users/password/:id",
 		passport.authenticate("jwt", { session: false }),
 		(req, res) => {
-			console.log(req.body);
             const { passwordNew, passwordVerify } = req.body;
 
             if (passwordNew === passwordVerify) {
@@ -195,7 +194,7 @@ module.exports = function(app) {
                                             id: data.id,
                                             firstName: data.firstName,
 											lastName: data.lastName,
-											avatarUrl: user.imageFile
+											avatarUrl: data.imageFile
                                         };
 
                                         jwt.sign(
@@ -212,6 +211,7 @@ module.exports = function(app) {
                                         );
                                     })
                                     .catch(err => {
+										console.log(err)
                                         res.status(500).json(err);
                                     });
                                 });
