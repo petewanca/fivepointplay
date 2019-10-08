@@ -13,6 +13,11 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 //For passport
 app.use(session({ secret: 'password', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -36,6 +41,7 @@ require("./routes/api/users")(app);
 require("./routes/api/auth")(app);
 require("./routes/api/teams")(app);
 require("./routes/api/list")(app);
+
 
 // Send every request to the React app
 // Define any API routes before this runs
