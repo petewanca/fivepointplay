@@ -1,8 +1,8 @@
-require("dotenv").config();
 var express = require("express");
 var path = require("path");
-var app = express();
 var PORT = process.env.PORT || 3001;
+var app = express();
+require("dotenv").config();
 
 var passport = require("passport");
 var session = require("express-session");
