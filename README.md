@@ -9,13 +9,13 @@ Five Point Play allows fantasy basketball participants view player statistics, a
 ![All Teams Screenshot](../media/allteams.png?raw=true)  
   
 **All Teams Search - Mobile**  
-![All Teams Screenshot](../media/allteams-mobile.png?raw=true)  
+![All Teams Mobile Screenshot](../media/allteams-mobile.png?raw=true)  
   
 **Player Profile - Desktop**  
-![All Teams Screenshot](../media/playerprofile.png?raw=true)  
+![Player Profile Screenshot](../media/playerprofile.png?raw=true)  
   
 **Player Profile - Mobile**  
-![All Teams Screenshot](../media/playerprofile-mobile.png?raw=true)
+![Player Profile Mobile Screenshot](../media/playerprofile-mobile.png?raw=true)
   
 ## Instructions  
 1. Navigate to http://fivepointplay.herokuapp.com/.
