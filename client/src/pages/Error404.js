@@ -2,7 +2,7 @@ import React from 'react';
 
 const styles = {
     image: {
-        width: "100%"
+        width: "50%"
     }
 }
 
