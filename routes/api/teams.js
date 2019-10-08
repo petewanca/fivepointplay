@@ -1,9 +1,6 @@
 module.exports = function(app) {
     const db = require("../../models");
-    const jwt = require('jsonwebtoken');
     const passport = require("passport");
-    const Sequelize = require('sequelize');
-    const Op = Sequelize.Op;
 
     // @route GET api/teams/
 	// @desc secure test of team api
@@ -13,15 +10,6 @@ module.exports = function(app) {
 			msg: "Testing endpoint works correctly.",
 		});
     });
-
-    // app.get("/api/teams", (req, res) => {
-    //     db.Teams.findAll({})
-    //     .then((data) => {
-    //         res.status(200).json(data);
-    //     }).catch((err) => {
-    //         res.status(500).json(err);
-    //     })
-    // });
 
     // @route GET api/team/:team
 	// @desc get all players from team
@@ -37,6 +25,4 @@ module.exports = function(app) {
             res.status(500).json(err);
         })
     })
-    
-
 };

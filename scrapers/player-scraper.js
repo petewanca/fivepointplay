@@ -59,7 +59,6 @@ const teamLinks = [
       counter++
       if (counter === teamLinks.length) {
         data.forEach(item => {
-          // console.log(item.team)
           db.Players.create({
             playerName: item.newPlayerName,
             playerLink: item.newPlayerLink,
@@ -70,3 +69,4 @@ const teamLinks = [
       }
     }).catch(err => res.json(err))
   })
+})

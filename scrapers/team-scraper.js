@@ -1,4 +1,3 @@
-const db = require("../models")
 const cheerio = require("cheerio");
 const axios = require("axios");
 
@@ -42,7 +41,6 @@ teamLinks.forEach(team => {
 
         const $ = cheerio.load(response.data);
         const results = [];
-        const allRosters = [];
         // gets player name and link
         $("#roster tr td[data-stat='player'] a").each(function(i, element) {
             let playerName = $(element).text();
@@ -54,13 +52,7 @@ teamLinks.forEach(team => {
                 playerName,
                 playerLink
             });
-            // take array of players and push to array
-            // allRosters.push({
-            //     team,
-            //     results
-            // });
         });
-
 
         console.log(results);
     });

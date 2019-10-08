@@ -6,6 +6,8 @@ module.exports = function(app) {
 	const keys = require('../../config/keys');
 	var md5 = require('md5');
 
+	// @route Get api/users/:id
+	// @desc gets user information by id
 	app.get("/api/users/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
 		db.Users.findOne({
 			where: {
@@ -38,6 +40,7 @@ module.exports = function(app) {
 					password: req.body.password,
 				};
 
+				// Call bcrypt to hash the password before storing in the database.
 				bcrypt.genSalt(10, (err, salt) => {
 					bcrypt.hash(newUser.password, salt, (err, hash) => {
 						if (err) throw err;
@@ -54,7 +57,7 @@ module.exports = function(app) {
 							.catch(err => console.log(err));
 					});
 				});
-			}
+			};
 		});
 	});
 
@@ -116,13 +119,13 @@ module.exports = function(app) {
 		}
 	);
 
-		// @route PUT api/users/:id
+	// @route PUT api/users/:id
 	// @desc updates a user
 	app.put(
 		"/api/users/avatar/:id",
 		passport.authenticate("jwt", { session: false }),
 		(req, res) => {
-			// Gravatar Code Here
+			// Hashes email to send Gravtar endpoint
 			// https://en.gravatar.com/site/implement/images/
 			// https://en.gravatar.com/site/implement/hash/
 			var hash = md5(req.body.email.trim());
@@ -145,6 +148,7 @@ module.exports = function(app) {
 							avatarUrl: user.imageFile
 						};
 
+						// Updates JSON web token with Avatar URL
 						jwt.sign(
 							payload,
 							keys.secretOrKey,
@@ -211,7 +215,6 @@ module.exports = function(app) {
                                         );
                                     })
                                     .catch(err => {
-										console.log(err)
                                         res.status(500).json(err);
                                     });
                                 });

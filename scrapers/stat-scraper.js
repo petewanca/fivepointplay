@@ -375,7 +375,6 @@ axios.get("https://www.basketball-reference.com/players/p/parsoch01.html").then(
         careerPpg.push(data);
     });
 
-
     // player statistics results object
     results.push({
         playerName,
@@ -433,7 +432,4 @@ axios.get("https://www.basketball-reference.com/players/p/parsoch01.html").then(
         careerPpg: careerPpg[0]
     });
 
-    
-
-    console.log(results);
 }).catch(err => console.log(err));
