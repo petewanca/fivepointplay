@@ -1,32 +1,31 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router';
 
-// import { Link } from 'react-router-dom';
-
-// Material-UI Components
+// import { Link } from 'react-router-dom'; Material-UI Components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 // React Components
 import PrimaryButton from "../components/PrimaryButton";
 
-// React APIs 
-// import API from "../utils/API";
+// React APIs import API from "../utils/API";
 import axios from 'axios';
 
 const styles = {
     secButton: {
         marginTop: "1rem",
-        marginRight: "1.7rem",
         float: "right"
     },
     defButton: {
         marginTop: "1rem",
-        marginLeft: "1.7rem",
         float: "left"
     },
     input: {
         width: "80%"
+    },
+    buttonContainer: {
+        width: "80%",
+        margin: "1rem auto"
     }
 }
 
@@ -39,14 +38,13 @@ export default class PasswordForm extends Component {
     };
 
     handleInputChange = event => {
-		const { name, value } = event.target;
-	
-		this.setState({
-			[name]: value
-		});
+        const {name, value} = event.target;
+
+        this.setState({[name]: value});
     };
 
-    handleSubmitForm = () => {
+    handleSubmitForm = event => {
+        event.preventDefault();
         var jwt = localStorage.getItem("jwt")
         var userData = JSON.parse(jwt);
         var userId = userData.data.id;
@@ -55,17 +53,18 @@ export default class PasswordForm extends Component {
             passwordNew: this.state.newPassword,
             passwordVerify: this.state.confirmNewPassword
         }
-        console.log(this.state.newPassword, this.state.passwordVerify)
-        axios.put(`/api/users/password/${userId}`, data, {
+        axios
+            .put(`/api/users/password/${userId}`, data, {
             headers: {
-                Authorization: `${token}`,     
-            }}).then(res => {
-                this.setState({
-                    redirect: true
-                })
-            }).catch(err => {
-                console.log(err)
-            }) 
+                Authorization: `${token}`
+            }
+        })
+            .then(res => {
+                this.setState({redirect: true})
+            })
+            .catch(err => {
+                this.setState({newPassword: "", confirmNewPassword: ""})
+            })
     };
 
     render() {
@@ -75,7 +74,7 @@ export default class PasswordForm extends Component {
         }
 
         return (
-            <form noValidate autoComplete="off">
+            <form onSubmit={this.handleSubmitForm} noValidate autoComplete="off">
                 <TextField
                     id="newPassword"
                     label="New Password"
@@ -83,19 +82,28 @@ export default class PasswordForm extends Component {
                     name="newPassword"
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={styles.input}
-                    />
-                    <TextField
+                    style={styles.input}/>
+                <TextField
                     id="confirmNewPassword"
                     label="Confirm Password"
                     type="password"
                     name="confirmNewPassword"
                     onChange={this.handleInputChange}
                     margin="normal"
-                    style={styles.input}
-                    />
-                <Button variant="contained" color="secondary" style={styles.secButton} onClick={this.handleSubmitForm}>Update</Button>
-                <PrimaryButton color={"default"} style={styles.defButton} to={"/profile"} message={"Cancel"} />
+                    style={styles.input}/>
+                <div style={styles.buttonContainer}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        style={styles.secButton}
+                        onClick={this.handleSubmitForm}
+                        type="submit">Update</Button>
+                    <PrimaryButton
+                        color={"default"}
+                        style={styles.defButton}
+                        to={"/profile"}
+                        message={"Cancel"}/>
+                </div>
             </form>
         )
     }
