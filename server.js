@@ -37,6 +37,13 @@ require("./routes/api/auth")(app);
 require("./routes/api/teams")(app);
 require("./routes/api/list")(app);
 
+// Send every request to the React app
+// Define any API routes before this runs
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(`==> 🌎  Listening on port ${PORT}.`,
