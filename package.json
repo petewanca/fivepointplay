@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
+  "engines": {
+    "node": "10.15.0",
+    "npm": "6.11.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -40,6 +44,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^5.18.4"
+    "sequelize": "^5.18.4",
+    "if-env": "^1.0.4"
   }
 }
