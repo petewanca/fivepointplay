@@ -66,5 +66,5 @@ To get started ...
 
 **Step 3** - 🔃 Create a new pull request using [https://github.com/petewanca/fivepointplay/compare](https://github.com/petewanca/fivepointplay/compare)  
 
-### Disclaimer  
+### 🚨 Disclaimer 🚨 
 *All data comes from nba.com and is used only for demonstration/instructional purposes.*
