@@ -1,10 +1,10 @@
 import React from "react";
 
 const styles = {
-	image: {
-		width: "100%"
-	}
-};
+    image: {
+        width: "50%"
+    }
+}
 
 export default function Error404() {
 	return (
