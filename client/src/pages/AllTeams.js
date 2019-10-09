@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 // Material-UI Components
 import Grid from "@material-ui/core/Grid";
 
-// React APIs
-// import API from "../utils/API";
-
 export default class AllTeams extends Component {
 	constructor(props) {
 		super(props);

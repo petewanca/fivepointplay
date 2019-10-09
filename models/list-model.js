@@ -1,8 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
 	var Lists = sequelize.define("Lists", {
-		// playerId: {
-		// type: DataTypes.INTEGER
-		// },
 		teamName: {
 			type: DataTypes.STRING
 		},

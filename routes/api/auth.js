@@ -14,7 +14,7 @@ module.exports = function(app) {
 		});
 	});
 
-	// @route GET api/auth/test
+	// @route GET api/auth/test-secure
 	// @desc tests secure api route
 	app.get(
 		"/api/auth/test-secure",
@@ -36,13 +36,11 @@ module.exports = function(app) {
 		db.Users.findOne({ where: { email } }).then((user) => {
 			// Check the user exists
 			if (!user) {
-				return res
-					.status(404)
-					.json({
-						msgTitle: "User Not Found",
-						msgBody:
-							'Please enter a valid email or click "Register" to create a new account.'
-					});
+				return res.status(404).json({
+					msgTitle: "User Not Found",
+					msgBody:
+						'Please enter a valid email or click "Register" to create a new account.'
+				});
 			}
 
 			let currentUser = user.get();
@@ -79,18 +77,18 @@ module.exports = function(app) {
 							res.status(200).json(err);
 						});
 				} else {
-					return res
-						.status(400)
-						.json({
-							msgTitle: "Incorrect Password",
-							msgBody:
-								"Please enter the correct password for this account."
-						});
+					return res.status(400).json({
+						msgTitle: "Incorrect Password",
+						msgBody:
+							"Please enter the correct password for this account."
+					});
 				}
 			});
 		});
 	});
 
+	// @route GET api/auth/logout
+	// @desc logs user out
 	app.get(
 		"/api/auth/logout",
 		passport.authenticate("jwt", { session: false }),

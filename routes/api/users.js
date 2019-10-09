@@ -35,13 +35,11 @@ module.exports = function(app) {
 			}
 		}).then((user) => {
 			if (user) {
-				return res
-					.status(400)
-					.json({
-						msgTitle: "Email Taken",
-						msgBody:
-							"This email already exists. Please use another email address."
-					});
+				return res.status(400).json({
+					msgTitle: "Email Taken",
+					msgBody:
+						"This email already exists. Please use another email address."
+				});
 			} else {
 				const newUser = {
 					firstName: req.body.firstName,
@@ -57,7 +55,7 @@ module.exports = function(app) {
 						newUser.password = hash;
 
 						db.Users.create(newUser)
-							.then((user) => {
+							.then(() => {
 								res.status(200).json({
 									message:
 										"User account successfully created.",
@@ -192,7 +190,7 @@ module.exports = function(app) {
 				bcrypt.genSalt(10, (err, salt) => {
 					bcrypt.hash(passwordNew, salt, (err, hash) => {
 						if (err) throw err;
-						passwordUpdate = hash;
+						let passwordUpdate = hash;
 
 						db.Users.update(
 							{

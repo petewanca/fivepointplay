@@ -1,11 +1,10 @@
 const db = require("../../models");
-const axios = require("axios");
-const cheerio = require("cheerio");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 module.exports = function(app) {
-	// find player by name
+	// @route GET api/findPLayer/:playerName
+	// @desc gets player by name.
 	app.get("/api/findPlayer/:playerName", (req, res) => {
 		let searchTerm = req.params.playerName;
 		db.Players.findAll({
@@ -37,7 +36,8 @@ module.exports = function(app) {
 			.catch((err) => res.status(404).json(err));
 	});
 
-	// show all players
+	// @route GET api/allPlayers
+	// @desc get all players
 	app.get("/api/allPlayers", (req, res) => {
 		db.Players.findAll({
 			order: [["playerName", "ASC"]]
@@ -49,8 +49,6 @@ module.exports = function(app) {
 						id: item.dataValues.id,
 						playerName: item.dataValues.playerName,
 						team: item.dataValues.teamName,
-						position: item.dataValues.position,
-						playerImage: item.dataValues.playerImage,
 						playerLink: item.dataValues.playerLink,
 						playerImage: item.dataValues.playerImage,
 						position: item.dataValues.position,
@@ -66,7 +64,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
-	// get team names and links for UI
+	// @route GET api/getTeams
+	// @desc get all teams
 	app.get("/api/getTeams", (req, res) => {
 		db.Teams.findAll({
 			order: [["teamName", "ASC"]]
@@ -86,7 +85,8 @@ module.exports = function(app) {
 			.catch((err) => res.status(404).json(err));
 	});
 
-	// get roster of team selected by teamName
+	// @route GET api/getTeam/:teamName
+	// @desc get team roster by name
 	app.get("/api/getTeam/:teamName", (req, res) => {
 		let team = req.params.teamName;
 
@@ -97,7 +97,7 @@ module.exports = function(app) {
 			order: [["playerName", "ASC"]]
 		})
 			.then((response) => {
-				roster = [];
+				let roster = [];
 				response.forEach((player) => {
 					roster.push({
 						id: player.dataValues.id,
@@ -117,7 +117,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
-	// get player info by id when clicked from roster
+	// @route GET api/player/:id
+	// @desc gets player info by id
 	app.get("/api/player/:id", (req, res) => {
 		let playerId = req.params.id;
 		db.Players.findAll({
@@ -146,7 +147,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
-	// get player stats with player and team name
+	/// @route POST api/stats
+	// @desc get player stats
 	app.post("/api/stats/", (req, res) => {
 		db.Stats.findAll({
 			where: {
@@ -184,7 +186,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
-	// fantasy point calculator for single player
+	// @route POST api/player/fantasyCalculator
+	// @desc gets fantasy point data
 	app.post("/api/player/fantasyCalculator/", (req, res) => {
 		let typ = req.body.type;
 		let type = typ.toLowerCase();
@@ -193,7 +196,6 @@ module.exports = function(app) {
 
 		switch (type) {
 			case "standard":
-				// console.log("standard scoring system")
 				db.Stats.findOne({
 					where: {
 						playerName: playerName,
@@ -254,10 +256,10 @@ module.exports = function(app) {
 					.catch((err) => res.json(err));
 				break;
 			case "espn":
-				// console.log("espn");
+				console.log("espn");
 				break;
 			case "yahoo":
-				// console.log("yahoo");
+				console.log("yahoo");
 				break;
 			default:
 				console.log("no score system selected");
@@ -265,7 +267,8 @@ module.exports = function(app) {
 		}
 	});
 
-	// fantasy point calculator for all players
+	// @route GET api/player/fantasyCalculator/:type
+	// @desc gets fantasy point data by type
 	app.get("/api/fantasyCalculator/:type", (req, res) => {
 		let typ = req.params.type;
 		let type = typ.toLowerCase();
@@ -332,10 +335,10 @@ module.exports = function(app) {
 					.catch((err) => res.json(err));
 				break;
 			case "espn":
-				// console.log("espn");
+				console.log("espn");
 				break;
 			case "yahoo":
-				// console.log("yahoo");
+				console.log("yahoo");
 				break;
 			default:
 				console.log("no score system selected");
@@ -343,7 +346,8 @@ module.exports = function(app) {
 		}
 	});
 
-	// add player to list
+	// @route POST api/add-to-list
+	// @desc adds player to list using JWT
 	app.post("/api/add-to-list", (req, res) => {
 		db.Lists.create({
 			playerName: req.body.playerName,
@@ -356,7 +360,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
-	// get players from user's list by userId
+	// @route GET api/retrieve-favorites/:userId
+	// @desc gets users saved favorites
 	app.get("/api/retrieve-favorites/:userId", (req, res) => {
 		let userId = req.params.userId;
 
@@ -378,6 +383,8 @@ module.exports = function(app) {
 			.catch((err) => res.json(err));
 	});
 
+	// @route GET api/delete-from-list/:userId/:playerName/:teamName
+	// @desc delete player from user list
 	app.delete(
 		"/api/delete-from-list/:userId/:playerName/:teamName",
 		(req, res) => {
@@ -395,7 +402,8 @@ module.exports = function(app) {
 		}
 	);
 
-	// get player profile
+	// @route GET api/player-profile
+	// @desc gets player profile data
 	app.post("/api/player-profile/", (req, res) => {
 		db.Players.findAll({
 			where: {

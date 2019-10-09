@@ -18,7 +18,6 @@ module.exports = function(app) {
 	// @route GET api/team/:team
 	// @desc get all players from team
 	app.get("/api/team/:team", (req, res) => {
-		console.log(req.params.team);
 		db.Players.findAll({
 			where: {
 				teamName: req.params.team

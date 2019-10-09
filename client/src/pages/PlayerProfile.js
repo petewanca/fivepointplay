@@ -79,7 +79,6 @@ export default class PlayerProfile extends Component {
 					userId: userId
 				})
 				.then((res) => {
-					// alert('Player saved to list.')
 					this.setState({
 						alertTitle: "Save Successful",
 						alertBody: "Player saved to list.",

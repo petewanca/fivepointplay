@@ -69,7 +69,7 @@ module.exports = function(app) {
 					id: req.params.id
 				}
 			})
-				.then((data) => {
+				.then(() => {
 					res.status(200).json({
 						msg: "Player successfully deleted from list.",
 						success: true

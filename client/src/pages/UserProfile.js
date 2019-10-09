@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 // Material-UI Components
 import UILink from "@material-ui/core/Link";
@@ -12,6 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 // React Components
 import Alert from "../components/Alert";
