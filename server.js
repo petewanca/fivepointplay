@@ -6,14 +6,14 @@ require("dotenv").config();
 
 var passport = require("passport");
 var session = require("express-session");
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 
 //For BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //For passport
-app.use(session({ secret: 'password', resave: true, saveUninitialized: true }));
+app.use(session({ secret: "password", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -23,7 +23,7 @@ app.use(express.json());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+	app.use(express.static("client/build"));
 }
 
 // Define Models
@@ -32,7 +32,7 @@ var db = require("./models");
 var syncOptions = { force: false };
 
 //Load passport strategies
-require('./config/passport.js')(passport, db.User);
+require("./config/passport.js")(passport, db.User);
 
 // Define Routes
 require("./routes/api/index")(app);
@@ -44,14 +44,13 @@ require("./routes/api/list")(app);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+	res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
-    console.log(`==> 🌎  Listening on port ${PORT}.`,
-    );
-  });
+	app.listen(PORT, function() {
+		console.log(`==> 🌎  Listening on port ${PORT}.`);
+	});
 });
 
 module.exports = app;

@@ -14,7 +14,6 @@ import UpdatePassword from "./pages/UpdatePassword";
 import UpdateAvatar from "./pages/UpdateAvatar";
 import AllTeams from "./pages/AllTeams";
 import Team from "./pages/Team";
-import Results from "./pages/Results";
 import PlayerProfile from "./pages/PlayerProfile";
 import Error404 from "./pages/Error404";
 
@@ -178,7 +177,6 @@ export default class App extends Component {
                                 <Route exact path="/update-avatar" component={UpdateAvatar}/>
                                 <Route exact path="/all-teams" component={AllTeams}/>
                                 <Route exact path="/team" component={Team}/>
-                                <Route exact path="/results" component={Results}/>
                                 <Route exact path="/player-profile" component={PlayerProfile}/>
                                 <Route exact path="/" component={Home}/>
                                 <Route component={Error404}/>
