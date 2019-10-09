@@ -1,43 +1,53 @@
 module.exports = function(app) {
 	const bcrypt = require("bcryptjs");
-    const db = require("../../models");
-    const jwt = require('jsonwebtoken');
-    const passport = require("passport");
-	const keys = require('../../config/keys');
-	var md5 = require('md5');
+	const db = require("../../models");
+	const jwt = require("jsonwebtoken");
+	const passport = require("passport");
+	const keys = require("../../config/keys");
+	var md5 = require("md5");
 
 	// @route Get api/users/:id
 	// @desc gets user information by id
-	app.get("/api/users/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-		db.Users.findOne({
-			where: {
-				id: req.params.id
-			}
-		}).then(user =>{
-			res.status(200).json(user);
-		}).catch(err => {
-			res.status(500).json(err)
-		})
-
-	});
+	app.get(
+		"/api/users/:id",
+		passport.authenticate("jwt", { session: false }),
+		(req, res) => {
+			db.Users.findOne({
+				where: {
+					id: req.params.id
+				}
+			})
+				.then((user) => {
+					res.status(200).json(user);
+				})
+				.catch((err) => {
+					res.status(500).json(err);
+				});
+		}
+	);
 
 	// @route POST api/users/
 	// @desc creates a new user
 	app.post("/api/users", (req, res) => {
 		db.Users.findOne({
 			where: {
-				email: req.body.email,
-			},
-		}).then(user => {
+				email: req.body.email
+			}
+		}).then((user) => {
 			if (user) {
-				return res.status(400).json({ msgTitle: 'Email Taken', msgBody: 'This email already exists. Please use another email address.'
-				});
+				return res
+					.status(400)
+					.json({
+						msgTitle: "Email Taken",
+						msgBody:
+							"This email already exists. Please use another email address."
+					});
 			} else {
 				const newUser = {
 					firstName: req.body.firstName,
 					lastName: req.body.lastName,
 					email: req.body.email,
-					password: req.body.password,
+					password: req.body.password
 				};
 
 				// Call bcrypt to hash the password before storing in the database.
@@ -47,17 +57,17 @@ module.exports = function(app) {
 						newUser.password = hash;
 
 						db.Users.create(newUser)
-							.then(user => {
+							.then((user) => {
 								res.status(200).json({
 									message:
 										"User account successfully created.",
-									userCreated: true,
+									userCreated: true
 								});
 							})
-							.catch(err => console.log(err));
+							.catch((err) => console.log(err));
 					});
 				});
-			};
+			}
 		});
 	});
 
@@ -69,16 +79,16 @@ module.exports = function(app) {
 		(req, res) => {
 			db.Users.destroy({
 				where: {
-					id: req.params.id,
-				},
+					id: req.params.id
+				}
 			})
 				.then(() => {
 					res.status(200).json({
 						message: "User account successfully deleted.",
-						userDeleted: true,
+						userDeleted: true
 					});
 				})
-				.catch(err => {
+				.catch((err) => {
 					res.status(500).json(err);
 				});
 		}
@@ -94,25 +104,25 @@ module.exports = function(app) {
 				{
 					firstName: req.body.firstName,
 					lastName: req.body.lastName,
-					email: req.body.email,
+					email: req.body.email
 				},
 				{
 					where: {
-						id: req.params.id,
-					},
+						id: req.params.id
+					}
 				}
 			).then(() => {
 				db.Users.findByPk(req.params.id)
-					.then(data => {
+					.then((data) => {
 						res.status(200).json({
 							firstName: data.firstName,
 							lastName: data.lastName,
 							email: data.email,
 							message: "User account successfully updated.",
-							userUpdated: true,
+							userUpdated: true
 						});
 					})
-					.catch(err => {
+					.catch((err) => {
 						res.status(500).json(err);
 					});
 			});
@@ -136,11 +146,12 @@ module.exports = function(app) {
 				},
 				{
 					where: {
-						id: req.params.id,
-					},
-				}).then(() => {
-					db.Users.findByPk(req.params.id)
-					.then(data => {
+						id: req.params.id
+					}
+				}
+			).then(() => {
+				db.Users.findByPk(req.params.id)
+					.then((data) => {
 						const payload = {
 							id: data.id,
 							firstName: data.firstName,
@@ -161,11 +172,13 @@ module.exports = function(app) {
 								});
 							}
 						);
-					}).catch(err => {
-						res.status(200).json(err)
+					})
+					.catch((err) => {
+						res.status(200).json(err);
 					});
-				});
-		});
+			});
+		}
+	);
 
 	// @route PUT api/users/:id
 	// @desc updates a user password
@@ -173,58 +186,55 @@ module.exports = function(app) {
 		"/api/users/password/:id",
 		passport.authenticate("jwt", { session: false }),
 		(req, res) => {
-            const { passwordNew, passwordVerify } = req.body;
+			const { passwordNew, passwordVerify } = req.body;
 
-            if (passwordNew === passwordVerify) {
-                bcrypt.genSalt(10, (err, salt) => {
+			if (passwordNew === passwordVerify) {
+				bcrypt.genSalt(10, (err, salt) => {
 					bcrypt.hash(passwordNew, salt, (err, hash) => {
-                        
-                        if (err) throw err;
+						if (err) throw err;
 						passwordUpdate = hash;
 
 						db.Users.update(
-                            {
-                                password: passwordUpdate
-                            },
-                            {
-                                where: {
-                                    id: req.params.id,
-                                },
-                            })
-							.then(() => {
-                                db.Users.findByPk(req.params.id)
-                                    .then(data => {
-                                        const payload = {
-                                            id: data.id,
-                                            firstName: data.firstName,
-											lastName: data.lastName,
-											avatarUrl: data.imageFile
-                                        };
+							{
+								password: passwordUpdate
+							},
+							{
+								where: {
+									id: req.params.id
+								}
+							}
+						).then(() => {
+							db.Users.findByPk(req.params.id)
+								.then((data) => {
+									const payload = {
+										id: data.id,
+										firstName: data.firstName,
+										lastName: data.lastName,
+										avatarUrl: data.imageFile
+									};
 
-                                        jwt.sign(
-                                            payload,
-                                            keys.secretOrKey,
-                                            { expiresIn: 3600 * 12 },
-                                            (err, token) => {
-                                                res.json({
-                                                    ...payload,
-                                                    success: true,
-                                                    token: `Bearer ${token}`
-                                                });
-                                            }
-                                        );
-                                    })
-                                    .catch(err => {
-                                        res.status(500).json(err);
-                                    });
-                                });
+									jwt.sign(
+										payload,
+										keys.secretOrKey,
+										{ expiresIn: 3600 * 12 },
+										(err, token) => {
+											res.json({
+												...payload,
+												success: true,
+												token: `Bearer ${token}`
+											});
+										}
+									);
+								})
+								.catch((err) => {
+									res.status(500).json(err);
+								});
+						});
 					});
 				});
-            } else {
-                return res
-                    .status(400)
-                    .json({ msg: "Passwords do not match." });
-            }
+			} else {
+				return res.status(400).json({ msg: "Passwords do not match." });
+			}
 		}
 	);
 };
